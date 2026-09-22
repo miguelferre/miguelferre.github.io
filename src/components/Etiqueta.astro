@@ -1,10 +1,13 @@
 ---
+import { t, type Lang } from '../i18n/ui';
+
 interface Props {
+  lang: Lang;
   estado: 'live' | 'repo' | 'privado';
   nota?: string;
 }
-const { estado, nota } = Astro.props;
-const texto = estado.toUpperCase() + (nota ? ` · ${nota.toUpperCase()}` : '');
+const { lang, estado, nota } = Astro.props;
+const texto = t(lang).etiqueta[estado] + (nota ? ` · ${nota.toUpperCase()}` : '');
 ---
 
 <span class:list={['etiqueta', `etiqueta--${estado}`]}>{texto}</span>

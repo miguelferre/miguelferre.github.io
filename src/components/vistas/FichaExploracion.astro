@@ -1,0 +1,126 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Etiqueta from '../Etiqueta.astro';
+import { t, rutas, rutaExploracion, type Lang } from '../../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  proyecto: CollectionEntry<'proyectos'>;
+  siguiente: CollectionEntry<'proyectos'>;
+}
+const { lang, proyecto, siguiente } = Astro.props;
+const d = proyecto.data;
+const s = t(lang);
+const x = s.exploracion;
+const otro: Lang = lang === 'es' ? 'en' : 'es';
+---
+
+<Base
+  lang={lang}
+  titulo={d.nombre}
+  descripcion={`${d.pregunta[lang]} ${d.resumen[lang]}`}
+  alterna={rutaExploracion(otro, proyecto.id)}
+  activa="exploraciones"
+>
+  <section class="tira cabecera-ficha">
+    <div class="contenedor pila pila--ancha limite">
+      <nav class="migas" aria-label={x.migas}>
+        <a href={rutas.inicio[lang]}>{s.nav.inicio}</a><span aria-hidden="true">/</span>
+        <a href={rutas.exploraciones[lang]}>{s.nav.exploraciones}</a><span aria-hidden="true">/</span>
+        <strong>{d.nombre}</strong>
+      </nav>
+      <div class="fila-etiquetas">
+        <span class="entradilla">{x.entradilla}</span>
+        <Etiqueta lang={lang} estado={d.estado} nota={d.estado_nota?.[lang]} />
+      </div>
+      <h1>{d.pregunta[lang]}</h1>
+      <p class="subtitulo">{d.intro?.[lang] ?? d.resumen[lang]}</p>
+      <div class="botones">
+        {d.url_live && <a class="boton boton--lleno" href={d.url_live}>{x.abrir}</a>}
+        {d.url_repo && <a class="boton" href={d.url_repo}>{x.repo}</a>}
+      </div>
+      {d.nota_codigo && <p class="nota">{d.nota_codigo[lang]}</p>}
+    </div>
+  </section>
+
+  <section class="tira tira--papel">
+    <div class="contenedor cuerpo">
+      <div class="cuerpo__captura">
+        {d.captura ? (
+          <img src={d.captura} alt={`${x.captura} ${d.nombre}`} width="1280" height="800" />
+        ) : (
+          <div class="cuerpo__marcador">{x.sinDesplegar}</div>
+        )}
+      </div>
+      {d.como && (
+        <div class="cuerpo__como">
+          <span class="entradilla" style="color: var(--tinta-3);">{x.como}</span>
+          <ul class="lista-puntos">
+            {d.como[lang].map((linea) => <li>{linea}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  </section>
+
+  {d.aprendi && (
+    <section class="tira">
+      <div class="contenedor pila limite">
+        <span class="entradilla" style="color: var(--tinta-3);">{x.aprendi}</span>
+        <p>{d.aprendi[lang]}</p>
+      </div>
+    </section>
+  )}
+
+  <section class="tira pie-ficha">
+    <div class="contenedor pie-ficha__fila">
+      <a href={rutas.exploraciones[lang]}>{x.todas}</a>
+      <a href={rutaExploracion(lang, siguiente.id)}>{x.siguiente}: {siguiente.data.nombre}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cabecera-ficha { padding-block: 32px 40px; }
+  .fila-etiquetas { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .nota { font-size: 13px; color: var(--tinta-3); }
+
+  .cuerpo { display: grid; gap: 24px; grid-template-columns: 1fr; align-items: start; }
+  @media (min-width: 900px) { .cuerpo { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); } }
+  /* La captura se muestra como franja recortada por arriba, no a tamaño completo. */
+  .cuerpo__captura img,
+  .cuerpo__marcador {
+    display: block;
+    width: 100%;
+    height: clamp(200px, 32vw, 360px);
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+  }
+  .cuerpo__captura img { object-fit: cover; object-position: top; background: #e8e4da; }
+  .cuerpo__marcador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+    background: repeating-linear-gradient(135deg, #f1eee7 0 12px, #e8e4da 12px 24px);
+    color: #6b6878;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .cuerpo__como {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 24px;
+    border-radius: 12px;
+    background: var(--fondo);
+    border: 1px solid var(--borde);
+  }
+
+  .pie-ficha { padding-block: 24px; border-top: 1px solid var(--borde); }
+  .pie-ficha__fila { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; }
+  .pie-ficha__fila a:first-child { color: var(--tinta-3); text-decoration: none; }
+  .pie-ficha__fila a:last-child { font-weight: 600; text-decoration: none; }
+</style>

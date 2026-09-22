@@ -1,36 +1,47 @@
 ---
 import '../styles/global.css';
+import { t, rutas, type Lang } from '../i18n/ui';
 
 interface Props {
+  lang: Lang;
   titulo: string;
   descripcion: string;
+  // Ruta de esta misma página en el otro idioma (para el selector y hreflang).
+  alterna: string;
   activa?: 'inicio' | 'herramienta' | 'exploraciones' | 'sobre-mi';
 }
 
-const { titulo, descripcion, activa } = Astro.props;
+const { lang, titulo, descripcion, alterna, activa } = Astro.props;
+const otro: Lang = lang === 'es' ? 'en' : 'es';
+const s = t(lang);
 const tituloCompleto = titulo === 'Miguel Ferreiro García' ? titulo : `${titulo} · Miguel Ferreiro García`;
 const canonica = new URL(Astro.url.pathname, Astro.site);
+const urlAlterna = new URL(alterna, Astro.site);
 
 const enlaces = [
-  { id: 'inicio', href: '/', texto: 'Inicio' },
-  { id: 'herramienta', href: '/revisor/', texto: 'La herramienta' },
-  { id: 'exploraciones', href: '/#exploraciones', texto: 'Exploraciones' },
-  { id: 'sobre-mi', href: '/#sobre-mi', texto: 'Sobre mí' },
+  { id: 'inicio', href: rutas.inicio[lang], texto: s.nav.inicio },
+  { id: 'herramienta', href: rutas.revisor[lang], texto: s.nav.herramienta },
+  { id: 'exploraciones', href: rutas.exploraciones[lang], texto: s.nav.exploraciones },
+  { id: 'sobre-mi', href: rutas.sobreMi[lang], texto: s.nav.sobreMi },
 ] as const;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{tituloCompleto}</title>
     <meta name="description" content={descripcion} />
     <link rel="canonical" href={canonica} />
+    <link rel="alternate" hreflang={lang} href={canonica} />
+    <link rel="alternate" hreflang={otro} href={urlAlterna} />
+    <link rel="alternate" hreflang="x-default" href={lang === 'es' ? canonica : urlAlterna} />
     <meta property="og:title" content={tituloCompleto} />
     <meta property="og:description" content={descripcion} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonica} />
+    <meta property="og:locale" content={lang === 'es' ? 'es_ES' : 'en_GB'} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,17 +51,20 @@ const enlaces = [
     />
   </head>
   <body>
-    <a class="saltar" href="#contenido">Saltar al contenido</a>
+    <a class="saltar" href="#contenido">{s.saltar}</a>
     <header class="cabecera">
       <div class="contenedor cabecera__fila">
-        <a class="marca" href="/">miguelferre</a>
-        <nav aria-label="Principal">
+        <a class="marca" href={rutas.inicio[lang]}>miguelferre</a>
+        <nav aria-label={lang === 'es' ? 'Principal' : 'Main'}>
           <ul class="menu">
             {enlaces.map((e) => (
               <li>
                 <a href={e.href} aria-current={activa === e.id ? 'page' : undefined}>{e.texto}</a>
               </li>
             ))}
+            <li>
+              <a class="idioma" href={alterna} lang={otro} hreflang={otro}>{s.cambiarIdioma}</a>
+            </li>
           </ul>
         </nav>
       </div>
@@ -62,14 +76,15 @@ const enlaces = [
 
     <footer class="pie">
       <div class="contenedor pie__fila">
-        <ul class="leyenda" aria-label="Qué significa cada etiqueta">
-          <li><span class="etiqueta etiqueta--live">LIVE</span> enlaza al producto</li>
-          <li><span class="etiqueta etiqueta--repo">REPO</span> enlaza al código</li>
-          <li><span class="etiqueta etiqueta--privado">PRIVADO</span> se enseña en conversación</li>
+        <ul class="leyenda" aria-label={s.leyenda.titulo}>
+          <li><span class="etiqueta etiqueta--live">{s.etiqueta.live}</span> {s.leyenda.live}</li>
+          <li><span class="etiqueta etiqueta--repo">{s.etiqueta.repo}</span> {s.leyenda.repo}</li>
+          <li><span class="etiqueta etiqueta--privado">{s.etiqueta.privado}</span> {s.leyenda.privado}</li>
         </ul>
         <div class="pie__enlaces">
           <a href="https://github.com/miguelferre">GitHub</a>
           <a href="https://www.linkedin.com/in/miguel-ferreiro-garcia">LinkedIn</a>
+          <a href={lang === 'es' ? '/cv/Miguel_Ferreiro_CV_ES.pdf' : '/cv/Miguel_Ferreiro_CV_EN.pdf'}>{s.cv}</a>
           <a href="mailto:ferreirogarciamiguel@gmail.com">ferreirogarciamiguel@gmail.com</a>
         </div>
       </div>
@@ -111,6 +126,7 @@ const enlaces = [
   .menu {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 4px 24px;
     margin: 0;
     padding: 0;
@@ -127,6 +143,14 @@ const enlaces = [
   }
   .menu a:hover { color: var(--tinta); }
   .menu a[aria-current='page'] { color: var(--tinta); border-bottom-color: var(--acento); }
+  .menu .idioma {
+    padding: 6px 12px;
+    border: 1px solid var(--borde);
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--tinta);
+  }
+  .menu .idioma:hover { border-color: var(--acento); }
 
   .pie {
     border-top: 1px solid var(--borde);

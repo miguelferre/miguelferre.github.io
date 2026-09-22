@@ -2,6 +2,8 @@
 # La fuente de verdad ampliada vive en el repo privado (portfolio/PROYECTOS.md);
 # cuando cambie algo allí, se refleja aquí a mano.
 #
+# Los textos van en los dos idiomas: { es: ..., en: ... }.
+#
 # estado: live | repo | privado
 #   live    -> hay producto desplegado (url_live obligatoria)
 #   repo    -> solo código público (url_repo obligatoria); estado_nota explica qué falta
@@ -10,98 +12,163 @@
 - id: revisor
   tipo: herramienta
   nombre: Human-AI Interaction Layer Reviewer
-  pregunta: Un revisor de cómo un sistema de IA le presenta el resultado a la persona.
-  resumen: >-
-    Audita la capa de interacción: automation bias, calibración de la confianza,
-    fatiga de alerta, capacidad de corregir. Cada hallazgo anclado a HAX-18 o PAIR,
-    a un punto concreto del sistema y a evidencia. Sin evidencia, no lo emite.
+  pregunta:
+    es: Un revisor de cómo un sistema de IA le presenta el resultado a la persona.
+    en: A reviewer of how an AI system presents its output to the person who uses it.
+  resumen:
+    es: >-
+      Audita la capa de interacción: automation bias, calibración de la confianza,
+      fatiga de alerta, capacidad de corregir. Cada hallazgo anclado a HAX-18 o PAIR,
+      a un punto concreto del sistema y a evidencia. Sin evidencia, no lo emite.
+    en: >-
+      It audits the interaction layer: automation bias, confidence calibration,
+      alert fatigue, ability to correct. Every finding is tied to HAX-18 or PAIR,
+      to a specific point in the system and to evidence. No evidence, no finding.
   estado: repo
   url_repo: https://github.com/miguelferre/human-ai-governance
-  url_ficha: /revisor/
   url_informe: /informes/google-flood-hub-review.html
   captura: /capturas/revisor.webp
-  captura_alt: Informe de hallazgos sobre Google Flood Hub, cada fila ligada a una cita del usuario, una guía y un artículo del AI Act
+  captura_alt:
+    es: Informe de hallazgos sobre Google Flood Hub, cada fila ligada a una cita del usuario, una guía y un artículo del AI Act
+    en: Findings report on Google Flood Hub, each row tied to a user quote, a guideline and an AI Act article
   metricas:
     - valor: "0,91"
-      etiqueta: recall ± 0,06
+      etiqueta: { es: "recall ± 0,06", en: "recall ± 0.06" }
     - valor: "0,97"
-      etiqueta: precisión
+      etiqueta: { es: "precisión", en: "precision" }
     - valor: "9"
-      etiqueta: sectores, juez independiente
+      etiqueta: { es: "sectores, juez independiente", en: "sectors, independent judge" }
   marcos: [EU AI Act, NIST AI RMF, HAX-18, PAIR]
 
 - id: praia-ou-montana
   tipo: exploracion
   nombre: Praia ou montaña
-  pregunta: ¿Playa o monte hoy en Galicia?
-  resumen: >-
-    954 playas, 201 rutas, meteo y mar en tiempo real, puesta de sol orográfica.
-    Veredicto explicado; los pesos los mueve el usuario.
+  pregunta:
+    es: ¿Playa o monte hoy en Galicia?
+    en: Beach or hike today in Galicia?
+  resumen:
+    es: >-
+      954 playas, 201 rutas, meteo y mar en tiempo real, puesta de sol orográfica.
+      Veredicto explicado; los pesos los mueve el usuario.
+    en: >-
+      954 beaches, 201 trails, live weather and sea state, terrain-aware sunset.
+      An explained verdict; the user sets the weights.
   estado: repo
-  estado_nota: sin desplegar
+  estado_nota: { es: sin desplegar, en: not deployed }
   url_repo: https://github.com/miguelferre/praia-ou-montana
   inicio: 2026
   como:
-    - Astro, React y TypeScript; PWA bilingüe ES y GL
-    - "Ingesta en Python: IDE Galicia, OSM, Open-Meteo (meteo, mar, mareas, UV), PVGIS para el horizonte"
-    - Tiempos de coche reales con OpenRouteService y OSRM
-    - Scoring ponderado explicable, 25 tests Vitest, CI en GitHub Actions
+    es:
+      - Astro, React y TypeScript; PWA bilingüe ES y GL
+      - "Ingesta en Python: IDE Galicia, OSM, Open-Meteo (meteo, mar, mareas, UV), PVGIS para el horizonte"
+      - Tiempos de coche reales con OpenRouteService y OSRM
+      - Scoring ponderado explicable, 25 tests Vitest, CI en GitHub Actions
+    en:
+      - Astro, React and TypeScript; bilingual PWA (ES and GL)
+      - "Python ingestion: IDE Galicia, OSM, Open-Meteo (weather, sea, tides, UV), PVGIS for the horizon"
+      - Real driving times with OpenRouteService and OSRM
+      - Explainable weighted scoring, 25 Vitest tests, CI on GitHub Actions
 
 - id: climatch
   tipo: exploracion
   nombre: Climatch
-  pregunta: ¿Qué ciudad tiene el clima que quiero, hoy y en 2050?
-  resumen: >-
-    ERA5 desde 1940, CMIP6 con banda de incertidumbre, percentiles en vez de medias.
-    En producción desde junio de 2026.
+  pregunta:
+    es: ¿Qué ciudad tiene el clima que quiero, hoy y en 2050?
+    en: Which city has the climate I want, today and in 2050?
+  resumen:
+    es: >-
+      ERA5 desde 1940, CMIP6 con banda de incertidumbre, percentiles en vez de medias.
+      En producción desde junio de 2026.
+    en: >-
+      ERA5 since 1940, CMIP6 with an uncertainty band, percentiles instead of averages.
+      In production since June 2026.
   estado: live
   url_live: https://climatch.app
   captura: /capturas/climatch.webp
   inicio: 2026
   como:
-    - TypeScript, Astro 5 y React 19 en islas; SVG propio con micro-módulos de d3
-    - "Datos: Open-Meteo/ERA5 (1940-2025), CMIP6 con tres modelos y método delta, NOAA, Banco Mundial, OCDE, Ookla"
-    - Cloudflare Workers, Vitest y Playwright, accesibilidad comprobada con Axe
-    - Bilingüe EN y ES, SEO programático, 8 ADRs
-  nota_codigo: El repositorio es privado; se enseña bajo petición.
+    es:
+      - TypeScript, Astro 5 y React 19 en islas; SVG propio con micro-módulos de d3
+      - "Datos: Open-Meteo/ERA5 (1940-2025), CMIP6 con tres modelos y método delta, NOAA, Banco Mundial, OCDE, Ookla"
+      - Cloudflare Workers, Vitest y Playwright, accesibilidad comprobada con Axe
+      - Bilingüe EN y ES, SEO programático, 8 ADRs
+    en:
+      - TypeScript, Astro 5 and React 19 islands; custom SVG with d3 micro-modules
+      - "Data: Open-Meteo/ERA5 (1940-2025), CMIP6 with three models and the delta method, NOAA, World Bank, OECD, Ookla"
+      - Cloudflare Workers, Vitest and Playwright, accessibility checked with Axe
+      - Bilingual EN and ES, programmatic SEO, 8 ADRs
+  nota_codigo:
+    es: El repositorio es privado; se enseña bajo petición.
+    en: The repository is private; available on request.
 
 - id: storymap-incendios
   tipo: exploracion
   nombre: Storymap incendios Galicia 2025
-  pregunta: ¿Qué ardió en Galicia en 2025 y cómo?
-  resumen: >-
-    dNBR sobre Sentinel-2, 1.400 incendios, el mayor registrado en Galicia.
-    Nueve capítulos scrollytelling, ES y GL.
+  pregunta:
+    es: ¿Qué ardió en Galicia en 2025 y cómo?
+    en: What burned in Galicia in 2025, and how?
+  resumen:
+    es: >-
+      dNBR sobre Sentinel-2, 1.400 incendios, el mayor registrado en Galicia.
+      Nueve capítulos scrollytelling, ES y GL.
+    en: >-
+      dNBR over Sentinel-2, 1,400 fires, the largest ever recorded in Galicia.
+      Nine scrollytelling chapters, ES and GL.
   estado: live
   url_live: https://miguelferre.github.io/STORYMAP_INCENDIOS_GALICIA_2025/
   url_repo: https://github.com/miguelferre/STORYMAP_INCENDIOS_GALICIA_2025
   captura: /capturas/storymap-incendios.webp
   inicio: 2025
-  intro: >-
-    Empecé en agosto de 2025, durante los incendios. Un storymap de nueve capítulos:
-    1.400 incendios y el mayor registrado en Galicia, Larouco-Seadur, 31.778 ha.
+  intro:
+    es: >-
+      Empecé en agosto de 2025, durante los incendios. Un storymap de nueve capítulos:
+      1.400 incendios y el mayor registrado en Galicia, Larouco-Seadur, 31.778 ha.
+    en: >-
+      I started in August 2025, while the fires were still burning. A nine-chapter storymap:
+      1,400 fires and the largest ever recorded in Galicia, Larouco-Seadur, 31,778 ha.
   como:
-    - Sentinel-2 vía Microsoft Planetary Computer, severidad por dNBR
-    - 21 pasos de procesado con geopandas, rasterio y xarray
-    - Mapbox GL JS, scrollytelling, ES y GL
-    - 69 commits, en solitario, de la ingesta al despliegue en Pages
+    es:
+      - Sentinel-2 vía Microsoft Planetary Computer, severidad por dNBR
+      - 21 pasos de procesado con geopandas, rasterio y xarray
+      - Mapbox GL JS, scrollytelling, ES y GL
+      - 69 commits, en solitario, de la ingesta al despliegue en Pages
+    en:
+      - Sentinel-2 via Microsoft Planetary Computer, burn severity by dNBR
+      - 21 processing steps with geopandas, rasterio and xarray
+      - Mapbox GL JS, scrollytelling, ES and GL
+      - 69 commits, solo, from ingestion to deployment on Pages
 
 - id: madrid-hli
   tipo: exploracion
   nombre: Madrid Healthy Living Index
-  pregunta: ¿Dónde se vive más sano en Madrid?
-  resumen: >-
-    Índice compuesto desde cero. El titular: correlación negativa con la renta
-    (ρ = −0,26). Isócronas en R, dashboard shinylive.
+  pregunta:
+    es: ¿Dónde se vive más sano en Madrid?
+    en: Where is healthy living easiest in Madrid?
+  resumen:
+    es: >-
+      Índice compuesto desde cero. El titular: correlación negativa con la renta
+      (ρ = −0,26). Isócronas en R, dashboard shinylive.
+    en: >-
+      A composite index built from scratch. The headline: negative correlation with income
+      (ρ = −0.26). Isochrones in R, shinylive dashboard.
   estado: live
   url_live: https://miguelferre.github.io/Madrid_HLI/
   url_repo: https://github.com/miguelferre/Madrid_HLI
   captura: /capturas/madrid-hli.webp
   inicio: 2026
-  intro: >-
-    Un índice compuesto de vida saludable por barrio. Los barrios del sur, de renta más baja,
-    puntúan mejor que los del norte; solo el 9 % de los barrios cumple la regla 3-30-300.
+  intro:
+    es: >-
+      Un índice compuesto de vida saludable por barrio. Los barrios del sur, de renta más baja,
+      puntúan mejor que los del norte; solo el 9 % de los barrios cumple la regla 3-30-300.
+    en: >-
+      A composite healthy-living index by neighbourhood. The lower-income southern neighbourhoods
+      score better than the northern ones; only 9% of neighbourhoods meet the 3-30-300 rule.
   como:
-    - R con terra, sf y dodgr; isócronas sobre 605.000 vértices
-    - Regla 3-30-300 de acceso al verde urbano
-    - Dashboard shinylive (WebAssembly) servido desde GitHub Pages
+    es:
+      - R con terra, sf y dodgr; isócronas sobre 605.000 vértices
+      - Regla 3-30-300 de acceso al verde urbano
+      - Dashboard shinylive (WebAssembly) servido desde GitHub Pages
+    en:
+      - R with terra, sf and dodgr; isochrones over 605,000 vertices
+      - The 3-30-300 rule for access to urban green
+      - shinylive (WebAssembly) dashboard served from GitHub Pages
