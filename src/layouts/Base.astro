@@ -1,0 +1,156 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  activa?: 'inicio' | 'herramienta' | 'exploraciones' | 'sobre-mi';
+}
+
+const { titulo, descripcion, activa } = Astro.props;
+const tituloCompleto = titulo === 'Miguel Ferreiro García' ? titulo : `${titulo} · Miguel Ferreiro García`;
+const canonica = new URL(Astro.url.pathname, Astro.site);
+
+const enlaces = [
+  { id: 'inicio', href: '/', texto: 'Inicio' },
+  { id: 'herramienta', href: '/revisor/', texto: 'La herramienta' },
+  { id: 'exploraciones', href: '/#exploraciones', texto: 'Exploraciones' },
+  { id: 'sobre-mi', href: '/#sobre-mi', texto: 'Sobre mí' },
+] as const;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonica} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap"
+    />
+  </head>
+  <body>
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+    <header class="cabecera">
+      <div class="contenedor cabecera__fila">
+        <a class="marca" href="/">miguelferre</a>
+        <nav aria-label="Principal">
+          <ul class="menu">
+            {enlaces.map((e) => (
+              <li>
+                <a href={e.href} aria-current={activa === e.id ? 'page' : undefined}>{e.texto}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="contenido">
+      <slot />
+    </main>
+
+    <footer class="pie">
+      <div class="contenedor pie__fila">
+        <ul class="leyenda" aria-label="Qué significa cada etiqueta">
+          <li><span class="etiqueta etiqueta--live">LIVE</span> enlaza al producto</li>
+          <li><span class="etiqueta etiqueta--repo">REPO</span> enlaza al código</li>
+          <li><span class="etiqueta etiqueta--privado">PRIVADO</span> se enseña en conversación</li>
+        </ul>
+        <div class="pie__enlaces">
+          <a href="https://github.com/miguelferre">GitHub</a>
+          <a href="https://www.linkedin.com/in/miguel-ferreiro-garcia">LinkedIn</a>
+          <a href="mailto:ferreirogarciamiguel@gmail.com">ferreirogarciamiguel@gmail.com</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .saltar {
+    position: absolute;
+    left: -999px;
+    top: 8px;
+    padding: 8px 12px;
+    background: var(--papel);
+    border: 1px solid var(--acento);
+    border-radius: 6px;
+    z-index: 10;
+  }
+  .saltar:focus { left: 8px; }
+
+  .cabecera {
+    border-bottom: 1px solid var(--borde);
+    background: var(--fondo);
+  }
+  .cabecera__fila {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 18px;
+  }
+  .marca {
+    font-family: var(--titulos);
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--tinta);
+    text-decoration: none;
+  }
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 24px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .menu a {
+    display: inline-block;
+    padding: 8px 0 6px;
+    color: var(--tinta-3);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+  .menu a:hover { color: var(--tinta); }
+  .menu a[aria-current='page'] { color: var(--tinta); border-bottom-color: var(--acento); }
+
+  .pie {
+    border-top: 1px solid var(--borde);
+    padding-block: 28px;
+    font-size: 12px;
+    color: var(--tinta-3);
+  }
+  .pie__fila {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 16px 32px;
+  }
+  .leyenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .leyenda li { display: flex; align-items: center; gap: 6px; }
+  .leyenda .etiqueta { font-size: 10px; padding: 3px 7px; }
+  .pie__enlaces { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+  .pie__enlaces a { color: var(--tinta-3); }
+  .pie__enlaces a:hover { color: var(--acento); }
+</style>

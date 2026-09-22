@@ -1,0 +1,156 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import TarjetaExploracion from '../components/TarjetaExploracion.astro';
+
+const revisor = await getEntry('proyectos', 'revisor');
+if (!revisor) throw new Error('Falta la entrada "revisor" en proyectos.yaml');
+const r = revisor.data;
+
+const exploraciones = (await getCollection('proyectos', (p) => p.data.tipo === 'exploracion'));
+---
+
+<Base
+  titulo="Miguel Ferreiro García"
+  descripcion="Gobernanza y validación de IA en sanidad. Por mi cuenta, productos de datos geoespaciales. Portfolio de proyectos."
+  activa="inicio"
+>
+  <section class="tira portada">
+    <div class="contenedor pila pila--ancha limite">
+      <h1>Miguel Ferreiro García</h1>
+      <p class="subtitulo">
+        Trabajo en la frontera entre un modelo y las personas que tienen que usarlo. Gobernanza y validación de IA en
+        sanidad. Por mi cuenta, productos de datos geoespaciales.
+      </p>
+      <div class="botones">
+        <a class="boton boton--lleno" href="https://github.com/miguelferre">GitHub</a>
+        <a class="boton" href="https://www.linkedin.com/in/miguel-ferreiro-garcia">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="tira tira--papel" aria-labelledby="herramienta">
+    <div class="contenedor pila pila--ancha">
+      <div class="pila limite">
+        <span class="entradilla">Una herramienta para un hueco</span>
+        <h2 id="herramienta">{r.pregunta}</h2>
+      </div>
+      <div class="destacado">
+        <a class="destacado__captura" href={r.url_informe} aria-label="Abrir el informe de ejemplo sobre Google Flood Hub">
+          <img src={r.captura} alt={r.captura_alt ?? ''} width="1280" height="720" />
+        </a>
+        <div class="pila pila--ancha">
+          <h3>{r.nombre}</h3>
+          <p class="destacado__texto">{r.resumen}</p>
+          {r.metricas && (
+            <div class="cifras">
+              {r.metricas.map((m) => (
+                <div class="cifra">
+                  <span class="cifra__valor">{m.valor}</span>
+                  <span class="cifra__etiqueta">{m.etiqueta}</span>
+                </div>
+              ))}
+            </div>
+          )}
+          {r.marcos && (
+            <ul class="chips" aria-label="Marcos de referencia">
+              {r.marcos.map((m) => <li class="chip">{m}</li>)}
+            </ul>
+          )}
+          <div class="botones">
+            <a class="boton boton--lleno" href={r.url_ficha}>Ver la ficha</a>
+            <a class="boton" href={r.url_informe}>Informe de ejemplo</a>
+            <a class="boton" href={r.url_repo}>Repo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tira" id="exploraciones" aria-labelledby="exploraciones-titulo">
+    <div class="contenedor pila pila--ancha">
+      <div class="pila limite">
+        <span class="entradilla">Exploraciones geoespaciales</span>
+        <h2 id="exploraciones-titulo">Proyectos con datos abiertos, hechos por curiosidad.</h2>
+        <p class="subtitulo" style="font-size: 16px;">Cada uno empezó con una pregunta.</p>
+      </div>
+      <div class="rejilla rejilla--2">
+        {exploraciones.map((p) => <TarjetaExploracion proyecto={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="tira tira--papel" aria-labelledby="privado">
+    <div class="contenedor pila pila--ancha">
+      <span class="entradilla" id="privado">Trabajo privado con salida pública</span>
+      <div class="rejilla rejilla--3">
+        <div class="ficha-corta">
+          <span class="ficha-corta__meta">Artículo · septiembre de 2026</span>
+          <span class="ficha-corta__titulo">Gobernanza de IA en Sanidad</span>
+          <span class="ficha-corta__texto">Revista médica española. Enlace cuando se publique.</span>
+        </div>
+        <div class="ficha-corta">
+          <span class="ficha-corta__meta">Ponente · mayo de 2026</span>
+          <span class="ficha-corta__titulo">Demo de watsonx.governance con IBM</span>
+          <span class="ficha-corta__texto">Gobernanza de modelos ante sistemas de salud.</span>
+        </div>
+        <div class="ficha-corta">
+          <span class="ficha-corta__meta">Privado · bajo demanda</span>
+          <span class="ficha-corta__titulo">Pipeline agéntico de búsqueda de empleo</span>
+          <span class="ficha-corta__texto">Recogida multifuente, scoring con LLM, digest diario. Se enseña en conversación.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tira" id="sobre-mi" aria-labelledby="sobre-mi-titulo">
+    <div class="contenedor pila pila--ancha limite">
+      <span class="entradilla">Sobre mí</span>
+      <h2 id="sobre-mi-titulo">Biólogo de formación, análisis de datos y producto después, gobernanza de IA ahora.</h2>
+      <p>
+        Trabajo en GMV como AI Governance Specialist: validación clínica y ciclo de vida de modelos de IA con
+        IBM watsonx.governance en dos sistemas autonómicos de salud. Antes, Product Owner de plataformas europeas de
+        datos clínicos y analista de datos de salud. Máster en Bioinformática y Bioestadística (UOC) y en Bioingeniería
+        (IQS); grado en Biología (USC). Certificado en ISO/IEC 42001 por BSI. Santiago de Compostela.
+      </p>
+      <div class="botones">
+        <a class="boton" href="https://www.linkedin.com/in/miguel-ferreiro-garcia">Perfil completo en LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .portada { padding-block: 72px 56px; }
+
+  .destacado {
+    display: grid;
+    gap: 32px;
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .destacado { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 40px; }
+  }
+  .destacado__captura {
+    display: block;
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    overflow: hidden;
+    background: #e8e4da;
+  }
+  .destacado__captura img { display: block; width: 100%; height: auto; }
+  .destacado__texto { color: var(--tinta-2); }
+
+  .ficha-corta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+  }
+  .ficha-corta__meta { font-size: 12px; color: var(--tinta-3); }
+  .ficha-corta__titulo { font-family: var(--titulos); font-weight: 600; font-size: 16px; }
+  .ficha-corta__texto { font-size: 13px; color: var(--tinta-2); }
+</style>

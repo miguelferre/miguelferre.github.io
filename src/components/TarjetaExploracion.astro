@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Etiqueta from './Etiqueta.astro';
+
+interface Props {
+  proyecto: CollectionEntry<'proyectos'>;
+}
+const { proyecto } = Astro.props;
+const d = proyecto.data;
+const ficha = `/exploraciones/${proyecto.id}/`;
+---
+
+<article class="tarjeta">
+  <a class="tarjeta__enlace" href={ficha} aria-label={`${d.nombre}: ${d.pregunta}`}>
+    {d.captura ? (
+      <img class="captura" src={d.captura} alt="" width="1280" height="800" loading="lazy" />
+    ) : (
+      <div class="marcador" aria-hidden="true">Sin desplegar todavía</div>
+    )}
+  </a>
+  <div class="tarjeta__cuerpo">
+    <div class="tarjeta__fila">
+      <span class="tarjeta__nombre">{d.nombre}</span>
+      <Etiqueta estado={d.estado} nota={d.estado_nota} />
+    </div>
+    <h3><a class="tarjeta__titulo" href={ficha}>{d.pregunta}</a></h3>
+    <p class="tarjeta__resumen">{d.resumen}</p>
+  </div>
+</article>
+
+<style>
+  .tarjeta__enlace { display: block; }
+  .tarjeta__cuerpo { display: flex; flex-direction: column; gap: 10px; padding: 20px 24px 24px; }
+  .tarjeta__fila { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .tarjeta__nombre { font-size: 12px; font-weight: 600; color: var(--tinta-3); }
+  .tarjeta__titulo { color: var(--tinta); text-decoration: none; }
+  .tarjeta__titulo:hover { color: var(--acento); }
+  .tarjeta__resumen { font-size: 14px; line-height: 1.55; color: var(--tinta-2); }
+</style>

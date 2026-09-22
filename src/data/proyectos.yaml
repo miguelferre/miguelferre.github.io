@@ -1,0 +1,107 @@
+# Fuente de datos del portfolio. Solo lo enlazable.
+# La fuente de verdad ampliada vive en el repo privado (portfolio/PROYECTOS.md);
+# cuando cambie algo allí, se refleja aquí a mano.
+#
+# estado: live | repo | privado
+#   live    -> hay producto desplegado (url_live obligatoria)
+#   repo    -> solo código público (url_repo obligatoria); estado_nota explica qué falta
+#   privado -> se enseña en conversación
+
+- id: revisor
+  tipo: herramienta
+  nombre: Human-AI Interaction Layer Reviewer
+  pregunta: Un revisor de cómo un sistema de IA le presenta el resultado a la persona.
+  resumen: >-
+    Audita la capa de interacción: automation bias, calibración de la confianza,
+    fatiga de alerta, capacidad de corregir. Cada hallazgo anclado a HAX-18 o PAIR,
+    a un punto concreto del sistema y a evidencia. Sin evidencia, no lo emite.
+  estado: repo
+  url_repo: https://github.com/miguelferre/human-ai-governance
+  url_ficha: /revisor/
+  url_informe: /informes/google-flood-hub-review.html
+  captura: /capturas/revisor.webp
+  captura_alt: Informe de hallazgos sobre Google Flood Hub, cada fila ligada a una cita del usuario, una guía y un artículo del AI Act
+  metricas:
+    - valor: "0,91"
+      etiqueta: recall ± 0,06
+    - valor: "0,97"
+      etiqueta: precisión
+    - valor: "9"
+      etiqueta: sectores, juez independiente
+  marcos: [EU AI Act, NIST AI RMF, HAX-18, PAIR]
+
+- id: praia-ou-montana
+  tipo: exploracion
+  nombre: Praia ou montaña
+  pregunta: ¿Playa o monte hoy en Galicia?
+  resumen: >-
+    954 playas, 201 rutas, meteo y mar en tiempo real, puesta de sol orográfica.
+    Veredicto explicado; los pesos los mueve el usuario.
+  estado: repo
+  estado_nota: sin desplegar
+  url_repo: https://github.com/miguelferre/praia-ou-montana
+  inicio: 2026
+  como:
+    - Astro, React y TypeScript; PWA bilingüe ES y GL
+    - "Ingesta en Python: IDE Galicia, OSM, Open-Meteo (meteo, mar, mareas, UV), PVGIS para el horizonte"
+    - Tiempos de coche reales con OpenRouteService y OSRM
+    - Scoring ponderado explicable, 25 tests Vitest, CI en GitHub Actions
+
+- id: climatch
+  tipo: exploracion
+  nombre: Climatch
+  pregunta: ¿Qué ciudad tiene el clima que quiero, hoy y en 2050?
+  resumen: >-
+    ERA5 desde 1940, CMIP6 con banda de incertidumbre, percentiles en vez de medias.
+    En producción desde junio de 2026.
+  estado: live
+  url_live: https://climatch.app
+  captura: /capturas/climatch.webp
+  inicio: 2026
+  como:
+    - TypeScript, Astro 5 y React 19 en islas; SVG propio con micro-módulos de d3
+    - "Datos: Open-Meteo/ERA5 (1940-2025), CMIP6 con tres modelos y método delta, NOAA, Banco Mundial, OCDE, Ookla"
+    - Cloudflare Workers, Vitest y Playwright, accesibilidad comprobada con Axe
+    - Bilingüe EN y ES, SEO programático, 8 ADRs
+  nota_codigo: El repositorio es privado; se enseña bajo petición.
+
+- id: storymap-incendios
+  tipo: exploracion
+  nombre: Storymap incendios Galicia 2025
+  pregunta: ¿Qué ardió en Galicia en 2025 y cómo?
+  resumen: >-
+    dNBR sobre Sentinel-2, 1.400 incendios, el mayor registrado en Galicia.
+    Nueve capítulos scrollytelling, ES y GL.
+  estado: live
+  url_live: https://miguelferre.github.io/STORYMAP_INCENDIOS_GALICIA_2025/
+  url_repo: https://github.com/miguelferre/STORYMAP_INCENDIOS_GALICIA_2025
+  captura: /capturas/storymap-incendios.webp
+  inicio: 2025
+  intro: >-
+    Empecé en agosto de 2025, durante los incendios. Un storymap de nueve capítulos:
+    1.400 incendios y el mayor registrado en Galicia, Larouco-Seadur, 31.778 ha.
+  como:
+    - Sentinel-2 vía Microsoft Planetary Computer, severidad por dNBR
+    - 21 pasos de procesado con geopandas, rasterio y xarray
+    - Mapbox GL JS, scrollytelling, ES y GL
+    - 69 commits, en solitario, de la ingesta al despliegue en Pages
+
+- id: madrid-hli
+  tipo: exploracion
+  nombre: Madrid Healthy Living Index
+  pregunta: ¿Dónde se vive más sano en Madrid?
+  resumen: >-
+    Índice compuesto desde cero. El titular: correlación negativa con la renta
+    (ρ = −0,26). Isócronas en R, dashboard shinylive.
+  estado: live
+  url_live: https://miguelferre.github.io/Madrid_HLI/
+  url_repo: https://github.com/miguelferre/Madrid_HLI
+  captura: /capturas/madrid-hli.webp
+  inicio: 2026
+  intro: >-
+    Un índice compuesto de vida saludable por barrio. Los barrios del sur, de renta más baja,
+    puntúan mejor que los del norte; solo el 9 % de los barrios cumple la regla 3-30-300.
+  como:
+    - R con terra, sf y dodgr; isócronas sobre 605.000 vértices
+    - Regla 3-30-300 de acceso al verde urbano
+    - Dashboard shinylive (WebAssembly) servido desde GitHub Pages

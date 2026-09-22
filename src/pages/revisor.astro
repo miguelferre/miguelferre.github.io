@@ -1,0 +1,229 @@
+---
+import { getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const revisor = await getEntry('proyectos', 'revisor');
+if (!revisor) throw new Error('Falta la entrada "revisor" en proyectos.yaml');
+const r = revisor.data;
+
+const REPO = 'https://github.com/miguelferre/human-ai-governance';
+const DECK_FLOOD = `${REPO}/blob/master/docs/presentacion/export/interaction-review-floods.pdf`;
+const DECK_CLINICO = `${REPO}/blob/master/docs/presentacion/export/interaction-review-interna.pdf`;
+const ADRS = `${REPO}/tree/master/docs/adr`;
+const RESULTADOS = `${REPO}/blob/master/docs/RESULTS.md`;
+
+const sectores = ['Sanidad', 'Justicia', 'RR. HH.', 'Aviación', 'Moderación', 'Alerta climática'];
+
+const escalera = [
+  { codigo: 'B0', nombre: 'Checklist', nota: 'baseline humano' },
+  { codigo: 'B1', nombre: 'Prompt', nota: 'una llamada' },
+  { codigo: 'P3', nombre: 'Pipeline determinista', nota: 'lo robusto: dedup en código', elegido: true },
+  { codigo: 'A4', nombre: 'Agente', nota: 'no se paga solo' },
+];
+---
+
+<Base
+  titulo="Human-AI Interaction Layer Reviewer"
+  descripcion="Revisor de la capa de interacción humano-IA: automation bias, calibración de confianza, fatiga de alerta y capacidad de corrección, con hallazgos anclados a HAX-18, PAIR, EU AI Act y NIST AI RMF."
+  activa="herramienta"
+>
+  <section class="tira cabecera-ficha">
+    <div class="contenedor pila pila--ancha limite">
+      <span class="entradilla">Una herramienta para un hueco</span>
+      <h1>{r.nombre}</h1>
+      <p class="subtitulo">
+        Las herramientas de gobernanza miran el modelo. Este revisor mira la capa de interacción: cómo se muestra el
+        resultado a quien decide.
+      </p>
+      <div class="botones">
+        <a class="boton boton--lleno" href={r.url_informe}>Abrir informe de ejemplo</a>
+        <a class="boton" href={REPO}>Repo</a>
+        <a class="boton" href={ADRS}>ADRs</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="pestanas" aria-label="Secciones de la ficha">
+    <div class="contenedor pestanas__fila">
+      <a href="#que-hace">Qué hace</a>
+      <a href="#validacion">Cómo se validó</a>
+      <a href="#escalera">La escalera</a>
+      <a href="#limites">Límites</a>
+    </div>
+  </nav>
+
+  <section class="tira" id="que-hace" aria-labelledby="que-hace-titulo">
+    <div class="contenedor pila pila--ancha">
+      <h2 id="que-hace-titulo">Qué hace</h2>
+      <div class="dos-columnas">
+        <p>
+          {r.resumen} Entra por tres plantillas: el perfil técnico del sistema, la experiencia de quien lo usa y el
+          inventario de documentos. Sale un informe con hallazgos, cada uno con su guía, su punto del sistema y su
+          evidencia, y con el mapeo al EU AI Act y al NIST AI RMF.
+        </p>
+        <ul class="lista-puntos">
+          <li>Automation bias: cuándo la persona deja de comprobar.</li>
+          <li>Calibración de la confianza: si el sistema enseña su incertidumbre y cómo.</li>
+          <li>Fatiga de alerta: volumen, timing y jerarquía de los avisos.</li>
+          <li>Capacidad de corregir: si hay override, si se registra y si se aprende de él.</li>
+        </ul>
+      </div>
+      <ul class="chips" aria-label="Marcos de referencia">
+        {r.marcos?.map((m) => <li class="chip">{m}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="tira tira--papel" id="validacion" aria-labelledby="validacion-titulo">
+    <div class="contenedor pila pila--ancha">
+      <h2 id="validacion-titulo">Cómo se validó</h2>
+      <div class="rejilla rejilla--3">
+        <div class="dato">
+          <span class="dato__meta">Caso clínico real</span>
+          <span class="dato__valor">13 a 14 / 15</span>
+          <span class="dato__texto">problemas redescubiertos en el cribado de EII, precisión cercana al 100 %.</span>
+        </div>
+        <div class="dato">
+          <span class="dato__meta">Producto · 9 casos</span>
+          <span class="dato__valor">0,91 ± 0,06</span>
+          <span class="dato__texto">recall con juez independiente (otro modelo), k = 3. Precisión 0,97.</span>
+        </div>
+        <div class="dato">
+          <span class="dato__meta">Control de falsos positivos</span>
+          <span class="dato__valor">0</span>
+          <span class="dato__texto">hallazgos en un sistema bien diseñado. Robusto al fraseo de la entrada.</span>
+        </div>
+      </div>
+      <div class="pila">
+        <h3>Probado fuera del ámbito clínico</h3>
+        <p class="limite">
+          Golden sets de fuentes independientes: Epic Sepsis, HireVue, COMPAS, MCAS (aviación), moderación de contenido
+          y Google Flood Hub. Hard test n = 3 con golden sets de una Royal Commission, un auditor estatal y una corte
+          federal: recall medio 0,79.
+        </p>
+        <ul class="chips" aria-label="Sectores cubiertos">
+          {sectores.map((s) => <li class="chip chip--neutro">{s}</li>)}
+        </ul>
+        <p class="limite enlace-detalle">
+          Detalle y método en <a href={RESULTADOS}>docs/RESULTS.md</a> del repositorio.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tira" id="escalera" aria-labelledby="escalera-titulo">
+    <div class="contenedor pila pila--ancha">
+      <h2 id="escalera-titulo">La pregunta de partida: ¿hace falta un agente?</h2>
+      <ol class="escalera">
+        {escalera.map((e) => (
+          <li class:list={['escalon', { 'escalon--elegido': e.elegido }]}>
+            <span class="escalon__codigo">{e.codigo}</span>
+            <span class="escalon__nombre">{e.nombre}</span>
+            <span class="escalon__nota">{e.nota}</span>
+          </li>
+        ))}
+      </ol>
+      <p class="limite">
+        El agente falla con entrada incompleta, que es lo normal en una auditoría. El punto débil fue el LLM-juez; por
+        eso las comprobaciones críticas están en código.
+      </p>
+    </div>
+  </section>
+
+  <section class="tira tira--papel" id="limites" aria-labelledby="limites-titulo">
+    <div class="contenedor pila pila--ancha">
+      <h2 id="limites-titulo">Límites</h2>
+      <div class="aviso" role="note">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+        <div>
+          <strong>Límite conocido</strong>
+          Sin el testimonio del usuario final, el recall cae de 0,83 a 0,56: los problemas más experienciales se van a
+          cero. La herramienta depende de esa entrada.
+        </div>
+      </div>
+      <div class="destacado">
+        <a class="destacado__captura" href={r.url_informe} aria-label="Abrir el informe de ejemplo sobre Google Flood Hub">
+          <img src={r.captura} alt={r.captura_alt ?? ''} width="1280" height="720" loading="lazy" />
+        </a>
+        <div class="pila">
+          <span class="entradilla" style="color: var(--tinta-3);">Informe de ejemplo</span>
+          <h3>Google Flood Hub, pre-registrado</h3>
+          <p class="destacado__texto">
+            Cómo un sistema de alerta de inundaciones le presenta el riesgo y la incertidumbre a quien decide. Recall
+            0,90 ± 0,08, precisión 1,00. Un caso completo, para leer sin instalar nada.
+          </p>
+          <div class="botones">
+            <a class="boton boton--lleno" href={r.url_informe}>Abrir el informe</a>
+            <a class="boton" href={DECK_FLOOD}>Deck Flood Hub (PDF)</a>
+            <a class="boton" href={DECK_CLINICO}>Deck clínico (PDF)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cabecera-ficha { padding-block: 56px 40px; }
+
+  .pestanas { border-bottom: 1px solid var(--borde); background: var(--fondo); }
+  .pestanas__fila { display: flex; flex-wrap: wrap; gap: 4px; }
+  .pestanas a {
+    display: inline-block;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--tinta-3);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+  .pestanas a:hover { color: var(--tinta); border-bottom-color: var(--acento); }
+
+  .dos-columnas { display: grid; gap: 24px; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .dos-columnas { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; } }
+
+  .dato {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px;
+    border-radius: 12px;
+    background: var(--fondo);
+    border: 1px solid var(--borde);
+  }
+  .dato__meta { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-3); }
+  .dato__valor { font-family: var(--titulos); font-weight: 700; font-size: 32px; color: var(--acento); line-height: 1.1; }
+  .dato__texto { font-size: 14px; color: var(--tinta-2); }
+  .enlace-detalle { font-size: 14px; color: var(--tinta-3); }
+
+  .escalera {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (min-width: 720px) { .escalera { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .escalon {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px;
+    border-radius: 10px;
+    background: var(--papel);
+    border: 1px solid var(--borde);
+  }
+  .escalon__codigo { font-size: 11px; font-weight: 700; color: var(--tinta-3); }
+  .escalon__nombre { font-family: var(--titulos); font-weight: 600; font-size: 16px; }
+  .escalon__nota { font-size: 13px; color: var(--tinta-3); }
+  .escalon--elegido { background: var(--acento); border-color: var(--acento); }
+  .escalon--elegido .escalon__codigo, .escalon--elegido .escalon__nota { color: #e6e1f7; }
+  .escalon--elegido .escalon__nombre { color: #fff; }
+
+  .destacado { display: grid; gap: 24px; grid-template-columns: 1fr; align-items: center; }
+  @media (min-width: 900px) { .destacado { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .destacado__captura { display: block; border-radius: 12px; border: 1px solid var(--borde); overflow: hidden; background: #e8e4da; }
+  .destacado__captura img { display: block; width: 100%; height: auto; }
+  .destacado__texto { font-size: 14px; color: var(--tinta-2); }
+</style>

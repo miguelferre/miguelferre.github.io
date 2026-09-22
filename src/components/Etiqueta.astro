@@ -1,0 +1,10 @@
+---
+interface Props {
+  estado: 'live' | 'repo' | 'privado';
+  nota?: string;
+}
+const { estado, nota } = Astro.props;
+const texto = estado.toUpperCase() + (nota ? ` · ${nota.toUpperCase()}` : '');
+---
+
+<span class:list={['etiqueta', `etiqueta--${estado}`]}>{texto}</span>
