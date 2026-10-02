@@ -44,6 +44,13 @@ export const ui = {
       sobreMiTitulo: 'Biólogo de formación, análisis de datos y producto después, gobernanza de IA ahora.',
       sobreMiTexto: 'Trabajo en GMV como AI Governance Specialist: validación clínica y ciclo de vida de modelos de IA con IBM watsonx.governance en dos sistemas autonómicos de salud. Antes, Product Owner de plataformas europeas de datos clínicos y analista de datos de salud. Máster en Bioinformática y Bioestadística (UOC) y en Bioingeniería (IQS); grado en Biología (USC). Certificado en ISO/IEC 42001 por BSI. Santiago de Compostela.',
       perfilLinkedIn: 'Perfil completo en LinkedIn',
+      // Fondo animado de la portada: se ven fragmentos de estas palabras
+      claves: [
+        'gobernanza', 'IA', 'sanidad', 'validación', 'datos', 'geoespacial',
+        'bioinformática', 'bioestadística', 'biología', 'watsonx', 'ISO 42001',
+        'EU AI Act', 'NIST AI RMF', 'automation bias', 'confianza', 'producto',
+        'modelos', 'personas', 'Santiago',
+      ],
     },
     revisor: {
       descripcion: 'Revisor de la capa de interacción humano-IA: automation bias, calibración de confianza, fatiga de alerta y capacidad de corrección, con hallazgos anclados a HAX-18, PAIR, EU AI Act y NIST AI RMF.',
@@ -131,6 +138,12 @@ export const ui = {
       sobreMiTitulo: 'Biologist by training, then data analysis and product, AI governance now.',
       sobreMiTexto: 'I work at GMV as an AI Governance Specialist: clinical validation and AI model lifecycle with IBM watsonx.governance across two regional health systems. Before that, Product Owner of European clinical-data platforms and health data analyst. MSc in Bioinformatics and Biostatistics (UOC) and in Bioengineering (IQS); BSc in Biology (USC). ISO/IEC 42001 certified by BSI. Based in Santiago de Compostela, Spain.',
       perfilLinkedIn: 'Full profile on LinkedIn',
+      claves: [
+        'governance', 'AI', 'healthcare', 'validation', 'data', 'geospatial',
+        'bioinformatics', 'biostatistics', 'biology', 'watsonx', 'ISO 42001',
+        'EU AI Act', 'NIST AI RMF', 'automation bias', 'trust', 'product',
+        'models', 'people', 'Santiago',
+      ],
     },
     revisor: {
       descripcion: 'A reviewer of the human-AI interaction layer: automation bias, confidence calibration, alert fatigue and ability to correct, with findings anchored to HAX-18, PAIR, the EU AI Act and NIST AI RMF.',
