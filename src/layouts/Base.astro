@@ -8,7 +8,7 @@ interface Props {
   descripcion: string;
   // Ruta de esta misma página en el otro idioma (para el selector y hreflang).
   alterna: string;
-  activa?: 'inicio' | 'herramienta' | 'exploraciones' | 'sobre-mi';
+  activa?: 'inicio' | 'herramientas' | 'exploraciones' | 'sobre-mi';
 }
 
 const { lang, titulo, descripcion, alterna, activa } = Astro.props;
@@ -20,7 +20,7 @@ const urlAlterna = new URL(alterna, Astro.site);
 
 const enlaces = [
   { id: 'inicio', href: rutas.inicio[lang], texto: s.nav.inicio },
-  { id: 'herramienta', href: rutas.revisor[lang], texto: s.nav.herramienta },
+  { id: 'herramientas', href: rutas.herramientas[lang], texto: s.nav.herramientas },
   { id: 'exploraciones', href: rutas.exploraciones[lang], texto: s.nav.exploraciones },
   { id: 'sobre-mi', href: rutas.sobreMi[lang], texto: s.nav.sobreMi },
 ] as const;

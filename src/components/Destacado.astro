@@ -1,0 +1,83 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Etiqueta from './Etiqueta.astro';
+import { t, type Lang } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  proyecto: CollectionEntry<'proyectos'>;
+}
+const { lang, proyecto } = Astro.props;
+const d = proyecto.data;
+const p = t(lang).portada;
+
+// Mientras el repo es privado, el bloque sale sin botones: ningún enlace lleva a un 404.
+const publico = d.estado !== 'privado';
+const principal = d.url_live
+  ? { href: d.url_live, texto: p.abrirCurso }
+  : d.url_descarga
+    ? { href: d.url_descarga, texto: p.descargar }
+    : undefined;
+const titulo = `destacado-${proyecto.id}`;
+---
+
+<article class="destacado" aria-labelledby={titulo}>
+  {d.captura && (
+    <div class="destacado__captura">
+      <img src={d.captura} alt={d.captura_alt?.[lang] ?? ''} width="1280" height="800" loading="lazy" />
+    </div>
+  )}
+  <div class="pila pila--ancha">
+    <div class="destacado__cabeza">
+      <h3 id={titulo}>{d.nombre}</h3>
+      <Etiqueta lang={lang} estado={d.estado} nota={d.estado_nota?.[lang]} />
+    </div>
+    <p class="destacado__pregunta">{d.pregunta[lang]}</p>
+    <p class="destacado__texto">{d.resumen[lang]}</p>
+    {d.metricas && (
+      <div class="cifras">
+        {d.metricas.map((m) => (
+          <div class="cifra">
+            <span class="cifra__valor">{m.valor}</span>
+            <span class="cifra__etiqueta">{m.etiqueta[lang]}</span>
+          </div>
+        ))}
+      </div>
+    )}
+    {publico ? (
+      <div class="botones">
+        {principal && <a class="boton boton--lleno" href={principal.href}>{principal.texto}</a>}
+        {d.url_repo && <a class="boton" href={d.url_repo}>{p.repo}</a>}
+      </div>
+    ) : (
+      <p class="destacado__aviso">{p.proximamente}</p>
+    )}
+    {d.nota_codigo && <p class="destacado__nota">{d.nota_codigo[lang]}</p>}
+  </div>
+</article>
+
+<style>
+  .destacado {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .destacado { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
+  }
+  .destacado__captura {
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    overflow: hidden;
+    background: #e8e4da;
+    max-height: 340px;
+  }
+  .destacado__captura img { display: block; width: 100%; height: 100%; max-height: 340px; object-fit: cover; object-position: top; }
+  .destacado__cabeza { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  .destacado__pregunta { font-weight: 500; color: var(--tinta); text-wrap: pretty; }
+  .destacado__texto { color: var(--tinta-2); text-wrap: pretty; }
+  .destacado__aviso { font-size: 14px; color: var(--tinta-3); font-style: italic; }
+  .destacado__nota { font-size: 12px; color: var(--tinta-3); }
+  .cifra__valor { font-variant-numeric: tabular-nums; }
+</style>

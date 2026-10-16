@@ -4,41 +4,77 @@
 #
 # Los textos van en los dos idiomas: { es: ..., en: ... }.
 #
+# tipo: herramienta (bloque destacado en la portada) | exploracion (tarjeta)
+#
 # estado: live | repo | privado
 #   live    -> hay producto desplegado (url_live obligatoria)
 #   repo    -> solo código público (url_repo obligatoria); estado_nota explica qué falta
 #   privado -> se enseña en conversación
 
-- id: revisor
+- id: vigia
   tipo: herramienta
-  nombre: Human-AI Interaction Layer Reviewer
+  nombre: Vigía
   pregunta:
-    es: Un revisor de cómo un sistema de IA le presenta el resultado a la persona.
-    en: A reviewer of how an AI system presents its output to the person who uses it.
+    es: Un programa para vigilar modelos de IA en producción.
+    en: A program to monitor AI models in production.
   resumen:
     es: >-
-      Audita la capa de interacción: automation bias, calibración de la confianza,
-      fatiga de alerta, capacidad de corregir. Cada hallazgo anclado a HAX-18 o PAIR,
-      a un punto concreto del sistema y a evidencia. Sin evidencia, no lo emite.
+      Mide la calidad, la equidad entre grupos, la deriva y la explicabilidad de un modelo
+      con datos tabulares. Añade la capa humana: deskilling, overrides y auditoría de la
+      interacción. Programa local para Windows, sin código; un asistente de IA lo opera por MCP.
     en: >-
-      It audits the interaction layer: automation bias, confidence calibration,
-      alert fatigue, ability to correct. Every finding is tied to HAX-18 or PAIR,
-      to a specific point in the system and to evidence. No evidence, no finding.
-  estado: repo
-  url_repo: https://github.com/miguelferre/human-ai-governance
-  url_informe: /informes/google-flood-hub-review.html
-  captura: /capturas/revisor.webp
+      It measures quality, fairness across groups, drift and explainability for a model
+      on tabular data. It adds the human layer: deskilling, overrides and an audit of the
+      interaction. A local, no-code Windows program; an AI assistant can run it over MCP.
+  # Al publicar el repo: estado repo.
+  estado: privado
+  url_repo: https://github.com/miguelferre/vigia
+  url_descarga: https://github.com/miguelferre/vigia/releases/latest
+  captura: /capturas/vigia.webp
   captura_alt:
-    es: Informe de hallazgos sobre Google Flood Hub, cada fila ligada a una cita del usuario, una guía y un artículo del AI Act
-    en: Findings report on Google Flood Hub, each row tied to a user quote, a guideline and an AI Act article
+    es: Cuadro de mando de Vigía con datos sintéticos
+    en: Vigía dashboard with synthetic data
   metricas:
-    - valor: "0,91"
-      etiqueta: { es: "recall ± 0,06", en: "recall ± 0.06" }
-    - valor: "0,97"
-      etiqueta: { es: "precisión", en: "precision" }
-    - valor: "9"
-      etiqueta: { es: "sectores, juez independiente", en: "sectors, independent judge" }
-  marcos: [EU AI Act, NIST AI RMF, HAX-18, PAIR]
+    - valor: "3"
+      etiqueta: { es: "tipos de tarea", en: "task types" }
+    - valor: "39"
+      etiqueta: { es: "herramientas MCP", en: "MCP tools" }
+    - valor: "7"
+      etiqueta: { es: "plantillas sintéticas", en: "synthetic templates" }
+
+- id: curso
+  tipo: herramienta
+  nombre: Seguridad y gobernanza de la IA
+  pregunta:
+    es: Un curso de seguridad y gobernanza de la IA, en español.
+    en: An AI safety and governance course, in Spanish.
+  resumen:
+    es: >-
+      Adapta al español el libro y el curso de seguridad de la IA del Center for AI Safety
+      (CAIS), con su permiso. Añade casos de sanidad y un módulo de monitorización con Vigía
+      como laboratorio. Se estudia en el navegador.
+    en: >-
+      A Spanish adaptation of the AI safety book and course by the Center for AI Safety
+      (CAIS), with their permission. It adds healthcare cases and a monitoring module with
+      Vigía as the lab. It runs in the browser.
+  # Al publicar el repo y activar Pages desde docs/: estado live.
+  estado: privado
+  url_live: https://miguelferre.github.io/curso-seguridad-y-gobernanza-ia/
+  url_repo: https://github.com/miguelferre/curso-seguridad-y-gobernanza-ia
+  captura: /capturas/curso.webp
+  captura_alt:
+    es: Portada del curso de seguridad y gobernanza de la IA
+    en: Home page of the AI safety and governance course
+  metricas:
+    - valor: "57"
+      etiqueta: { es: "lecciones", en: "lessons" }
+    - valor: "75"
+      etiqueta: { es: "simuladores", en: "simulators" }
+    - valor: "≈40 h"
+      etiqueta: { es: "de estudio", en: "of study" }
+  nota_codigo:
+    es: Reproduced with permission of Center for AI Safety, Inc. CAIS no respalda este curso.
+    en: Reproduced with permission of Center for AI Safety, Inc. CAIS does not endorse this course.
 
 - id: praia-ou-montana
   tipo: exploracion

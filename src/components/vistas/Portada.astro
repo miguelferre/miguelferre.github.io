@@ -1,7 +1,8 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TarjetaExploracion from '../TarjetaExploracion.astro';
+import Destacado from '../Destacado.astro';
 import { t, rutas, type Lang } from '../../i18n/ui';
 
 interface Props { lang: Lang }
@@ -10,12 +11,11 @@ const s = t(lang);
 const p = s.portada;
 const otro: Lang = lang === 'es' ? 'en' : 'es';
 
-const revisor = await getEntry('proyectos', 'revisor');
-if (!revisor) throw new Error('Falta la entrada "revisor" en proyectos.yaml');
-const r = revisor.data;
+const herramientas = await getCollection('proyectos', (e) => e.data.tipo === 'herramienta');
 
 const exploraciones = await getCollection('proyectos', (e) => e.data.tipo === 'exploracion');
 const cv = lang === 'es' ? '/cv/Miguel_Ferreiro_CV_ES.pdf' : '/cv/Miguel_Ferreiro_CV_EN.pdf';
+const idHerramientas = lang === 'es' ? 'herramientas' : 'tools';
 const idExploraciones = lang === 'es' ? 'exploraciones' : 'explorations';
 const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
 ---
@@ -38,40 +38,14 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
     </div>
   </section>
 
-  <section class="tira tira--papel" aria-labelledby="herramienta">
+  <section class="tira tira--papel" id={idHerramientas} aria-labelledby="herramientas-titulo">
     <div class="contenedor pila pila--ancha">
       <div class="pila limite">
-        <span class="entradilla">{p.herramientaEntradilla}</span>
-        <h2 id="herramienta">{r.pregunta[lang]}</h2>
+        <span class="entradilla">{p.herramientasEntradilla}</span>
+        <h2 id="herramientas-titulo">{p.herramientasTitulo}</h2>
       </div>
-      <div class="destacado">
-        <a class="destacado__captura" href={r.url_informe} aria-label={p.abrirInforme}>
-          <img src={r.captura} alt={r.captura_alt?.[lang] ?? ''} width="1280" height="720" />
-        </a>
-        <div class="pila pila--ancha">
-          <h3>{r.nombre}</h3>
-          <p class="destacado__texto">{r.resumen[lang]}</p>
-          {r.metricas && (
-            <div class="cifras">
-              {r.metricas.map((m) => (
-                <div class="cifra">
-                  <span class="cifra__valor">{lang === 'en' ? m.valor.replace(',', '.') : m.valor}</span>
-                  <span class="cifra__etiqueta">{m.etiqueta[lang]}</span>
-                </div>
-              ))}
-            </div>
-          )}
-          {r.marcos && (
-            <ul class="chips" aria-label={p.marcos}>
-              {r.marcos.map((m) => <li class="chip">{m}</li>)}
-            </ul>
-          )}
-          <div class="botones">
-            <a class="boton boton--lleno" href={rutas.revisor[lang]}>{p.verFicha}</a>
-            <a class="boton" href={r.url_informe}>{p.informeEjemplo}</a>
-            <a class="boton" href={r.url_repo}>{p.repo}</a>
-          </div>
-        </div>
+      <div class="herramientas">
+        {herramientas.map((h) => <Destacado lang={lang} proyecto={h} />)}
       </div>
     </div>
   </section>
@@ -256,25 +230,7 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
     .lluvia :global(i) { transition: none; }
   }
 
-  .destacado {
-    display: grid;
-    gap: 32px;
-    grid-template-columns: 1fr;
-    align-items: center;
-  }
-  @media (min-width: 900px) {
-    .destacado { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; }
-  }
-  .destacado__captura {
-    display: block;
-    border-radius: 12px;
-    border: 1px solid var(--borde);
-    overflow: hidden;
-    background: #e8e4da;
-    max-height: 340px;
-  }
-  .destacado__captura img { display: block; width: 100%; height: 100%; max-height: 340px; object-fit: cover; object-position: top; }
-  .destacado__texto { color: var(--tinta-2); }
+  .herramientas { display: flex; flex-direction: column; gap: 56px; }
 
   .ficha-corta {
     display: flex;

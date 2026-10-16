@@ -20,7 +20,7 @@ const proyectos = defineCollection({
     estado_nota: texto.optional(),
     url_live: z.string().url().optional(),
     url_repo: z.string().url().optional(),
-    url_informe: z.string().optional(),
+    url_descarga: z.string().url().optional(),
     captura: z.string().optional(),
     captura_alt: texto.optional(),
     inicio: z.number().optional(),
