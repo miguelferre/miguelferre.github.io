@@ -25,7 +25,8 @@ export const ui = {
     figurasCredito: 'Figuras con ISO-GLOW ↗',
     portada: {
       descripcion: 'Gobernanza y validación de IA en sanidad. Por mi cuenta, productos de datos geoespaciales. Portfolio de proyectos.',
-      subtitulo: 'Empecé en la biología, me fui acercando a los datos y hoy trabajo en la vigilancia y supervisión de modelos de inteligencia artificial. Lo que busco en todo esto es un enfoque humano de la tecnología. Por mi cuenta exploro otros temas y construyo herramientas: aquí tienes algunas.',
+      lema: 'Gobernando sistemas de inteligencia artificial.',
+      subtitulo: 'Biólogo de formación, pasé por el mundo de los datos y hoy trabajo en la vigilancia y supervisión de modelos de inteligencia artificial. Mi objetivo es contribuir a que la inteligencia artificial siga al servicio de las personas. Por mi cuenta exploro otros temas y construyo herramientas: explóralas tú mismo.',
       herramientasEntradilla: 'Herramientas',
       herramientasTitulo: 'Herramientas para gobernar y vigilar modelos de IA.',
       descargar: 'Descargar',
@@ -81,7 +82,8 @@ export const ui = {
     figurasCredito: 'Figures made with ISO-GLOW ↗',
     portada: {
       descripcion: 'AI governance and validation in healthcare. On my own time, geospatial data products. Project portfolio.',
-      subtitulo: 'I started in biology, moved closer to data, and today I work on monitoring and overseeing AI models. What I look for in all of it is a human approach to technology. On my own, I explore other topics and build tools: here are some of them.',
+      lema: 'Governing artificial intelligence systems.',
+      subtitulo: 'A biologist by training, I moved through the world of data and today I work on monitoring and overseeing AI models. My goal is to help keep artificial intelligence at the service of people. On my own, I explore other topics and build tools: explore them yourself.',
       herramientasEntradilla: 'Tools',
       herramientasTitulo: 'Tools to govern and monitor AI models.',
       descargar: 'Download',

@@ -30,6 +30,7 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
     </div>
     <div class="contenedor pila pila--ancha limite">
       <h1>Miguel Ferreiro García</h1>
+      <p class="lema">{p.lema}</p>
       <p class="subtitulo">{p.subtitulo}</p>
       <div class="botones">
         <a class="boton boton--icono" href="https://github.com/miguelferre" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
@@ -162,6 +163,7 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
   .portada { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--borde); }
   .portada > .contenedor { position: relative; z-index: 2; }
   .portada .subtitulo { color: var(--tinta); font-weight: 500; }
+  .portada .lema { font-family: var(--titulos); font-weight: 600; font-size: clamp(20px, 2.4vw, 26px); color: var(--acento); text-wrap: balance; }
   .portada .boton:not(.boton--lleno) { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(6px); }
 
   .portada__fondo {
