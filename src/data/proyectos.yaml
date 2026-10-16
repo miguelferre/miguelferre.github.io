@@ -15,17 +15,19 @@
   tipo: herramienta
   nombre: Vigía
   pregunta:
-    es: Una herramienta para vigilar modelos de IA en producción.
-    en: A tool to monitor AI models in production.
+    es: Una herramienta para vigilar modelos de IA en producción, pensada para usarla con un asistente de IA por MCP.
+    en: A tool to monitor AI models in production, built to be run with an AI assistant over MCP.
   resumen:
     es: >-
       Mide la calidad, la equidad entre grupos, la deriva y la explicabilidad de un modelo
       con datos tabulares. Añade la capa humana: deskilling, overrides y auditoría de la
-      interacción. Herramienta local para Windows, sin código; un asistente de IA lo opera por MCP.
+      interacción. Un asistente de IA la opera por MCP con 39 herramientas, y todo lo que hace
+      queda en el diario. Herramienta local para Windows, sin código.
     en: >-
       It measures quality, fairness across groups, drift and explainability for a model
       on tabular data. It adds the human layer: deskilling, overrides and an audit of the
-      interaction. A local, no-code Windows tool; an AI assistant can run it over MCP.
+      interaction. An AI assistant runs it over MCP with 39 tools, and everything it does
+      goes into the log. A local, no-code Windows tool.
   # Al publicar el repo: estado repo.
   estado: privado
   url_repo: https://github.com/miguelferre/vigia
@@ -82,8 +84,8 @@
   tipo: exploracion
   nombre: Madrid Healthy Living Index
   pregunta:
-    es: ¿Dónde se vive más sano en Madrid?
-    en: Where is healthy living easiest in Madrid?
+    es: ¿Es igual de fácil llevar una vida saludable en todos los barrios de Madrid?
+    en: Is healthy living equally easy in every Madrid neighbourhood?
   resumen:
     es: >-
       Índice compuesto desde cero. El titular: correlación negativa con la renta
@@ -162,8 +164,8 @@
   tipo: exploracion
   nombre: Praia ou montaña
   pregunta:
-    es: ¿Playa o monte hoy en Galicia?
-    en: Beach or hike today in Galicia?
+    es: ¿Día de playa o ruta por el monte hoy en Galicia?
+    en: Beach day or mountain hike today in Galicia?
   resumen:
     es: >-
       Playas y 201 rutas de monte, meteo y mar en tiempo real, puesta de sol orográfica.

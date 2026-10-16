@@ -30,7 +30,7 @@ FIGS.push({
     // compliance per block [3 trees, 30 % canopy, 300 m park]; rows: north, middle, south
     const OK = [[1,0,0],[0,0,0],[0,1,0], [1,0,0],[0,0,1],[1,0,0], [1,1,1],[1,1,0],[1,0,1]];
     const PARK = 6;
-    const K = api.iso.frame([[-14,-14,0],[W+14,W+14,0],[-14,W+14,0],[W+14,-14,0],[0,0,26],[W,W,-22]]);
+    const K = api.iso.frame([[-14,-14,0],[W+14,W+14,0],[-14,W+14,0],[W+14,-14,0],[0,0,26],[W+12,W+12,-58]]);
     const { P, TOP, box } = K;
     const vb = K.viewBox.split(/[ ,]+/).map(Number);
     const cell = (a, b) => [6 + a * 22 + 2, 6 + b * 22 + 2];
@@ -74,18 +74,18 @@ FIGS.push({
       for (let k = 0; k < 3; k++) svg += `<circle id="madrid-hli-pip${i}-${k}" class="mh-pip" cx="${p[0] + (k - 1) * 17}" cy="${p[1]}" r="6.5" pointer-events="none" filter="url(#soft)"/>`;
     }
     // indicator pills in screen space, below the city
-    const pcx = P(W / 2, W / 2, 0)[0], py = P(W, W, 0)[1] - 8, pw = 150, pg = 8;
+    const pcx = P(W / 2, W / 2, 0)[0], py = P(W + 12, W + 12, -10)[1] + 12, pw = 150, pg = 16;
     for (let k = 0; k < 3; k++) {
       const x = pcx + (k - 1) * (pw + pg) - pw / 2;
       svg += `<g pointer-events="none"><rect id="madrid-hli-pill${k}" class="face led mh-pill" x="${x}" y="${py}" width="${pw}" height="34" rx="17"/>`
            + `<text id="madrid-hli-pt${k}" class="label mh-pt" x="${x + pw / 2}" y="${py + 23}" text-anchor="middle" style="font-size:16px">${MH_T.pills[k]}</text></g>`;
     }
-    svg += `<text id="madrid-hli-name" class="label" x="${vb[0] + 14}" y="${vb[1] + 28}" style="font-size:22px"></text>`;
     for (let i = 0; i < 9; i++) {
       const r = (i / 3) | 0, c = i % 3;
       svg += `<g transform="${TOP(r*STEP, c*STEP, 3)}"><rect class="mh-hit" data-mh="${i}" width="${B}" height="${B}"/></g>`;
     }
-    stage.setAttribute('viewBox', K.viewBox);
+    const vt = Math.min(P(-14,-14,0)[1], P(0,0,26)[1]) - 8, vH = py + 34 + 8 - vt, vW = vH * 1.6;
+    stage.setAttribute('viewBox', `${pcx - vW / 2} ${vt} ${vW} ${vH}`);
     stage.innerHTML = svg;
 
     const $ = id => stage.querySelector('#madrid-hli-' + id);
@@ -116,10 +116,9 @@ FIGS.push({
           $('pill' + k).setAttribute('class', 'face led mh-pill' + (on ? ' hot' : ''));
           $('pt' + k).style.fill = on ? 'var(--panel)' : 'var(--ink-hi)';
         }
-        $('name').textContent = `${MH_T.block} ${st.sel + 1}`;
         api.readout(`${MH_T.block} ${st.sel + 1} · 3 ${ok[0] ? '✓' : '✗'} 30 ${ok[1] ? '✓' : '✗'} 300 ${ok[2] ? '✓' : '✗'}`);
       } else {
-        ringG.innerHTML = ''; $('name').textContent = '';
+        ringG.innerHTML = '';
         for (let k = 0; k < 3; k++) { $('pill' + k).setAttribute('class', 'face led mh-pill'); $('pt' + k).style.fill = 'var(--ink-hi)'; }
         api.readout(EN ? '9 blocks · 1 passes all' : '9 barrios · 1 cumple los tres');
       }

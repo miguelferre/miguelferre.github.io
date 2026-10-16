@@ -300,7 +300,7 @@ FIGS.push({
     });
     for (let n = 0; n < 9; n++) svg += `<rect class="sm-pip" id="${id}-p${n}" x="${OX + 62 + n * 12}" y="${OY + 186}" width="8" height="8"/>`;
 
-    stage.setAttribute('viewBox', `${OX - 186} ${OY - 58} 372 279`);
+    stage.setAttribute('viewBox', `${OX - 200} ${OY - 48} 400 300`);
     stage.innerHTML = svg;
     const $ = s => stage.querySelector('#' + id + '-' + s);
     const cellEl = {};

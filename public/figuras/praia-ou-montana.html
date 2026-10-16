@@ -189,11 +189,11 @@ const EN = new URLSearchParams(location.search).get('lang') === 'en';
 const PM_T = EN
   ? { name: 'Beach or hills', hint: 'Click the sun or the cloud · ←→ change the weather · space next',
       aria: 'Isometric split plate: coast on one side, hill with a trail on the other, a signpost between them. The weather changes and the signpost lights the better choice. Click the sun or cloud, or use arrow keys and space.',
-      beach: 'PRAIA', hike: 'MONTAÑA', win: ['beach', 'hike'],
+      beach: 'PLAYA', hike: 'MONTE', win: ['beach', 'hike'],
       w: ['sun · calm sea', 'clouds · calm sea', 'wind · rough sea', 'sun · light chop'] }
-  : { name: 'Praia ou montaña', hint: 'Clic en el sol o la nube · ←→ cambian el tiempo · espacio siguiente',
+  : { name: 'Playa o monte', hint: 'Clic en el sol o la nube · ←→ cambian el tiempo · espacio siguiente',
       aria: 'Placa isométrica partida: costa a un lado, monte con una senda al otro y un poste indicador en medio. El tiempo cambia y el poste ilumina la mejor opción. Clic en el sol o la nube, o flechas y espacio.',
-      beach: 'PRAIA', hike: 'MONTAÑA', win: ['praia', 'monte'],
+      beach: 'PLAYA', hike: 'MONTE', win: ['playa', 'monte'],
       w: ['sol · mar en calma', 'nubes · mar en calma', 'viento · mar picado', 'sol · mar rizado'] };
 
 FIGS.push({
@@ -275,7 +275,7 @@ FIGS.push({
     svg += `<g class="pm-wind" id="${ID}-wind" transform="translate(${(cloudP[0] + 52).toFixed(1)} ${(cloudP[1] - 6).toFixed(1)})">
       <path d="M0 0 h60 q9 0 9 -7"/><path d="M-10 14 h74 q9 0 9 7"/><path d="M6 28 h46 q8 0 8 -6"/></g>`;
 
-    stage.setAttribute('viewBox', K.viewBox); stage.innerHTML = svg;
+    const vb = K.viewBox.split(/[ ,]+/).map(Number), k = 0.16; stage.setAttribute('viewBox', [vb[0] - vb[2] * k / 2, vb[1] - vb[3] * k / 2, vb[2] * (1 + k), vb[3] * (1 + k)].map(n => n.toFixed(1)).join(' ')); stage.innerHTML = svg;
     const q = s => stage.querySelector('#' + ID + '-' + s);
     const sun = q('sun'), cloud = q('cloud'), wind = q('wind'), waves = q('waves'), sand = q('sand'),
       trails = q('trails'), flag = q('flag'), lamp = q('lamp'), bm = q('bm'), bp = q('bp');

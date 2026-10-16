@@ -186,82 +186,141 @@
 <!-- FIGURES: one <script> per figure, each calling FIGS.push({...}). Order here = Fig 1, 2, 3 ... -->
 <script>
 const EN = new URLSearchParams(location.search).get('lang') === 'en';
-// 13 módulos agrupados en 8 edificios: [rótulo, módulos, alto, columna, fila]
+// 5 edificios del campus, en el orden del curso: [rótulo, módulos]
 const CURSO_B = EN
-  ? [['Foundations', '0', 64, 0, 0], ['Risks', '1', 70, 1, 0], ['Engineering', '2-4', 76, 2, 0], ['Monitoring', '5-6', 84, 3, 0],
-     ['Alignment', '7', 50, 3, 1], ['Ethics', '8-9', 52, 2, 1], ['Governance', '10', 56, 1, 1], ['Wrap-up', '11-12', 48, 0, 1]]
-  : [['Fundamentos', '0', 64, 0, 0], ['Riesgos', '1', 70, 1, 0], ['Ingeniería', '2-4', 76, 2, 0], ['Monitorización', '5-6', 84, 3, 0],
-     ['Alineamiento', '7', 50, 3, 1], ['Ética', '8-9', 52, 2, 1], ['Gobernanza', '10', 56, 1, 1], ['Cierre', '11-12', 48, 0, 1]];
-const CURSO_FOOT = EN ? '13 modules · 57 lessons · 40 h' : '13 módulos · 57 lecciones · 40 h';
+  ? [['Foundations & risks', '0-1'], ['Safe engineering', '2-4'], ['Monitoring lab', '5-6'], ['Alignment', '7'], ['Ethics & governance', '8-12']]
+  : [['Fundamentos y riesgos', '0-1'], ['Ingeniería segura', '2-4'], ['Monitorización', '5-6'], ['Alineamiento', '7'], ['Ética y gobernanza', '8-12']];
 
 FIGS.push({
   id: 'curso',
   name: EN ? 'AI safety course campus' : 'Campus del curso de seguridad de la IA',
   hint: EN ? 'Click a building · space next · r restart' : 'Clic en un edificio · espacio avanza · r reinicia',
   aria: EN
-    ? 'Isometric campus with eight buildings, one per group of course modules. A marker walks the roads and visits each building; visited buildings light their windows. The Monitoring building is the lab and its screen glows when the marker arrives. Click a building to jump to it, space advances, r restarts.'
-    : 'Campus isométrico con ocho edificios, uno por grupo de módulos del curso. Un marcador recorre los caminos y visita cada edificio; los visitados encienden las ventanas. El edificio de Monitorización es el laboratorio y su pantalla brilla cuando llega el marcador. Clic en un edificio salta a él, espacio avanza, r reinicia.',
+    ? 'Isometric university campus: faculty hall, clock tower, monitoring lab, library and great hall around a lawn courtyard. A student walks the paths and visits each building in course order; visited buildings light up. The lab screen glows when the student arrives. Click a building to jump to it, space advances, r restarts.'
+    : 'Campus universitario isométrico: facultad, torre del reloj, laboratorio de monitorización, biblioteca y aula magna alrededor de un patio de césped. Un estudiante recorre los caminos y visita cada edificio en el orden del curso; los visitados se encienden. La pantalla del laboratorio brilla cuando llega. Clic en un edificio salta a él, espacio avanza, r reinicia.',
   mount(stage, api) {
-    const CW = 102, BW = 82, BD = 50, YB = 0, YF = 92;   // columnas, anchos y filas
-    const RA = YB + BD, RAW = 42, RB = YF + BD, RBW = 34;                    // caminos A (entre filas) y B (delante)
-    const K = api.iso.frame([[-14, -10, 0], [4 * CW + 14, -10, 0], [-14, 196, 0], [4 * CW + 14, 196, 0], [0, 0, 100]]);
+    const XL = 90, XR = 280, YT = 72, YB = 190, RW = 16;                     // camino en anillo (ejes centrales)
+    const K = api.iso.frame([[-8, -8, 0], [372, -8, 0], [-8, 206, 0], [372, 206, 0], [60, 20, 178]]);
     const { P, TOP, FRONT, SIDE, box } = K;
-    const bx = b => b[3] * CW, by = b => (b[4] ? YF : YB);
-    let svg = box(-14, -10, -6, 4 * CW + 28, 206, 6, 10);
-    svg += `<g transform="${TOP(-14, -10, 0)}"><rect class="detail" x="6" y="6" width="${4 * CW + 16}" height="194" rx="8"/></g>`;
-    // caminos
-    const road = (x, y, w, h) => `<g transform="${TOP(x, y, 0)}"><rect class="face recess" x="0" y="0" width="${w}" height="${h}" rx="2"/></g>`;
-    svg += road(-12, RA + 2, 4 * CW + 12, RAW - 4) + road(-12, RB + 2, 4 * CW + 12, RBW - 4) + road(4 * CW - 16, RA + 2, 26, RB - RA);
-    for (let x = -4; x < 4 * CW; x += 22) svg += `<g transform="${TOP(x, RA + RAW / 2 - 0.5, 0)}"><rect class="detail" width="10" height="1"/></g><g transform="${TOP(x, RB + RBW / 2 - 0.5, 0)}"><rect class="detail" width="10" height="1"/></g>`;
-    // edificios, de atrás hacia delante
-    const order = CURSO_B.map((b, i) => i).sort((a, b) => (bx(CURSO_B[a]) + by(CURSO_B[a])) - (bx(CURSO_B[b]) + by(CURSO_B[b])));
-    for (const i of order) {
-      const b = CURSO_B[i], x = bx(b), y = by(b), h = b[2], lab = i === 3;
-      const wins = (plane, cols, cw, gx, w0) => {
-        let s = '';
-        for (let v = 24; v + 8 <= h - 6; v += 14) for (let c = 0; c < cols; c++)
-          s += `<rect data-b="${i}" class="glass" x="${gx + c * cw}" y="${v}" width="${w0}" height="8" rx="1"/>`;
-        return `<g transform="${plane}">${s}</g>`;
-      };
-      svg += `<g class="press" id="curso-g${i}" style="cursor:pointer">${box(x, y, 0, BW, BD, h, 3)}`;
-      svg += `<g transform="${TOP(x - 3, y - 3, h)}"><rect class="face top" width="${BW + 6}" height="${BD + 6}" rx="3"/><rect class="detail" x="8" y="8" width="${BW - 10}" height="${BD - 10}" rx="2"/></g>`;
-      svg += `<g transform="${FRONT(x, y + BD, h)}"><rect class="detail" x="0" y="${h - 8}" width="${BW}" height="1"/>`
-        + `<text id="curso-l${i}" class="label" x="${BW / 2}" y="13" text-anchor="middle" style="font-size:9px;font-weight:700;fill:var(--ink-hi)">${b[0]}</text>`
-        + `<text class="label" x="${BW / 2}" y="${h - 11}" text-anchor="middle" style="font-size:8px;fill:var(--ink)">${EN ? 'mod.' : 'mód.'} ${b[1]}</text></g>`;
-      svg += lab
-        ? `<g transform="${FRONT(x, y + BD, h)}"><rect data-b="${i}" id="curso-scr" class="glass" x="8" y="22" width="${BW - 16}" height="${h - 44}" rx="3"/>`
-          + `<g id="curso-lines" class="scr" style="opacity:0"><rect x="14" y="30" width="38" height="3"/><rect x="14" y="38" width="26" height="3"/><rect x="44" y="38" width="20" height="3"/><rect x="14" y="46" width="50" height="3"/></g></g>`
-        : wins(FRONT(x, y + BD, h), 5, 15, 5, 11);
-      svg += wins(SIDE(x + BW, y + BD, h), 3, 15, 5, 11) + `</g>`;
-      if (lab) svg += `<ellipse id="curso-halo" class="halo" filter="url(#bloom)" cx="${P(x + 40, y + BD, 40)[0]}" cy="${P(x + 40, y + BD, 40)[1]}" rx="46" ry="34" style="pointer-events:none"/>`;
+    const road = (x, y, w, h) => `<g transform="${TOP(x, y, 0)}"><rect class="face recess" width="${w}" height="${h}" rx="1.5"/></g>`;
+    let svg = box(-8, -8, -6, 380, 214, 6, 10);
+    svg += `<g transform="${TOP(-8, -8, 0)}"><rect class="detail" x="4" y="4" width="372" height="206" rx="8"/></g>`;
+    // patio de césped y caminos
+    svg += `<g transform="${TOP(XL + 8, YT + 8, 0)}"><rect class="face" width="${XR - XL - 16}" height="${YB - YT - 16}" rx="4"/>${api.iso.slits(3, XR - XL - 19, 8, 3, YB - YT - 19, true, 'detail')}</g>`;
+    svg += road(XL - RW / 2, YT - RW / 2, XR - XL + RW, RW) + road(XL - RW / 2, YB - RW / 2, XR - XL + RW, RW)
+      + road(XL - RW / 2, YT - RW / 2, RW, YB - YT + RW) + road(XR - RW / 2, YT - RW / 2, RW, YB - YT + RW)
+      + road(177, YT + 8, 12, YB - YT - 16) + road(XL + 8, 125, XR - XL - 16, 12)
+      + road(172, YT - RW / 2 - 12, 12, 12) + road(XL - 6, 52, 12, 12) + road(XR - 6, 52, 12, 12)
+      + road(XL - 22, 125, 14, 12);
+    svg += box(171, 125, 0, 16, 16, 5, 7) + `<g transform="${TOP(171, 125, 5)}"><rect class="detail" x="3" y="3" width="10" height="10" rx="5"/></g>`;
+
+    const items = [];      // {key, svg, x0,y0,x1,y1}
+    const add = (x0, y0, x1, y1, s) => items.push({ x0, y0, x1, y1, s, key: x0 + x1 + y0 + y1 });
+    const wins = (plane, b, u0, v0, cols, rows, cw, ch, gx, gy) => {
+      let s = '';
+      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++)
+        s += `<rect data-b="${b}" class="glass" x="${u0 + c * gx}" y="${v0 + r * gy}" width="${cw}" height="${ch}" rx="1"/>`;
+      return `<g transform="${plane}">${s}</g>`;
+    };
+    const tree = (x, y) => add(x - 6, y - 6, x + 9, y + 9, box(x, y, 0, 3, 3, 10, 1) + box(x - 6, y - 6, 10, 15, 15, 16, 7));
+    [[120, 98], [236, 98], [120, 160], [236, 160]].forEach(t => tree(...t));
+
+    // 0 Facultad: columnas y frontón (x112-236, y0-58)
+    {
+      const x = 112, y = 0, w = 124, d = 58, h = 46;
+      let s = `<g class="press" id="curso-g0" style="cursor:pointer">${box(x, y, 0, w, d, h, 2)}`;
+      s += wins(FRONT(x, y + d, h), 0, 6, 8, 2, 2, 11, 9, 14, 17) + wins(FRONT(x, y + d, h), 0, 87, 8, 2, 2, 11, 9, 14, 17);
+      s += wins(SIDE(x + w, y + d, h), 0, 8, 8, 3, 2, 11, 9, 15, 17);
+      for (let i = 0; i < 6; i++) s += box(150 + i * 11.5, 58, 0, 5, 5, 36, 1);
+      s += box(147, 56, 36, 68 - 8 + 4, 9, 5, 1);
+      s += `<g transform="${FRONT(147, 65, 41)}"><rect data-b="0" class="glass" x="29" y="22" width="12" height="19" rx="6"/></g>`;
+      s += `<g transform="${FRONT(147, 65, 59)}"><path class="face" d="M0 18 L32 0 L64 18 Z"/><path class="detail" d="M6 15 L32 4 L58 15"/></g></g>`;
+      add(x, y, x + w, y + d + 9, s);
     }
-    svg += `<g transform="${TOP(0, 178, 0)}"><text class="label" x="0" y="12" style="font-size:12px;font-weight:700;fill:var(--ink-hi)">${CURSO_FOOT}</text></g>`;
-    // recorrido del peón: puertas de la fila de atrás por el camino A, vuelta por el este y fila de delante por el camino B
-    const yA = RA + RAW / 2, yB = RB + RBW / 2, ex = 4 * CW - 4;
-    const WP = [];
-    for (let c = 0; c < 4; c++) WP.push([c * CW + BW / 2, yA]);
-    WP.push([ex, yA], [ex, yB]);
-    for (let c = 3; c >= 0; c--) WP.push([c * CW + BW / 2, yB]);
-    const MAP = [0, 1, 2, 3, 6, 7, 8, 9];
-    svg += `<g id="curso-pawn" style="pointer-events:none"><ellipse rx="9" ry="3.5" class="face"/>`
-      + `<path d="M-7 0 L-3.5 -20 L3.5 -20 L7 0 Z" style="fill:var(--accent);stroke:var(--accent-hi)" vector-effect="non-scaling-stroke" filter="url(#soft)"/>`
-      + `<circle cy="-26" r="6.5" style="fill:var(--accent-hi);stroke:var(--accent)" vector-effect="non-scaling-stroke" filter="url(#soft)"/></g>`;
+    // 1 Torre del reloj (x48-90, y8-50)
+    {
+      const x = 48, y = 8, w = 42, d = 42, h = 104;
+      let s = `<g class="press" id="curso-g1" style="cursor:pointer">${box(x, y, 0, w, d, h, 2)}`;
+      s += box(x + 3, y + 3, h, w - 6, d - 6, 8, 1) + box(x + 11, y + 11, h + 8, w - 22, d - 22, 9, 1) + box(x + 17, y + 17, h + 17, 8, 8, 15, 1);
+      s += `<g transform="${FRONT(x, y + d, h)}"><circle data-b="1" class="glass" cx="${w / 2}" cy="26" r="13"/><path class="detail" d="M${w / 2} 26 L${w / 2} 17 M${w / 2} 26 L${w / 2 + 7} 29"/>`
+        + `<rect data-b="1" class="glass" x="${w / 2 - 4}" y="${h - 22}" width="8" height="16" rx="4"/><rect data-b="1" class="glass" x="6" y="52" width="6" height="12" rx="3"/><rect data-b="1" class="glass" x="${w - 12}" y="52" width="6" height="12" rx="3"/></g>`;
+      s += `<g transform="${SIDE(x + w, y + d, h)}"><rect data-b="1" class="glass" x="${d / 2 - 3}" y="14" width="6" height="14" rx="3"/><rect data-b="1" class="glass" x="${d / 2 - 3}" y="50" width="6" height="14" rx="3"/></g></g>`;
+      add(x, y, x + w, y + d, s);
+    }
+    // 2 Laboratorio (x296-360, y86-146): pantalla grande
+    {
+      const x = 296, y = 86, w = 64, d = 60, h = 44;
+      let s = `<ellipse id="curso-halo" class="halo" filter="url(#bloom)" cx="${P(x + 32, y + d, 26)[0]}" cy="${P(x + 32, y + d, 26)[1]}" rx="44" ry="30" style="pointer-events:none"/>`;
+      s += `<g class="press" id="curso-g2" style="cursor:pointer">${box(x, y, 0, w, d, h, 2)}`;
+      s += box(x + 24, y + 22, h, 8, 8, 16, 1) + box(x + 20, y + 20, h + 16, 16, 12, 2, 1);
+      s += `<g transform="${FRONT(x, y + d, h)}"><rect id="curso-scr" data-b="2" class="glass" x="5" y="5" width="${w - 10}" height="26" rx="2"/>`
+        + `<g id="curso-lines" class="scr" style="opacity:0"><rect x="10" y="10" width="34" height="3"/><rect x="10" y="17" width="22" height="3"/><rect x="36" y="17" width="14" height="3"/><rect x="10" y="24" width="44" height="3"/></g>`
+        + `<rect data-b="2" class="glass" x="${w / 2 - 5}" y="${h - 10}" width="10" height="10" rx="1"/></g>`;
+      s += wins(SIDE(x + w, y + d, h), 2, 9, 8, 3, 2, 11, 10, 17, 18) + `</g>`;
+      add(x, y, x + w, y + d, s);
+    }
+    // 3 Biblioteca (x14-76, y96-166): ventanales en la cara que da al patio
+    {
+      const x = 14, y = 96, w = 62, d = 70, h = 36;
+      let s = `<g class="press" id="curso-g3" style="cursor:pointer">${box(x, y, 0, w, d, h, 2)}${box(x + 8, y + 10, h, w - 16, d - 20, 6, 1)}`;
+      s += wins(SIDE(x + w, y + d, h), 3, 7, 7, 4, 1, 10, 20, 16, 0) + wins(FRONT(x, y + d, h), 3, 7, 7, 3, 1, 10, 20, 17, 0);
+      s += `<g transform="${SIDE(x + w, y + d, h)}"><rect data-b="3" class="glass" x="${d / 2 - 6}" y="${h - 12}" width="12" height="12" rx="1"/></g></g>`;
+      add(x, y, x + w, y + d, s);
+    }
+    // 4 Aula magna (x240-340, y0-52): cúpula y entrada
+    {
+      const x = 240, y = 0, w = 100, d = 52, h = 34;
+      let s = `<g class="press" id="curso-g4" style="cursor:pointer">${box(x, y, 0, w, d, h, 2)}${box(x + 28, y + 8, h, 44, 36, 8, 7)}${box(x + 36, y + 14, h + 8, 28, 24, 8, 6)}`;
+      s += wins(FRONT(x, y + d, h), 4, 8, 8, 2, 1, 11, 18, 15, 0) + wins(FRONT(x, y + d, h), 4, 62, 8, 2, 1, 11, 18, 15, 0);
+      s += `<g transform="${FRONT(x, y + d, h)}"><rect data-b="4" class="glass" x="${w / 2 - 8}" y="10" width="16" height="24" rx="8"/></g>`;
+      s += wins(SIDE(x + w, y + d, h), 4, 8, 8, 3, 1, 11, 18, 14, 0) + `</g>`;
+      add(x, y, x + w, y + d, s);
+    }
+    items.sort((a, b) => a.key - b.key);
+    items.forEach((it, n) => { svg += `<g id="curso-it${n}">${it.s}</g>`; });
+
+    // peón (estudiante): se coloca entre los edificios según su profundidad, en cada fotograma
+    svg += `<g id="curso-pawn" style="pointer-events:none"><ellipse rx="10" ry="4" class="face"/>`
+      + `<path d="M-7 0 L-3.5 -19 L3.5 -19 L7 0 Z" style="fill:var(--accent);stroke:var(--accent-hi)" vector-effect="non-scaling-stroke" filter="url(#soft)"/>`
+      + `<circle cy="-25" r="6.5" style="fill:var(--accent-hi);stroke:var(--accent)" vector-effect="non-scaling-stroke" filter="url(#soft)"/></g>`;
+    // rótulos flotantes (no se inclinan con el plano)
+    const TAGS = [[174, 24, 84, 24, -34], [69, 29, 150, -4, -34], [338, 146, 0, 0, 8], [45, 131, 46, 0, -34], [290, 26, 56, 8, -34]];
+    TAGS.forEach(([tx, ty, tz, dx, dy], i) => {
+      const p = P(tx, ty, tz), W = 128;
+      svg += `<g id="curso-tag${i}" transform="translate(${p[0] + dx - W / 2} ${p[1] + dy})" style="cursor:pointer"><rect class="glass" width="${W}" height="31" rx="5"/>`
+        + `<text class="label" x="${W / 2}" y="14" text-anchor="middle" style="font-size:13px;font-weight:700;fill:var(--ink-hi)">${CURSO_B[i][0]}</text>`
+        + `<text class="label" x="${W / 2}" y="26" text-anchor="middle" style="font-size:10px;fill:var(--ink)">${EN ? 'mod.' : 'mód.'} ${CURSO_B[i][1]}</text></g>`;
+    });
     stage.setAttribute('viewBox', K.viewBox); stage.innerHTML = svg;
 
     const $ = id => stage.querySelector('#curso-' + id);
-    const st = { m: 0, pos: 0, auto: false, last: 0 };
     const pawn = $('pawn');
+    // anillo de caminos: perímetro y posición de cada puerta
+    const LT = XR - XL, LR = YB - YT, PER = 2 * (LT + LR);
+    const ringPt = s => {
+      s = ((s % PER) + PER) % PER;
+      if (s < LT) return [XL + s, YT];
+      if (s < LT + LR) return [XR, YT + s - LT];
+      if (s < 2 * LT + LR) return [XR - (s - LT - LR), YB];
+      return [XL, YB - (s - 2 * LT - LR)];
+    };
+    const DOOR = [174 - XL, 0, LT, 2 * LT + LR + (YB - 131), LT - 90 + 0];
+    DOOR[1] = 0; DOOR[2] = LT + 88; DOOR[3] = 2 * LT + LR + (YB - 131); DOOR[4] = LT;
+    const st = { m: 0, s: DOOR[0], auto: false, last: 0 };
     const place = () => {
-      const a = Math.min(WP.length - 2, Math.floor(st.pos)), f = st.pos - a;
-      const x = WP[a][0] + (WP[a + 1][0] - WP[a][0]) * f, y = WP[a][1] + (WP[a + 1][1] - WP[a][1]) * f;
-      const p = P(x, y, 0);
-      pawn.setAttribute('transform', `translate(${p[0]} ${p[1]}) scale(1.15)`);
+      const [x, y] = ringPt(st.s), p = P(x, y, 0);
+      pawn.setAttribute('transform', `translate(${p[0]} ${p[1]}) scale(1.2)`);
+      // orden de pintado: tras todo lo que queda por detrás, antes de lo que queda delante
+      let after = -1;
+      items.forEach((it, n) => { if (x > it.x1 || y > it.y1) after = n; });
+      const ref = $('it' + (after + 1));
+      if (ref) { if (pawn.nextElementSibling !== ref) ref.parentNode.insertBefore(pawn, ref); }
+      else if (pawn.nextElementSibling && pawn.nextElementSibling.id.indexOf('curso-tag') !== 0) stage.insertBefore(pawn, $('tag0'));
     };
     function render() {
       stage.querySelectorAll('[data-b]').forEach(e => e.classList.toggle('hot', +e.dataset.b <= st.m));
-      CURSO_B.forEach((b, i) => $('g' + i).classList.toggle('lit', i === st.m));
-      CURSO_B.forEach((b, i) => { $('l' + i).style.fill = i === st.m ? 'var(--panel)' : 'var(--ink-hi)'; });
-      const lab = st.m === 3;
+      CURSO_B.forEach((b, i) => { $('g' + i).classList.toggle('lit', i === st.m); $('tag' + i).firstChild.classList.toggle('hot', i <= st.m); });
+      const lab = st.m === 2;
       $('halo').classList.toggle('hot', lab);
       $('lines').style.opacity = lab ? 1 : 0;
       api.power(lab);
@@ -269,11 +328,11 @@ FIGS.push({
     }
     const go = n => { st.m = Math.max(0, Math.min(CURSO_B.length - 1, n)); render(); };
     const stopAuto = () => { st.auto = false; };
-    CURSO_B.forEach((b, i) => $('g' + i).addEventListener('click', () => { stopAuto(); go(i); }));
+    CURSO_B.forEach((b, i) => { const f = () => { stopAuto(); go(i); }; $('g' + i).addEventListener('click', f); $('tag' + i).addEventListener('click', f); });
     api.loop(t => {
       const dt = Math.min(0.05, (t - (st.last || t)) / 1000); st.last = t;
-      const d = MAP[st.m] - st.pos, sp = d < -4 ? 12 : 3.6;
-      st.pos += Math.sign(d) * Math.min(Math.abs(d), dt * sp);
+      let d = ((DOOR[st.m] - st.s) % PER + PER) % PER; if (d > PER / 2) d -= PER;   // camino más corto por el anillo
+      st.s += Math.sign(d) * Math.min(Math.abs(d), dt * 120);
       place();
     });
     render(); place();
@@ -287,10 +346,7 @@ FIGS.push({
       },
       demo() {
         st.auto = true; go(0);
-        api.every(1700, () => {
-          if (!st.auto) return;
-          go(st.m >= CURSO_B.length - 1 ? 0 : st.m + 1);
-        });
+        api.every(3000, () => { if (st.auto) go(st.m >= CURSO_B.length - 1 ? 0 : st.m + 1); });
       },
     };
   },
