@@ -51,7 +51,7 @@ export const ui = {
         { etiqueta: '2021 · Datos de salud', texto: 'Entré en GMV como analista de datos de salud, trabajando con datasets clínicos europeos y su calidad. En paralelo hice el máster en Bioinformática y Bioestadística de la UOC, donde aprendí machine learning. En el trabajo final medí con tuits en varias lenguas cómo cambió el sentimiento negativo en España durante la pandemia, y lo comparé con los casos de COVID-19 [[tuits]].' },
         { etiqueta: '2022 · Producto', texto: 'Pasé a gestionar productos de datos. Diseñé el flujo de datos de plataformas europeas como ProReg, el registro de cáncer de próstata de la European Association of Urology [[proreg]], con el modelo OMOP en la base, procesos ETL con controles de calidad e iteraciones con urólogos de varios países.' },
         { etiqueta: '2026 · Gobernanza de IA', texto: 'Hoy diseño cómo se valida un modelo de IA antes de que llegue a la práctica clínica y cómo se vigila cuando ya está en uso, desde su calidad, equidad y deriva hasta la forma en que lo usan los profesionales. Lo hago con IBM watsonx.governance en dos sistemas autonómicos de salud, y lo presento ante sistemas sanitarios. Mi objetivo es contribuir a que la IA siga al servicio de las personas.' },
-        { etiqueta: 'Por mi cuenta', texto: 'Exploro otros temas y construyo herramientas, de mapas con datos abiertos a Vigía, el curso de seguridad de la IA o Wikinatu. Fuera de la pantalla me gustan la montaña [[montana]] y la fotografía [[paisaje]].' },
+        { etiqueta: 'Por mi cuenta', texto: 'Exploro otros temas y construyo herramientas, de mapas con datos abiertos a Vigía, el curso de seguridad de la IA o WikiNatu [[wikinatu]]. Fuera de la pantalla me gustan la montaña [[montana]] y la fotografía [[paisaje]].' },
       ],
       fotos: {
         retrato: { src: '/sobre-mi/retrato.webp', alt: 'Retrato de Miguel Ferreiro' },
@@ -59,6 +59,7 @@ export const ui = {
         easimap: { src: '/sobre-mi/easimap.webp', alt: 'EASiMap, mapa polar de una familia de enzimas en sus hemisferios norte y sur' },
         tuits: { src: '/sobre-mi/tuits-covid.webp', alt: 'Gráfico de tuits con sentimiento negativo frente a casos de COVID-19 en España' },
         proreg: { src: '/sobre-mi/proreg.webp', alt: 'Web pública de ProReg, el registro de cáncer de próstata de la EAU' },
+        wikinatu: { src: '/sobre-mi/wikinatu.webp', alt: 'WikiNatu: ficha del tritón ibérico observado a lo largo de una ruta' },
         montana: { src: '/sobre-mi/montana.webp', alt: 'Miguel en un valle nevado de montaña' },
         paisaje: { src: '/sobre-mi/paisaje.webp', alt: 'Valle con un río y montañas nevadas' },
       },
@@ -119,7 +120,7 @@ export const ui = {
         { etiqueta: '2021 · Health data', texto: 'I joined GMV as a health data analyst, working with European clinical datasets and their quality. At the same time I did the MSc in Bioinformatics and Biostatistics at UOC, where I learned machine learning. For my thesis I measured, with tweets in several languages, how negative sentiment changed in Spain during the pandemic, and compared it with COVID-19 cases [[tuits]].' },
         { etiqueta: '2022 · Product', texto: 'I moved on to managing data products. I designed the data flow of European platforms such as ProReg, the prostate cancer registry of the European Association of Urology [[proreg]], with the OMOP model underneath, ETL processes with quality checks, and iterations with urologists from several countries.' },
         { etiqueta: '2026 · AI governance', texto: 'Today I design how an AI model is validated before it reaches clinical practice and how it is monitored once in use, from its quality, fairness and drift to the way professionals use it. I do it with IBM watsonx.governance in two regional health systems, and I present it to health systems. My goal is to help keep AI at the service of people.' },
-        { etiqueta: 'On my own', texto: 'I explore other topics and build tools, from open-data maps to Vigía, the AI safety course or Wikinatu. Away from the screen I enjoy the mountains [[montana]] and photography [[paisaje]].' },
+        { etiqueta: 'On my own', texto: 'I explore other topics and build tools, from open-data maps to Vigía, the AI safety course or WikiNatu [[wikinatu]]. Away from the screen I enjoy the mountains [[montana]] and photography [[paisaje]].' },
       ],
       fotos: {
         retrato: { src: '/sobre-mi/retrato.webp', alt: 'Portrait of Miguel Ferreiro' },
@@ -127,6 +128,7 @@ export const ui = {
         easimap: { src: '/sobre-mi/easimap.webp', alt: 'EASiMap, polar map of an enzyme family in its north and south hemispheres' },
         tuits: { src: '/sobre-mi/tuits-covid.webp', alt: 'Chart of negative-sentiment tweets against COVID-19 cases in Spain' },
         proreg: { src: '/sobre-mi/proreg.webp', alt: 'Public website of ProReg, the EAU prostate cancer registry' },
+        wikinatu: { src: '/sobre-mi/wikinatu.webp', alt: 'WikiNatu: card of an Iberian newt observed along a route' },
         montana: { src: '/sobre-mi/montana.webp', alt: 'Miguel in a snowy mountain valley' },
         paisaje: { src: '/sobre-mi/paisaje.webp', alt: 'Valley with a river and snowy mountains' },
       },
