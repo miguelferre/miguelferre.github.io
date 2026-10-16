@@ -71,12 +71,6 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
       <span class="entradilla">{p.sobreMiEntradilla}</span>
       <h2 id="sobre-mi-titulo">{p.sobreMiTitulo}</h2>
       <Camino etapas={p.camino} fotos={p.fotos} />
-      <span class="entradilla ficha__titulo">{p.enDetalle}</span>
-      <dl class="ficha">
-        {p.ficha.map((f) => (
-          <div class="ficha__fila"><dt>{f.clave}</dt><dd>{Array.isArray(f.valor) ? <ul class="ficha__lista">{f.valor.map((v) => <li>{v}</li>)}</ul> : f.valor}</dd></div>
-        ))}
-      </dl>
       <div class="botones">
         <a class="boton boton--icono" href="https://github.com/miguelferre" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
         <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
@@ -229,12 +223,4 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
   .herramientas { display: flex; flex-direction: column; gap: 56px; }
 
   /* Ficha de «Sobre mí»: clave a la izquierda, valor a la derecha */
-  .ficha__titulo { margin-top: 28px; }
-  .ficha { margin: 0; border-top: 1px solid var(--borde); }
-  .ficha__fila { display: grid; grid-template-columns: 1fr; gap: 2px 24px; padding: 12px 0; border-bottom: 1px solid var(--borde); }
-  @media (min-width: 640px) { .ficha__fila { grid-template-columns: 160px minmax(0, 1fr); } }
-  .ficha dt { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--tinta-3); padding-top: 3px; }
-  .ficha dd { margin: 0; color: var(--tinta-2); text-wrap: pretty; }
-  .ficha__lista { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
-  .ficha__lista li::marker { color: var(--acento); }
 </style>
