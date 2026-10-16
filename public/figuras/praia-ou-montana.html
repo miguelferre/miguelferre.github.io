@@ -227,8 +227,10 @@ FIGS.push({
 [data-fig="praia-ou-montana"] .pm-board.hot{filter:url(#glow)}
 [data-fig="praia-ou-montana"] .pm-board.hot text{fill:var(--panel)}`,
   mount(stage, api) {
-    const K = api.iso.frame([[0,0,0],[240,0,0],[0,150,0],[240,150,0],[120,75,142],[200,0,152],[30,120,150]]);
-    const { P, TOP, FRONT, SIDE, rect, box } = K;
+    const K = api.iso.frame([[0,0,0],[150,0,0],[0,240,0],[150,240,0],[75,120,142],[0,200,152],[120,30,150]]);
+    const { P: P0, TOP, FRONT, SIDE, box: box0 } = K;
+    const P = (x, y, z) => P0(y, x, z), box = (x, y, z, w, d, h, r) => box0(y, x, z, d, w, h, r);   // escena espejada: x e y intercambiados
+    const TSW = 'matrix(0 1 1 0 0 0)';
     const ID = 'praia-ou-montana';
     const zig = (u0, u1, v0, v1, n) => {          // zigzag local (u,v), v grows downward
       let d = `M${u0} ${v1}`; const du = (u1 - u0) / n;
@@ -240,10 +242,10 @@ FIGS.push({
     for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; rays += `<line class="ray" x1="${(Math.cos(a) * 21).toFixed(1)}" y1="${(Math.sin(a) * 21).toFixed(1)}" x2="${(Math.cos(a) * 29).toFixed(1)}" y2="${(Math.sin(a) * 29).toFixed(1)}"/>`; }
 
     let svg = box(0, 0, 0, 240, 150, 8, 12);
-    svg += `<g transform="${TOP(0, 0, 8)}"><rect class="detail" x="8" y="8" width="224" height="134" rx="8"/>
+    svg += `<g transform="${TOP(0, 0, 8)} ${TSW}"><rect class="detail" x="8" y="8" width="224" height="134" rx="8"/>
       <line class="detail" x1="8" y1="82" x2="232" y2="82"/></g>`;
     // costa: arena + mar con olas
-    svg += `<g transform="${TOP(0, 0, 8)}"><rect class="pm-sand" id="${ID}-sand" x="12" y="86" width="216" height="26" rx="4"/>
+    svg += `<g transform="${TOP(0, 0, 8)} ${TSW}"><rect class="pm-sand" id="${ID}-sand" x="12" y="86" width="216" height="26" rx="4"/>
       <rect class="face recess" x="12" y="114" width="216" height="28" rx="4"/>
       <clipPath id="${ID}-clip"><rect x="12" y="114" width="216" height="28"/></clipPath>
       <g clip-path="url(#${ID}-clip)"><g id="${ID}-waves" class="pm-waves"></g></g></g>`;
@@ -251,28 +253,28 @@ FIGS.push({
     svg += box(14, 14, 8, 56, 50, 22, 3) + box(28, 24, 30, 28, 28, 18, 3);
     svg += box(70, 4, 8, 140, 68, 30, 3) + box(100, 14, 38, 90, 48, 30, 3) + box(125, 24, 68, 44, 28, 28, 3) + box(138, 32, 96, 18, 12, 12, 2);
     svg += `<g id="${ID}-trails" class="pm-trails">
-      <g transform="${FRONT(70, 72, 38)}"><path class="pm-trail" d="${zig(10, 70, 5, 26, 5)}"/></g>
-      <g transform="${FRONT(100, 62, 68)}"><path class="pm-trail" d="${zig(40, 80, 4, 26, 4)}"/></g>
-      <g transform="${FRONT(125, 52, 96)}"><path class="pm-trail" d="${zig(10, 32, 3, 24, 3)}"/></g></g>`;
+      <g transform="${SIDE(72, 210, 38)}"><path class="pm-trail" d="${zig(70, 130, 5, 26, 5)}"/></g>
+      <g transform="${SIDE(62, 190, 68)}"><path class="pm-trail" d="${zig(10, 50, 4, 26, 4)}"/></g>
+      <g transform="${SIDE(52, 169, 96)}"><path class="pm-trail" d="${zig(12, 34, 3, 24, 3)}"/></g></g>`;
     const fl = P(144, 38, 108);
     svg += `<g id="${ID}-flag" class="pm-flag" transform="translate(${fl[0].toFixed(1)} ${fl[1].toFixed(1)})"><line x1="0" y1="0" x2="0" y2="-22"/><path d="M0 -22 l15 4 l-15 5 z"/></g>`;
     // costa viva: sombrillas, roca y faro
     const para = (x, y) => { const b = P(x, y, 8); return `<g class="pm-para" transform="translate(${b[0].toFixed(1)} ${b[1].toFixed(1)})"><line x1="0" y1="0" x2="0" y2="-20"/><path class="can" d="M-14 -20 a14 9 0 0 1 28 0 z"/></g>`; };
     svg += para(52, 98) + para(168, 102) + box(18, 124, 8, 14, 10, 8, 3);
-    svg += box(208, 90, 8, 14, 14, 36, 2) + `<g transform="${FRONT(208, 104, 44)}"><rect class="detail" x="2" y="-2" width="10" height="3"/></g>` + `<g id="${ID}-lamp" class="pm-lamp">${box(211, 93, 44, 8, 8, 8, 1)}</g>`;
+    svg += box(208, 90, 8, 14, 14, 36, 2) + `<g transform="${SIDE(104, 222, 44)}"><rect class="detail" x="2" y="-2" width="10" height="3"/></g>` + `<g id="${ID}-lamp" class="pm-lamp">${box(211, 93, 44, 8, 8, 8, 1)}</g>`;
     // poste y brazos
     svg += box(116, 80, 8, 8, 8, 142, 2);
     svg += `<g class="pm-board" id="${ID}-bm">${box(114, 14, 124, 12, 74, 16, 2)}
-      <g transform="${SIDE(126, 88, 140)}"><text class="label" x="12" y="12" style="font-size:12px">${PM_T.hike}</text></g></g>`;
+      <g transform="${FRONT(14, 126, 140)}"><text class="label" x="6" y="12" style="font-size:12px">${PM_T.hike}</text></g></g>`;
     svg += `<g class="pm-board" id="${ID}-bp">${box(114, 80, 104, 12, 66, 16, 2)}
-      <g transform="${SIDE(126, 146, 120)}"><text class="label" x="6" y="12" style="font-size:12px">${PM_T.beach}</text></g></g>`;
+      <g transform="${FRONT(80, 126, 120)}"><text class="label" x="12" y="12" style="font-size:12px">${PM_T.beach}</text></g></g>`;
     // cielo
     svg += `<g class="pm-hit pm-sun" id="${ID}-sun" transform="translate(${sunP[0].toFixed(1)} ${sunP[1].toFixed(1)})">
       <circle class="core" r="14"/>${rays}<circle r="32" style="fill:var(--panel);fill-opacity:0;pointer-events:all"/></g>`;
     svg += `<g class="pm-hit pm-cloud" id="${ID}-cloud" transform="translate(${cloudP[0].toFixed(1)} ${cloudP[1].toFixed(1)}) scale(1.35)">
       <path class="face" d="M-26 8 a10 10 0 0 1 4 -18 a14 14 0 0 1 26 -4 a11 11 0 0 1 18 8 a9 9 0 0 1 -2 14 z"/>
       <rect x="-34" y="-26" width="68" height="42" style="fill:var(--panel);fill-opacity:0;pointer-events:all"/></g>`;
-    svg += `<g class="pm-wind" id="${ID}-wind" transform="translate(${(cloudP[0] + 52).toFixed(1)} ${(cloudP[1] - 6).toFixed(1)})">
+    svg += `<g class="pm-wind" id="${ID}-wind" transform="translate(${(cloudP[0] - 100).toFixed(1)} ${(cloudP[1] - 6).toFixed(1)})">
       <path d="M0 0 h60 q9 0 9 -7"/><path d="M-10 14 h74 q9 0 9 7"/><path d="M6 28 h46 q8 0 8 -6"/></g>`;
 
     const vb = K.viewBox.split(/[ ,]+/).map(Number), k = 0.16; stage.setAttribute('viewBox', [vb[0] - vb[2] * k / 2, vb[1] - vb[3] * k / 2, vb[2] * (1 + k), vb[3] * (1 + k)].map(n => n.toFixed(1)).join(' ')); stage.innerHTML = svg;

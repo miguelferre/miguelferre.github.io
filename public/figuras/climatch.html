@@ -298,8 +298,8 @@ FIGS.push({
     discrete();
     frame(16, 0);
     try { // encuadre ajustado al dibujo, 4:3, con margen para el brillo
-      const bb = stage.getBBox(), m = 10;
-      const w = Math.max(bb.width + 2 * m, (bb.height + 2 * m) * 1.5), h = w * 3 / 4;
+      const bb = stage.getBBox(), m = 20;
+      const w = Math.max(bb.width + 2 * m, (bb.height + 2 * m) * 1.5), h = w / 1.5;
       stage.setAttribute('viewBox', `${(bb.x + bb.width / 2 - w / 2).toFixed(1)} ${(bb.y + bb.height / 2 - h / 2).toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}`);
     } catch (e) {}
 

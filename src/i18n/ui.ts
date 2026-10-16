@@ -25,7 +25,7 @@ export const ui = {
     figurasCredito: 'Figuras con ISO-GLOW ↗',
     portada: {
       descripcion: 'Gobernanza y validación de IA en sanidad. Por mi cuenta, productos de datos geoespaciales. Portfolio de proyectos.',
-      subtitulo: 'Trabajo en la vigilancia y supervisión de modelos de IA. Llegué desde la biología, pasando por los datos, y busco un enfoque humano para estas tecnologías. Por mi cuenta exploro otros temas y construyo herramientas.',
+      subtitulo: 'Empecé en la biología, me fui acercando a los datos y hoy trabajo en la vigilancia y supervisión de modelos de inteligencia artificial. Lo que busco en todo esto es un enfoque humano de la tecnología. Por mi cuenta exploro otros temas y construyo herramientas: aquí tienes algunas.',
       herramientasEntradilla: 'Herramientas',
       herramientasTitulo: 'Herramientas para gobernar y vigilar modelos de IA.',
       descargar: 'Descargar',
@@ -81,7 +81,7 @@ export const ui = {
     figurasCredito: 'Figures made with ISO-GLOW ↗',
     portada: {
       descripcion: 'AI governance and validation in healthcare. On my own time, geospatial data products. Project portfolio.',
-      subtitulo: 'I work on monitoring and overseeing AI models. I came from biology, by way of data, and I look for a human approach to these technologies. On my own, I explore other topics and build tools.',
+      subtitulo: 'I started in biology, moved closer to data, and today I work on monitoring and overseeing AI models. What I look for in all of it is a human approach to technology. On my own, I explore other topics and build tools: here are some of them.',
       herramientasEntradilla: 'Tools',
       herramientasTitulo: 'Tools to govern and monitor AI models.',
       descargar: 'Download',

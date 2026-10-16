@@ -23,6 +23,7 @@ FIGS.push({
     [data-fig="madrid-hli"] .mh-tree.mh-lit { fill: var(--accent); fill-opacity: .7; }
     [data-fig="madrid-hli"] .mh-pip { transition: fill .3s, opacity .3s; }
     [data-fig="madrid-hli"] .mh-pill { transition: fill .3s, stroke .3s; }
+    [data-fig="madrid-hli"] .mh-pt { transition: fill .3s; font-weight: 600; }
     [data-fig="madrid-hli"] .mh-pt { transition: fill .3s; }
   `,
   mount(stage, api) {
