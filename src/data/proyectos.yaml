@@ -54,11 +54,11 @@
   resumen:
     es: >-
       Adapta al español el libro y el curso de seguridad de la IA del Center for AI Safety
-      (CAIS), con su permiso. Añade casos de sanidad y un módulo de monitorización con Vigía
+      (CAIS). Añade casos de sanidad y un módulo de monitorización con Vigía
       como laboratorio. Se estudia en el navegador.
     en: >-
       A Spanish adaptation of the AI safety book and course by the Center for AI Safety
-      (CAIS), with their permission. It adds healthcare cases and a monitoring module with
+      (CAIS). It adds healthcare cases and a monitoring module with
       Vigía as the lab. It runs in the browser.
   # Al publicar el repo y activar Pages desde docs/: estado live.
   estado: privado

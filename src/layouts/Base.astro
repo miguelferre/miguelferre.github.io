@@ -73,22 +73,6 @@ const enlaces = [
       <slot />
     </main>
 
-    <footer class="pie">
-      <div class="contenedor pie__fila">
-        <ul class="leyenda" aria-label={s.leyenda.titulo}>
-          <li><span class="etiqueta etiqueta--live">{s.etiqueta.live}</span> {s.leyenda.live}</li>
-          <li><span class="etiqueta etiqueta--repo">{s.etiqueta.repo}</span> {s.leyenda.repo}</li>
-          <li><span class="etiqueta etiqueta--privado">{s.etiqueta.privado}</span> {s.leyenda.privado}</li>
-        </ul>
-        <div class="pie__enlaces">
-          <a href="https://github.com/miguelferre">GitHub</a>
-          <a href="https://www.linkedin.com/in/miguel-ferreiro-garcia">LinkedIn</a>
-          <a href={lang === 'es' ? '/cv/Miguel_Ferreiro_CV_ES.pdf' : '/cv/Miguel_Ferreiro_CV_EN.pdf'}>{s.cv}</a>
-          <a href="mailto:ferreirogarciamiguel@gmail.com">ferreirogarciamiguel@gmail.com</a>
-          <a href="https://iso-glow.vercel.app" rel="noopener">{s.figurasCredito}</a>
-        </div>
-      </div>
-    </footer>
   </body>
 </html>
 
@@ -145,29 +129,4 @@ const enlaces = [
   }
   .menu .idioma:hover { border-color: var(--acento); }
 
-  .pie {
-    border-top: 1px solid var(--borde);
-    padding-block: 28px;
-    font-size: 12px;
-    color: var(--tinta-3);
-  }
-  .pie__fila {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 16px 32px;
-  }
-  .leyenda {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .leyenda li { display: flex; align-items: center; gap: 6px; }
-  .leyenda .etiqueta { font-size: 10px; padding: 3px 7px; }
-  .pie__enlaces { display: flex; flex-wrap: wrap; gap: 8px 16px; }
-  .pie__enlaces a { color: var(--tinta-3); }
-  .pie__enlaces a:hover { color: var(--acento); }
 </style>

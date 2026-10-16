@@ -30,7 +30,7 @@ export const ui = {
       subtitulo: [
         'Biólogo de formación. Comencé en el mundo de los datos y hoy vigilo y superviso modelos de IA.',
         'Mi objetivo: que la IA siga al servicio de las personas.',
-        'Por mi cuenta exploro y construyo herramientas: explóralas tú mismo.',
+        'Por mi cuenta exploro y construyo herramientas. Explóralas tú mismo.',
       ],
       herramientasEntradilla: 'Herramientas',
       herramientasTitulo: 'Herramientas para gobernar y vigilar modelos de IA.',
@@ -46,13 +46,28 @@ export const ui = {
       sobreMiTitulo: 'Biología → datos → IA.',
       // Ficha de «Sobre mí»: filas clave-valor
       ficha: [
-        { clave: 'Rol', valor: 'AI Governance Specialist en GMV, desde 2026. Gobernanza y validación de modelos de IA en dos sistemas autonómicos de salud: Madrid y Comunitat Valenciana.' },
-        { clave: 'Qué hago', valor: 'Diseño escenarios de validación clínica (doble ciego, ground truth, detección de sesgo) y llevo el ciclo de vida de los modelos con IBM watsonx.governance: inventarios, flujos de aprobación y métricas de calidad, equidad, deriva y explicabilidad.' },
-        { clave: 'Antes', valor: 'Product Owner en GMV (2022-2025): diseñé el flujo de datos de ProReg, la plataforma europea de la European Association of Urology, con modelo OMOP y validación automática de datos clínicos; desbloqueé un proyecto europeo a dos meses de la entrega. Antes, Health Data Analyst (2021-2022) con datasets clínicos europeos.' },
+        { clave: 'Rol', valor: 'AI Governance Specialist en GMV' },
+        { clave: 'Qué hago', valor: [
+          'Diseño escenarios de validación clínica: doble ciego, ground truth y detección de sesgo.',
+          'Llevo el ciclo de vida de los modelos con IBM watsonx.governance: inventarios, flujos de aprobación y métricas de calidad, equidad, deriva y explicabilidad.',
+          'Entiendo el contexto en el que trabaja cada modelo para aplicarle bien la gobernanza: hago de puente entre la parte funcional y la técnica.',
+          'Presento y vendo estas soluciones: demos de gobernanza de IA ante sistemas de salud, junto a IBM.',
+        ] },
+        { clave: 'Antes', valor: [
+          'Gestioné productos de datos de principio a fin, iterando con profesionales clínicos de varios países.',
+          'Diseñé el flujo de datos de plataformas europeas como ProReg, de la European Association of Urology.',
+          'Trabajé con el modelo común de datos OMOP para reutilizar datos clínicos entre centros.',
+          'Analicé datos clínicos y construí procesos ETL con controles de calidad automáticos.',
+        ] },
         { clave: 'Formación', valor: 'Grado en Biología (USC) · Máster en Bioinformática y Bioestadística (UOC) · Máster en Bioingeniería (IQS)' },
-        { clave: 'Certificaciones', valor: 'ISO/IEC 42001 AI Management System (BSI, 2025) · GIS Programming for Environmental Research (ISGlobal, 2025) · PMI-ACP (PMI, 2024) · Data Management Fundamentals (DAMA, 2023)' },
-        { clave: 'Base', valor: 'Santiago de Compostela' },
-        { clave: 'Lo que me gusta', valor: 'Traducir un problema real en algo que la IA pueda abordar, y llevarlo al uso.' },
+        { clave: 'Certificaciones', valor: [
+          'ISO/IEC 42001 AI Management System · BSI, 2025',
+          'GIS Programming for Environmental Research · ISGlobal, 2025',
+          'PMI Agile Certified Practitioner (PMI-ACP) · PMI, 2024',
+          'Data Management Fundamentals · DAMA, 2023',
+        ] },
+        { clave: 'Localización', valor: 'Santiago de Compostela' },
+        { clave: 'Lo que me mueve', valor: 'Traducir un problema real en algo que la IA pueda abordar, y llevarlo al uso.' },
       ],
       perfilLinkedIn: 'Perfil completo en LinkedIn',
       // Fondo animado de la portada: se ven fragmentos de estas palabras
@@ -91,7 +106,7 @@ export const ui = {
       subtitulo: [
         'A biologist by training. I started out in data, and today I monitor and oversee AI models.',
         'My goal: to keep AI at the service of people.',
-        'On my own, I explore and build tools: explore them yourself.',
+        'On my own, I explore and build tools. Explore them yourself.',
       ],
       herramientasEntradilla: 'Tools',
       herramientasTitulo: 'Tools to govern and monitor AI models.',
@@ -106,13 +121,28 @@ export const ui = {
       sobreMiEntradilla: 'About',
       sobreMiTitulo: 'Biology → data → AI.',
       ficha: [
-        { clave: 'Role', valor: 'AI Governance Specialist at GMV since 2026. Governance and validation of AI models in two regional health systems: Madrid and Valencia.' },
-        { clave: 'What I do', valor: 'I design clinical validation scenarios (double-blind, ground truth, bias detection) and run the model lifecycle with IBM watsonx.governance: inventories, approval workflows, and quality, fairness, drift and explainability metrics.' },
-        { clave: 'Before', valor: 'Product Owner at GMV (2022-2025): I designed the data flow of ProReg, the European Association of Urology platform, on an OMOP model with automated clinical-data validation; I unblocked a European project two months before delivery. Before that, Health Data Analyst (2021-2022) on European clinical datasets.' },
+        { clave: 'Role', valor: 'AI Governance Specialist at GMV' },
+        { clave: 'What I do', valor: [
+          'I design clinical validation scenarios: double-blind, ground truth and bias detection.',
+          'I run the model lifecycle with IBM watsonx.governance: inventories, approval workflows, and quality, fairness, drift and explainability metrics.',
+          'I understand the context each model works in so that governance fits it: I bridge the functional and the technical side.',
+          'I present and sell these solutions: AI governance demos for health systems, together with IBM.',
+        ] },
+        { clave: 'Before', valor: [
+          'I managed data products end to end, iterating with clinicians from several countries.',
+          'I designed the data flow of European platforms such as ProReg, for the European Association of Urology.',
+          'I worked with the OMOP common data model to reuse clinical data across sites.',
+          'I analysed clinical data and built ETL processes with automated quality checks.',
+        ] },
         { clave: 'Education', valor: 'BSc in Biology (USC) · MSc in Bioinformatics and Biostatistics (UOC) · MSc in Bioengineering (IQS)' },
-        { clave: 'Certifications', valor: 'ISO/IEC 42001 AI Management System (BSI, 2025) · GIS Programming for Environmental Research (ISGlobal, 2025) · PMI-ACP (PMI, 2024) · Data Management Fundamentals (DAMA, 2023)' },
-        { clave: 'Based in', valor: 'Santiago de Compostela, Spain' },
-        { clave: 'What I enjoy', valor: 'Turning a real problem into something AI can tackle, and taking it into use.' },
+        { clave: 'Certifications', valor: [
+          'ISO/IEC 42001 AI Management System · BSI, 2025',
+          'GIS Programming for Environmental Research · ISGlobal, 2025',
+          'PMI Agile Certified Practitioner (PMI-ACP) · PMI, 2024',
+          'Data Management Fundamentals · DAMA, 2023',
+        ] },
+        { clave: 'Location', valor: 'Santiago de Compostela, Spain' },
+        { clave: 'What drives me', valor: 'Turning a real problem into something AI can tackle, and taking it into use.' },
       ],
       perfilLinkedIn: 'Full profile on LinkedIn',
       claves: [
