@@ -50,8 +50,8 @@ const titulo = `destacado-${proyecto.id}`;
     )}
     {publico ? (
       <div class="botones">
-        {principal && <a class="boton boton--lleno" href={principal.href}>{principal.texto}</a>}
-        {d.url_repo && <a class="boton" href={d.url_repo}>{p.repo}</a>}
+        {principal && <a class="boton boton--lleno" href={principal.href} target="_blank" rel="noopener">{principal.texto}</a>}
+        {d.url_repo && <a class="boton" href={d.url_repo} target="_blank" rel="noopener">{p.repo}</a>}
       </div>
     ) : (
       <p class="destacado__aviso">{p.proximamente}</p>

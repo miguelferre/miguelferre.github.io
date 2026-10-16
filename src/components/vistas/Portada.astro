@@ -33,9 +33,9 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
       <p class="lema">{p.lema}</p>
       <div class="subtitulo">{p.subtitulo.map((linea) => <p>{linea}</p>)}</div>
       <div class="botones">
-        <a class="boton boton--icono" href="https://github.com/miguelferre" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
-        <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
-        <a class="boton boton--lleno" href={cv}><Icono nombre="cv" /> {s.cv}</a>
+        <a class="boton boton--icono" href="https://github.com/miguelferre" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
+        <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
+        <a class="boton boton--lleno" href={cv} target="_blank" rel="noopener"><Icono nombre="cv" /> {s.cv}</a>
       </div>
     </div>
   </section>
@@ -75,9 +75,9 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
         ))}
       </dl>
       <div class="botones">
-        <a class="boton boton--icono" href="https://github.com/miguelferre" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
-        <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
-        <a class="boton boton--lleno" href={cv}><Icono nombre="cv" /> {s.cv}</a>
+        <a class="boton boton--icono" href="https://github.com/miguelferre" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
+        <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
+        <a class="boton boton--lleno" href={cv} target="_blank" rel="noopener"><Icono nombre="cv" /> {s.cv}</a>
       </div>
     </div>
   </section>
