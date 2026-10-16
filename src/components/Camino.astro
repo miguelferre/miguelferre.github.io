@@ -1,0 +1,78 @@
+---
+// El camino de «Sobre mí»: etapas con miniaturas en línea que se amplían al pasar el ratón o al enfocar.
+interface Foto { src: string; alt: string }
+interface Etapa { etiqueta: string; texto: string }
+interface Props { etapas: readonly Etapa[]; fotos: Readonly<Record<string, Foto>> }
+const { etapas, fotos } = Astro.props;
+
+// "texto [[id]] texto" → trozos de texto y de foto
+const trozos = (texto: string) =>
+  texto.split(/(\[\[\w+\]\])/).map((t) => {
+    const m = t.match(/^\[\[(\w+)\]\]$/);
+    return m ? { foto: fotos[m[1]] } : { texto: t };
+  });
+---
+
+<ol class="camino">
+  {etapas.map((e) => (
+    <li class="camino__etapa">
+      <span class="camino__etiqueta">{e.etiqueta}</span>
+      <p class="camino__texto">
+        {trozos(e.texto).map((t) =>
+          'foto' in t && t.foto ? (
+            <span class="mini" tabindex="0">
+              <img class="mini__icono" src={t.foto.src} alt="" loading="lazy" />
+              <span class="mini__grande" role="img" aria-label={t.foto.alt}>
+                <img src={t.foto.src} alt={t.foto.alt} loading="lazy" />
+              </span>
+            </span>
+          ) : (
+            t.texto
+          )
+        )}
+      </p>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .camino { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+  .camino__etapa { display: grid; grid-template-columns: 1fr; gap: 4px 24px; }
+  @media (min-width: 640px) { .camino__etapa { grid-template-columns: 160px minmax(0, 1fr); } }
+  .camino__etiqueta { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); padding-top: 5px; }
+  .camino__texto { font-size: 17px; line-height: 1.65; color: var(--tinta); text-wrap: pretty; }
+
+  /* Miniatura en línea, del alto de una línea de texto */
+  .mini { position: relative; display: inline-block; vertical-align: -0.28em; margin: 0 2px; outline: none; }
+  .mini__icono {
+    display: block; width: 1.9em; height: 1.35em; object-fit: cover; border-radius: 4px;
+    border: 1px solid var(--borde); transition: transform .2s ease;
+  }
+  .mini:hover .mini__icono, .mini:focus-visible .mini__icono { transform: scale(1.08); }
+  .mini:focus-visible .mini__icono { outline: 2px solid var(--acento); outline-offset: 2px; }
+
+  /* Ampliada: encima del texto, sin mover el párrafo */
+  .mini__grande {
+    position: absolute; z-index: 20; left: 50%; bottom: calc(100% + 10px);
+    width: min(320px, 80vw); padding: 6px; border-radius: 10px;
+    background: var(--papel); border: 1px solid var(--borde); box-shadow: 0 12px 32px rgba(31, 29, 43, .18);
+    display: none; pointer-events: none; transform: translate(-50%, 0); transform-origin: 50% 100%;
+  }
+  .mini__grande img { display: block; width: 100%; height: auto; border-radius: 6px; }
+  /* Oculta con display: none para que no ensanche la página en el móvil */
+  .mini:hover .mini__grande, .mini:focus .mini__grande { display: block; animation: aparece .2s ease; }
+  @keyframes aparece {
+    from { opacity: 0; transform: translate(-50%, 6px) scale(.96); }
+    to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  }
+  /* En pantallas estrechas la ampliada se centra en la pantalla */
+  @media (max-width: 640px) {
+    .mini { position: static; }
+    .camino__texto { position: relative; }
+    .mini__grande { left: 50%; width: min(320px, 90%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mini__icono { transition: none; }
+    .mini:hover .mini__grande, .mini:focus .mini__grande { animation: none; }
+  }
+</style>

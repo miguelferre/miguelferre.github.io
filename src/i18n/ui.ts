@@ -44,6 +44,27 @@ export const ui = {
       exploracionesTexto: 'Cada uno empezó con una pregunta.',
       sobreMiEntradilla: 'Sobre mí',
       sobreMiTitulo: 'Biología → datos → IA.',
+      // El camino de «Sobre mí»: [[id]] inserta la miniatura de fotos[id]
+      camino: [
+        { etiqueta: 'Hoy', texto: 'Soy Miguel [[retrato]], vivo en Santiago de Compostela y trabajo en la vigilancia y supervisión de modelos de inteligencia artificial.' },
+        { etiqueta: '2018 · Biología', texto: 'Empecé por la Biología en la USC [[paisaje]], y la naturaleza sigue siendo lo que más me tira fuera del trabajo. Después hice el máster en Bioingeniería en el IQS, y ahí mi trabajo final ya fue más de ordenador que de laboratorio, un mapa de familias de proteínas a partir de sus estructuras [[proteinas]].' },
+        { etiqueta: '2021 · Datos de salud', texto: 'Entré en GMV como analista de datos de salud, con datasets clínicos europeos, y hasta escribí en la revista de la empresa sobre el exposoma, todo lo que no viene en los genes y aun así afecta a nuestra salud [[exposoma]]. A la vez hice el máster en Bioinformática y Bioestadística de la UOC, donde aprendí machine learning, y en el trabajo final analicé tuits para ver qué le pasó a la salud mental en España durante la pandemia [[twitter]].' },
+        { etiqueta: '2022 · Producto', texto: 'Después pasé a producto. Gestioné productos de datos de principio a fin y diseñé el flujo de datos de plataformas europeas como ProReg, iterando con urólogos de varios países y peleándome con el modelo OMOP y los procesos ETL.' },
+        { etiqueta: '2026 · Gobernanza de IA', texto: 'Ahora diseño cómo se valida un modelo de IA antes de que llegue al hospital y cómo se vigila cuando ya está en uso, y lo explico ante sistemas de salud. Mi objetivo es contribuir a que la IA siga al servicio de las personas.' },
+        { etiqueta: 'Por mi cuenta', texto: 'Exploro otros temas y construyo herramientas. Algunas son mapas, como el de los incendios de Galicia [[incendios]] o el de los barrios de Madrid [[madrid]], y otras son de lo mío, como Vigía [[vigia]] o el curso de seguridad de la IA [[curso]]. También me gusta la fotografía, y la foto del paisaje es mía.' },
+      ],
+      fotos: {
+        retrato: { src: '/sobre-mi/retrato.webp', alt: 'Retrato de Miguel Ferreiro' },
+        paisaje: { src: '/sobre-mi/paisaje.webp', alt: 'Valle con un río y montañas nevadas' },
+        proteinas: { src: '/sobre-mi/proteinas.webp', alt: 'Mapa circular de familias de proteínas, del trabajo final del máster en Bioingeniería' },
+        exposoma: { src: '/sobre-mi/exposoma.webp', alt: 'Artículo «¿Cómo afecta el exposoma de las personas a su salud?» en la revista GMV News' },
+        twitter: { src: '/sobre-mi/twitter-salud-mental.webp', alt: 'Nube de palabras sobre depresión en tuits, con la forma de España' },
+        incendios: { src: '/capturas/storymap-incendios.webp', alt: 'Storymap de los incendios de Galicia en 2025' },
+        madrid: { src: '/capturas/madrid-hli.webp', alt: 'Dashboard del índice de vida saludable de Madrid' },
+        vigia: { src: '/capturas/vigia.webp', alt: 'Cuadro de mando de Vigía con datos sintéticos' },
+        curso: { src: '/capturas/curso.webp', alt: 'Portada del curso de seguridad y gobernanza de la IA' },
+      },
+      enDetalle: 'En detalle',
       // Ficha de «Sobre mí»: filas clave-valor
       ficha: [
         { clave: 'Rol', valor: 'AI Governance Specialist en GMV' },
@@ -120,6 +141,26 @@ export const ui = {
       exploracionesTexto: 'Each one started with a question.',
       sobreMiEntradilla: 'About',
       sobreMiTitulo: 'Biology → data → AI.',
+      camino: [
+        { etiqueta: 'Today', texto: 'I am Miguel [[retrato]], I live in Santiago de Compostela, Spain, and I work on monitoring and overseeing artificial intelligence models.' },
+        { etiqueta: '2018 · Biology', texto: 'I started with Biology at USC [[paisaje]], and nature is still what pulls me most outside work. Then I did an MSc in Bioengineering at IQS, and my final project there was already more computer than lab, a map of protein families built from their structures [[proteinas]].' },
+        { etiqueta: '2021 · Health data', texto: 'I joined GMV as a health data analyst, working with European clinical datasets, and I even wrote in the company magazine about the exposome, everything that does not come from our genes and still affects our health [[exposoma]]. At the same time I did the MSc in Bioinformatics and Biostatistics at UOC, where I learned machine learning, and for my thesis I analysed tweets to see what happened to mental health in Spain during the pandemic [[twitter]].' },
+        { etiqueta: '2022 · Product', texto: 'Then I moved to product. I managed data products end to end and designed the data flow of European platforms such as ProReg, iterating with urologists from several countries and wrestling with the OMOP model and ETL processes.' },
+        { etiqueta: '2026 · AI governance', texto: 'Now I design how an AI model is validated before it reaches the hospital and how it is monitored once it is in use, and I explain it to health systems. My goal is to help keep AI at the service of people.' },
+        { etiqueta: 'On my own', texto: 'I explore other topics and build tools. Some are maps, like the one about the Galicia wildfires [[incendios]] or the one about Madrid neighbourhoods [[madrid]], and others are closer to my field, like Vigía [[vigia]] or the AI safety course [[curso]]. I also enjoy photography, and the landscape photo is mine.' },
+      ],
+      fotos: {
+        retrato: { src: '/sobre-mi/retrato.webp', alt: 'Portrait of Miguel Ferreiro' },
+        paisaje: { src: '/sobre-mi/paisaje.webp', alt: 'Valley with a river and snowy mountains' },
+        proteinas: { src: '/sobre-mi/proteinas.webp', alt: 'Circular map of protein families, from the Bioengineering MSc thesis' },
+        exposoma: { src: '/sobre-mi/exposoma.webp', alt: 'Article on the exposome in the GMV News magazine' },
+        twitter: { src: '/sobre-mi/twitter-salud-mental.webp', alt: 'Word cloud of depression-related tweets shaped like Spain' },
+        incendios: { src: '/capturas/storymap-incendios.webp', alt: 'Storymap of the 2025 Galicia wildfires' },
+        madrid: { src: '/capturas/madrid-hli.webp', alt: 'Madrid healthy-living index dashboard' },
+        vigia: { src: '/capturas/vigia.webp', alt: 'Vigía dashboard with synthetic data' },
+        curso: { src: '/capturas/curso.webp', alt: 'Home page of the AI safety and governance course' },
+      },
+      enDetalle: 'In detail',
       ficha: [
         { clave: 'Role', valor: 'AI Governance Specialist at GMV' },
         { clave: 'What I do', valor: [
