@@ -56,7 +56,7 @@ export const ui = {
       fotos: {
         retrato: { src: '/sobre-mi/retrato.webp', alt: 'Retrato de Miguel Ferreiro' },
         mariposa: { src: '/sobre-mi/mariposa.webp', alt: 'Mariposa chupaleches posada en un tojo' },
-        easimap: { src: '/sobre-mi/easimap.webp', alt: 'EASiMap, mapa polar de una familia de enzimas en sus hemisferios norte y sur' },
+        easimap: { src: '/sobre-mi/easimap.webp', alt: 'EASiMap, mapa estelar del hemisferio norte de la familia de enzimas GH1, con zoom en la posición 333: el triptófano se orienta distinto en eucariotas que en bacterias y arqueas' },
         tuits: { src: '/sobre-mi/tuits-covid.webp', alt: 'Gráfico de tuits con sentimiento negativo frente a casos de COVID-19 en España' },
         proreg: { src: '/sobre-mi/proreg.webp', alt: 'Web pública de ProReg, el registro de cáncer de próstata de la EAU' },
         wikinatu: { src: '/sobre-mi/wikinatu.webp', alt: 'WikiNatu en la ruta de O Pindo: 83 especies de iNaturalist sobre el mapa y cinco fichas con foto' },
@@ -125,7 +125,7 @@ export const ui = {
       fotos: {
         retrato: { src: '/sobre-mi/retrato.webp', alt: 'Portrait of Miguel Ferreiro' },
         mariposa: { src: '/sobre-mi/mariposa.webp', alt: 'Scarce swallowtail butterfly on gorse' },
-        easimap: { src: '/sobre-mi/easimap.webp', alt: 'EASiMap, polar map of an enzyme family in its north and south hemispheres' },
+        easimap: { src: '/sobre-mi/easimap.webp', alt: 'EASiMap, star map of the northern hemisphere of the GH1 enzyme family, zooming into position 333: the tryptophan points differently in eukaryotes than in bacteria and archaea' },
         tuits: { src: '/sobre-mi/tuits-covid.webp', alt: 'Chart of negative-sentiment tweets against COVID-19 cases in Spain' },
         proreg: { src: '/sobre-mi/proreg.webp', alt: 'Public website of ProReg, the EAU prostate cancer registry' },
         wikinatu: { src: '/sobre-mi/wikinatu.webp', alt: 'WikiNatu on the O Pindo route: 83 iNaturalist species on the map and five species cards' },
