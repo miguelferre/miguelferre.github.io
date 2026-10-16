@@ -225,8 +225,9 @@ FIGS.push({
     [data-fig="vigia"] .wire { stroke-width:2; }
     [data-fig="vigia"] .pulse { stroke-width:3.2; }
     [data-fig="vigia"] .pulse.go { animation-duration:.9s; }
-    [data-fig="vigia"] .halo.hot { opacity:1; }
-    [data-fig="vigia"] .glass.hot { filter:url(#soft); }
+    [data-fig="vigia"] #vg-ass .ico { stroke:var(--line); }
+    [data-fig="vigia"] #vg-ass.act .ico, [data-fig="vigia"] #vg-ass.act #vg-at { stroke:var(--accent); filter:url(#soft); }
+    [data-fig="vigia"] #vg-ass.act #vg-at { fill:var(--accent); stroke:none; }
     [data-fig="vigia"] .label { fill:var(--ink-hi); font-weight:600; }
     [data-fig="vigia"] #vg-at.vivo { fill:var(--accent); }
     @keyframes vg-nd { 0% { fill:var(--accent-hi); } 100% { fill:var(--detail); } }
@@ -251,8 +252,7 @@ FIGS.push({
 
     // asistente de IA (MCP)
     svg += `<g id="vg-ass">${box(36, -16, PZ, 44, 48, 40, 3)}
-      <g transform="${SIDE(80, 32, PZ + 40)}"><rect id="vg-ah" class="halo" x="0" y="0" width="48" height="40" filter="url(#bloom)"/>
-      <rect id="vg-ag" class="face glass" x="3" y="3" width="42" height="22" rx="2"/>${vgIco('chat', 6, 6, 15, 'vivo')}
+      <g transform="${SIDE(80, 32, PZ + 40)}"><rect id="vg-ag" class="face glass" x="3" y="3" width="42" height="22" rx="2"/>${vgIco('chat', 6, 6, 15)}
       <text id="vg-at" class="label" x="23" y="19.5" font-size="9.5" letter-spacing=".4">MCP</text>
       <text class="label" x="5" y="35" font-size="6.4" letter-spacing=".5">${VG_T.ass}</text></g></g>`;
 
@@ -265,11 +265,10 @@ FIGS.push({
         <circle id="vg-e${i}" class="led" cx="74" cy="${RY[i]}" r="2.8"/></g>`;
     });
     svg += `<g transform="${SIDE(96, 144, MZ)}">
-      <rect id="vg-halo" class="halo" x="-2" y="0" width="88" height="80" filter="url(#bloom)"/>
-      <rect id="vg-glass" class="face glass" x="3" y="3" width="78" height="62" rx="3"/>${filas}
+      <rect id="vg-glass" class="face glass" x="3" y="3" width="78" height="66" rx="3"/>${filas}
       <path class="detail" d="M7 52H77"/>${vgIco('persona', 7, 54, 11, 'mon')}<g id="vg-ticks"></g>
-      <text class="label" x="6" y="72.5" font-size="8.6" letter-spacing="1.2">${VG_T.mon}</text>
-      <circle id="vg-alarm" class="led" cx="74" cy="69.5" r="2.6"/></g>`;
+      <text class="label" x="6" y="78" font-size="7.4" letter-spacing="1.2">${VG_T.mon}</text>
+      <circle id="vg-alarm" class="led" cx="52" cy="75" r="2.6"/></g>`;
 
     // modelo con red neuronal en la tapa y puerto en la cara
     svg += box(24, 156, PZ, 60, 84, 64, 5);
@@ -291,10 +290,10 @@ FIGS.push({
 
     // cables (sobre el suelo, por delante de las cajas)
     const cable = (id, d) => `<path class="wire-under" d="${d}"/><path id="${id}" class="wire" d="${d}"/><path id="${id}-p" class="pulse" pathLength="1000" d="${d}"/>`;
-    svg += cable('vg-wr', path([[42, 240, PZ + .5], [42, 262, PZ + .5]]));
+    svg += cable('vg-wr', path([[84, 232, PZ + .5], [72, 232, PZ + .5], [72, 268, PZ + .5], [54, 268, PZ + .5]]));
     svg += cable('vg-w', path([[106, 180, 31], [106, 180, PZ + .5], [106, 110, PZ + .5], [96, 110, PZ + .5]]));
-    svg += cable('vg-wu', path([[60, 278, PZ + .5], [118, 278, PZ + .5], [118, 90, PZ + .5], [96, 90, PZ + .5]]));
-    svg += cable('vg-wa', path([[84, 8, PZ + .5], [90, 8, PZ + .5], [90, 60, PZ + .5]]));
+    svg += cable('vg-wu', path([[54, 288, PZ + .5], [118, 288, PZ + .5], [118, 90, PZ + .5], [96, 90, PZ + .5]]));
+    svg += cable('vg-wa', path([[80, 8, PZ + .5], [90, 8, PZ + .5], [90, 60, PZ + .5]]));
 
     // sonda (pulsable)
     svg += `<g class="press" id="vg-probe">${box(84, 174, 26, 22, 12, 10, 2)}
@@ -338,10 +337,9 @@ FIGS.push({
       probe.setAttribute('transform', st.on ? '' : `translate(${fuera[0].toFixed(2)} ${fuera[1].toFixed(2)})`);
       ['vg-w', 'vg-wu', 'vg-wa'].forEach(id => $(id).classList.toggle('hot', st.on));
       $('vg-wr').classList.add('hot');
-      ['vg-ag', 'vg-ah'].forEach(id => $(id).classList.toggle('hot', st.on && st.ass));
-      $('vg-at').setAttribute('class', st.on && st.ass ? 'label vivo' : 'label');
+      $('vg-ass').classList.toggle('act', st.on && st.ass);
       $('vg-ring').classList.toggle('hot', st.on); nodes.forEach(n => n.classList.toggle('hot', st.on));
-      $('vg-glass').classList.toggle('hot', st.on); $('vg-halo').classList.toggle('hot', st.on);
+      $('vg-glass').classList.toggle('hot', st.on);
       $('vg-alarm').classList.toggle('hot', st.on && st.mal);
       [0, 1, 2].forEach(i => {
         $('vg-f' + i).classList.toggle('mal', st.on && st.mal && i === 2);
@@ -373,7 +371,7 @@ FIGS.push({
     function asistente() {
       if (!st.on) return;
       st.ass = true; render(); api.replay($('vg-wa-p'));
-      api.after(1500, () => { st.ass = false; render(); });
+      api.after(1000, () => { st.ass = false; render(); });
     }
     let auto = true, n = 0;
     const stopAuto = () => { auto = false; };

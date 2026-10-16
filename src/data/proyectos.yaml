@@ -123,8 +123,8 @@
   tipo: exploracion
   nombre: Storymap incendios Galicia 2025
   pregunta:
-    es: ¿Cómo ardió Galicia en 2025?
-    en: How did Galicia burn in 2025?
+    es: ¿Por qué ardió tanto Galicia en 2025?
+    en: Why did so much of Galicia burn in 2025?
   resumen:
     es: >-
       dNBR sobre Sentinel-2. Incluye el mayor incendio registrado en Galicia.
