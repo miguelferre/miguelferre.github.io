@@ -22,12 +22,18 @@ FIGS.push({
 [data-fig="storymap-incendios"] .sm-ln{fill:none;stroke:var(--accent-hi);stroke-width:2.2;vector-effect:non-scaling-stroke}
 [data-fig="storymap-incendios"] .sm-strip{fill:var(--accent);opacity:.3}
 [data-fig="storymap-incendios"] .sm-lg{font-size:10px}
+[data-fig="storymap-incendios"] .sm-f1{fill:var(--accent-hi)}
+[data-fig="storymap-incendios"] .sm-f2{fill:var(--accent)}
+[data-fig="storymap-incendios"] .sm-sm{fill:none;stroke:var(--ink);stroke-width:.8;vector-effect:non-scaling-stroke}
+[data-fig="storymap-incendios"] .sm-pip{fill:none;stroke:var(--line);stroke-width:1;vector-effect:non-scaling-stroke}
+[data-fig="storymap-incendios"] .sm-pip.on{fill:var(--accent);stroke:var(--accent-hi)}
 [data-fig="storymap-incendios"] #storymap-incendios-sat{cursor:pointer}`,
   mount(stage, api) {
     const id = 'storymap-incendios';
-    const N = 6, S = 34, M = 10, W = N * S + 2 * M, Z = 104, GZ = 12, SWEEP = 2400;
-    const K = api.iso.frame([[0, 0, 0], [W, 0, 0], [0, W, 0], [W, W, 0], [W / 2, 0, Z + 36]]);
+    const N = 6, S = 30, M = 8, W = N * S + 2 * M, Z = 66, GZ = 12, SWEEP = 2400, FIRE = 3200;
+    const K = api.iso.frame([[0, 0, 0], [W, 0, 0], [0, W, 0], [W, W, 0], [W / 2, 0, Z + 18]]);
     const { P, D, TOP, FRONT, box } = K;
+    const [OX, OY] = P(0, 0, 0);
     const CHSEV = [0, 1, 2, 3, 2, 1, 3, 2, 3, 3];
 
     // parcelas quemadas: un frente que crece desde una parcela, 3 por capítulo
@@ -71,6 +77,17 @@ FIGS.push({
           const [px, py] = P(x, y, zt);
           svg += `<path class="sm-t" d="M${px - 3.2} ${py}L${px + 3.2} ${py}L${px} ${py - 8.5}Z"/>`;
         });
+        if (burn[key(i, j)]) {
+          svg += `<g id="${id}-f${key(i, j)}" style="display:none">`;
+          [[0.3, 0.35, 1.3], [0.7, 0.45, 1.05], [0.45, 0.78, 1.4]].forEach(([fx, fy, sc], n) => {
+            const [px, py] = P(x0 + fx * S, y0 + fy * S, zt);
+            svg += `<g class="sm-fl" data-n="${n}" data-sc="${sc}" transform="translate(${px.toFixed(1)} ${py.toFixed(1)})">` +
+              `<path class="sm-sm" d="M0 -20q-4 -5 0 -10t0 -10t0 -10"/>` +
+              `<g class="sm-fi"><path class="sm-f1" filter="url(#glow)" d="M0 0C-7 -3 -7 -11 -1 -19C0 -13 2 -12 3 -15C7 -9 8 -3 0 0Z"/>` +
+              `<path class="sm-f2" d="M0 0C-3 -1 -3 -5 0 -9C1 -6 3 -4 0 0Z"/></g></g>`;
+          });
+          svg += `</g>`;
+        }
       }
     }
 
@@ -87,21 +104,21 @@ FIGS.push({
     sat += `<g transform="${TOP(cx + 14, -4, Z + 8)}">${api.iso.slits(5, 37, 6, 0, 8)}</g>`;
     svg += `<g id="${id}-pos"><g id="${id}-sat">${sat}</g></g>`;
 
-    // leyenda
-    const [vx, vy, vw, vh] = K.viewBox.split(/[ ,]+/).map(Number);
-    const lx = vx + 8, ly = vy + vh - 50;
-    svg += `<text class="label sm-lg" x="${lx}" y="${ly}">${SMI.title}</text>`;
-    [['1', 1], ['2', 2], ['3', 3]].forEach(([, v], n) => {
-      const yy = ly + 7 + n * 12;
+    // leyenda mínima y progreso de capítulos
+    const lx = OX - 180, ly = OY + 152;
+    [1, 2, 3].forEach((v, n) => {
+      const yy = ly + n * 12;
       svg += `<rect class="face" x="${lx}" y="${yy}" width="10" height="9"/><rect class="sm-b s${v}" x="${lx}" y="${yy}" width="10" height="9" style="transition:none"/>`;
       svg += `<text class="label sm-lg" x="${lx + 16}" y="${yy + 8}">${SMI.sev[v]}</text>`;
     });
+    for (let n = 0; n < 9; n++) svg += `<rect class="sm-pip" id="${id}-p${n}" x="${OX + 62 + n * 12}" y="${OY + 186}" width="8" height="8"/>`;
 
-    stage.setAttribute('viewBox', K.viewBox);
+    stage.setAttribute('viewBox', `${OX - 186} ${OY - 58} 372 279`);
     stage.innerHTML = svg;
     const $ = s => stage.querySelector('#' + id + '-' + s);
     const cellEl = {};
-    order.forEach(c => { cellEl[key(c.i, c.j)] = $('b' + key(c.i, c.j)); c.seen = false; });
+    order.forEach(c => { const k = key(c.i, c.j); cellEl[k] = $('b' + k); c.fEl = $('f' + k); c.seen = false; c.fire = null; c.sc = false; });
+    const pips = [...Array(9).keys()].map(n => $('p' + n));
     const fan = $('fan'), strip = $('strip'), ln = $('ln'), pos = $('pos'), satEl = $('sat');
 
     const st = { ch: 1, t0: -1e9, auto: false };
@@ -126,25 +143,48 @@ FIGS.push({
       order.forEach(c => {
         const want = c.ch <= st.ch && (p >= 1 || M + c.j * S + S / 2 <= by);
         const el = cellEl[key(c.i, c.j)];
-        if (want && !c.seen) { c.seen = true; el.setAttribute('class', 'sm-b s' + c.sev); }
-        else if (c.ch > st.ch && c.seen) { c.seen = false; el.setAttribute('class', 'sm-b'); }
+        if (want && !c.seen) {
+          c.seen = true;
+          if (p < 1) { c.fire = ts; c.sc = false; c.fEl.style.display = ''; }
+          else { c.sc = true; el.setAttribute('class', 'sm-b s' + c.sev); }
+        } else if (c.ch > st.ch && c.seen) {
+          c.seen = false; c.fire = null; c.sc = false; c.fEl.style.display = 'none'; el.setAttribute('class', 'sm-b');
+        }
+        if (c.fire !== null) {
+          const age = ts - c.fire;
+          if (age > 2200 && !c.sc) { c.sc = true; el.setAttribute('class', 'sm-b s' + c.sev); }
+          if (age > FIRE) { c.fire = null; c.fEl.style.display = 'none'; return; }
+          c.fEl.style.opacity = Math.min(1, age / 250, (FIRE - age) / 700).toFixed(2);
+          c.fEl.querySelectorAll('.sm-fl').forEach(f => {
+            const n = +f.dataset.n, sc = +f.dataset.sc;
+            const fl = 1 + 0.22 * Math.sin(ts / 85 + n * 2) + 0.1 * Math.sin(ts / 41 + n);
+            f.querySelector('.sm-fi').setAttribute('transform', `scale(${(sc * (1 + 0.08 * Math.sin(ts / 110 + n))).toFixed(2)} ${(sc * fl).toFixed(2)}) skewX(${(6 * Math.sin(ts / 130 + n)).toFixed(1)})`);
+            const q = ((ts / 1500) + n * 0.33) % 1;
+            const sm = f.querySelector('.sm-sm');
+            sm.setAttribute('transform', `translate(${(2 * Math.sin(q * 6)).toFixed(1)} ${(-q * 8).toFixed(1)})`);
+            sm.style.opacity = ((1 - q) * 0.7).toFixed(2);
+          });
+        }
       });
     }
-    function clearAll() { order.forEach(c => { c.seen = false; cellEl[key(c.i, c.j)].setAttribute('class', 'sm-b'); }); }
+    function clearAll() { order.forEach(c => { c.seen = false; c.fire = null; c.sc = false; c.fEl.style.display = 'none'; cellEl[key(c.i, c.j)].setAttribute('class', 'sm-b'); }); }
     function readout() { api.readout(`${SMI.chap} ${st.ch}/9 · ${SMI.sevWord} ${SMI.sev[CHSEV[st.ch]]}`); }
     function go(n, sweep) {
       st.ch = n;
       st.t0 = sweep ? performance.now() : -1e9;
+      pips.forEach((e, n) => e.setAttribute('class', 'sm-pip' + (n < n0() ? ' on' : '')));
       readout();
     }
-    const next = () => { if (st.ch >= 9) { clearAll(); go(1, true); } else go(st.ch + 1, true); };
+    const n0 = () => st.ch;
+    const next = () => { if (st.ch < 9) go(st.ch + 1, true); };
+    const autoNext = () => { if (st.ch >= 9) { clearAll(); go(1, true); } else go(st.ch + 1, true); };
     const prev = () => { if (st.ch > 1) go(st.ch - 1, false); };
     const reset = () => { clearAll(); go(1, true); };
     const stop = () => { st.auto = false; };
 
     satEl.addEventListener('click', e => { e.stopPropagation(); stop(); next(); });
     stage.addEventListener('pointerdown', stop);
-    readout();
+    go(1, false);
     update(performance.now());
     api.loop(update);
 
@@ -159,7 +199,7 @@ FIGS.push({
       demo() {
         st.auto = true;
         reset();
-        api.every(3600, () => { if (st.auto) next(); });
+        api.every(3600, () => { if (st.auto) autoNext(); });
       },
     };
   },

@@ -15,17 +15,17 @@
   tipo: herramienta
   nombre: Vigía
   pregunta:
-    es: Un programa para vigilar modelos de IA en producción.
-    en: A program to monitor AI models in production.
+    es: Una herramienta para vigilar modelos de IA en producción.
+    en: A tool to monitor AI models in production.
   resumen:
     es: >-
       Mide la calidad, la equidad entre grupos, la deriva y la explicabilidad de un modelo
       con datos tabulares. Añade la capa humana: deskilling, overrides y auditoría de la
-      interacción. Programa local para Windows, sin código; un asistente de IA lo opera por MCP.
+      interacción. Herramienta local para Windows, sin código; un asistente de IA lo opera por MCP.
     en: >-
       It measures quality, fairness across groups, drift and explainability for a model
       on tabular data. It adds the human layer: deskilling, overrides and an audit of the
-      interaction. A local, no-code Windows program; an AI assistant can run it over MCP.
+      interaction. A local, no-code Windows tool; an AI assistant can run it over MCP.
   # Al publicar el repo: estado repo.
   estado: privado
   url_repo: https://github.com/miguelferre/vigia
@@ -75,8 +75,88 @@
     - valor: "≈40 h"
       etiqueta: { es: "de estudio", en: "of study" }
   nota_codigo:
-    es: Reproduced with permission of Center for AI Safety, Inc. CAIS no respalda este curso.
-    en: Reproduced with permission of Center for AI Safety, Inc. CAIS does not endorse this course.
+    es: Reproduced with permission of Center for AI Safety, Inc.
+    en: Reproduced with permission of Center for AI Safety, Inc.
+
+- id: madrid-hli
+  tipo: exploracion
+  nombre: Madrid Healthy Living Index
+  pregunta:
+    es: ¿Dónde se vive más sano en Madrid?
+    en: Where is healthy living easiest in Madrid?
+  resumen:
+    es: >-
+      Índice compuesto desde cero. El titular: correlación negativa con la renta
+      (ρ = −0,26). Isócronas en R, dashboard shinylive.
+    en: >-
+      A composite index built from scratch. The headline: negative correlation with income
+      (ρ = −0.26). Isochrones in R, shinylive dashboard.
+  estado: live
+  url_live: https://miguelferre.github.io/Madrid_HLI/
+  url_repo: https://github.com/miguelferre/Madrid_HLI
+  captura: /capturas/madrid-hli.webp
+  figura: madrid-hli
+  metricas:
+    - valor: "9 %"
+      etiqueta: { es: "de barrios cumplen 3-30-300", en: "of neighbourhoods meet 3-30-300" }
+  inicio: 2026
+  intro:
+    es: >-
+      Un índice compuesto de vida saludable por barrio. Los barrios del sur, de renta más baja,
+      puntúan mejor que los del norte; solo el 9 % de los barrios cumple la regla 3-30-300.
+    en: >-
+      A composite healthy-living index by neighbourhood. The lower-income southern neighbourhoods
+      score better than the northern ones; only 9% of neighbourhoods meet the 3-30-300 rule.
+  como:
+    es:
+      - R con terra, sf y dodgr; isócronas sobre 605.000 vértices
+      - Regla 3-30-300 de acceso al verde urbano
+      - Dashboard shinylive (WebAssembly) servido desde GitHub Pages
+    en:
+      - R with terra, sf and dodgr; isochrones over 605,000 vertices
+      - The 3-30-300 rule for access to urban green
+      - shinylive (WebAssembly) dashboard served from GitHub Pages
+
+- id: storymap-incendios
+  tipo: exploracion
+  nombre: Storymap incendios Galicia 2025
+  pregunta:
+    es: ¿Qué ardió en Galicia en 2025 y cómo?
+    en: What burned in Galicia in 2025, and how?
+  resumen:
+    es: >-
+      dNBR sobre Sentinel-2. Incluye el mayor incendio registrado en Galicia.
+      Nueve capítulos scrollytelling, ES y GL.
+    en: >-
+      dNBR over Sentinel-2. It includes the largest fire ever recorded in Galicia.
+      Nine scrollytelling chapters, ES and GL.
+  estado: live
+  url_live: https://miguelferre.github.io/STORYMAP_INCENDIOS_GALICIA_2025/
+  url_repo: https://github.com/miguelferre/STORYMAP_INCENDIOS_GALICIA_2025
+  captura: /capturas/storymap-incendios.webp
+  figura: storymap-incendios
+  metricas:
+    - valor: "1.400"
+      etiqueta: { es: "incendios", en: "fires" }
+  inicio: 2025
+  intro:
+    es: >-
+      Empecé en agosto de 2025, durante los incendios. Un storymap de nueve capítulos:
+      1.400 incendios y el mayor registrado en Galicia, Larouco-Seadur, 31.778 ha.
+    en: >-
+      I started in August 2025, while the fires were still burning. A nine-chapter storymap:
+      1,400 fires and the largest ever recorded in Galicia, Larouco-Seadur, 31,778 ha.
+  como:
+    es:
+      - Sentinel-2 vía Microsoft Planetary Computer, severidad por dNBR
+      - 21 pasos de procesado con geopandas, rasterio y xarray
+      - Mapbox GL JS, scrollytelling, ES y GL
+      - 69 commits, en solitario, de la ingesta al despliegue en Pages
+    en:
+      - Sentinel-2 via Microsoft Planetary Computer, burn severity by dNBR
+      - 21 processing steps with geopandas, rasterio and xarray
+      - Mapbox GL JS, scrollytelling, ES and GL
+      - 69 commits, solo, from ingestion to deployment on Pages
 
 - id: praia-ou-montana
   tipo: exploracion
@@ -146,83 +226,3 @@
   nota_codigo:
     es: El repositorio es privado; se enseña bajo petición.
     en: The repository is private; available on request.
-
-- id: storymap-incendios
-  tipo: exploracion
-  nombre: Storymap incendios Galicia 2025
-  pregunta:
-    es: ¿Qué ardió en Galicia en 2025 y cómo?
-    en: What burned in Galicia in 2025, and how?
-  resumen:
-    es: >-
-      dNBR sobre Sentinel-2. Incluye el mayor incendio registrado en Galicia.
-      Nueve capítulos scrollytelling, ES y GL.
-    en: >-
-      dNBR over Sentinel-2. It includes the largest fire ever recorded in Galicia.
-      Nine scrollytelling chapters, ES and GL.
-  estado: live
-  url_live: https://miguelferre.github.io/STORYMAP_INCENDIOS_GALICIA_2025/
-  url_repo: https://github.com/miguelferre/STORYMAP_INCENDIOS_GALICIA_2025
-  captura: /capturas/storymap-incendios.webp
-  figura: storymap-incendios
-  metricas:
-    - valor: "1.400"
-      etiqueta: { es: "incendios", en: "fires" }
-  inicio: 2025
-  intro:
-    es: >-
-      Empecé en agosto de 2025, durante los incendios. Un storymap de nueve capítulos:
-      1.400 incendios y el mayor registrado en Galicia, Larouco-Seadur, 31.778 ha.
-    en: >-
-      I started in August 2025, while the fires were still burning. A nine-chapter storymap:
-      1,400 fires and the largest ever recorded in Galicia, Larouco-Seadur, 31,778 ha.
-  como:
-    es:
-      - Sentinel-2 vía Microsoft Planetary Computer, severidad por dNBR
-      - 21 pasos de procesado con geopandas, rasterio y xarray
-      - Mapbox GL JS, scrollytelling, ES y GL
-      - 69 commits, en solitario, de la ingesta al despliegue en Pages
-    en:
-      - Sentinel-2 via Microsoft Planetary Computer, burn severity by dNBR
-      - 21 processing steps with geopandas, rasterio and xarray
-      - Mapbox GL JS, scrollytelling, ES and GL
-      - 69 commits, solo, from ingestion to deployment on Pages
-
-- id: madrid-hli
-  tipo: exploracion
-  nombre: Madrid Healthy Living Index
-  pregunta:
-    es: ¿Dónde se vive más sano en Madrid?
-    en: Where is healthy living easiest in Madrid?
-  resumen:
-    es: >-
-      Índice compuesto desde cero. El titular: correlación negativa con la renta
-      (ρ = −0,26). Isócronas en R, dashboard shinylive.
-    en: >-
-      A composite index built from scratch. The headline: negative correlation with income
-      (ρ = −0.26). Isochrones in R, shinylive dashboard.
-  estado: live
-  url_live: https://miguelferre.github.io/Madrid_HLI/
-  url_repo: https://github.com/miguelferre/Madrid_HLI
-  captura: /capturas/madrid-hli.webp
-  figura: madrid-hli
-  metricas:
-    - valor: "9 %"
-      etiqueta: { es: "de barrios cumplen 3-30-300", en: "of neighbourhoods meet 3-30-300" }
-  inicio: 2026
-  intro:
-    es: >-
-      Un índice compuesto de vida saludable por barrio. Los barrios del sur, de renta más baja,
-      puntúan mejor que los del norte; solo el 9 % de los barrios cumple la regla 3-30-300.
-    en: >-
-      A composite healthy-living index by neighbourhood. The lower-income southern neighbourhoods
-      score better than the northern ones; only 9% of neighbourhoods meet the 3-30-300 rule.
-  como:
-    es:
-      - R con terra, sf y dodgr; isócronas sobre 605.000 vértices
-      - Regla 3-30-300 de acceso al verde urbano
-      - Dashboard shinylive (WebAssembly) servido desde GitHub Pages
-    en:
-      - R with terra, sf and dodgr; isochrones over 605,000 vertices
-      - The 3-30-300 rule for access to urban green
-      - shinylive (WebAssembly) dashboard served from GitHub Pages

@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TarjetaExploracion from '../TarjetaExploracion.astro';
 import Destacado from '../Destacado.astro';
+import Icono from '../Icono.astro';
 import { t, rutas, cifra, type Lang } from '../../i18n/ui';
 
 interface Props { lang: Lang }
@@ -14,7 +15,6 @@ const otro: Lang = lang === 'es' ? 'en' : 'es';
 const herramientas = await getCollection('proyectos', (e) => e.data.tipo === 'herramienta');
 
 const exploraciones = await getCollection('proyectos', (e) => e.data.tipo === 'exploracion');
-const inventario = [...herramientas, ...exploraciones].filter((e) => e.data.metricas?.length);
 const cv = lang === 'es' ? '/cv/Miguel_Ferreiro_CV_ES.pdf' : '/cv/Miguel_Ferreiro_CV_EN.pdf';
 const idHerramientas = lang === 'es' ? 'herramientas' : 'tools';
 const idExploraciones = lang === 'es' ? 'exploraciones' : 'explorations';
@@ -32,9 +32,9 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
       <h1>Miguel Ferreiro García</h1>
       <p class="subtitulo">{p.subtitulo}</p>
       <div class="botones">
-        <a class="boton boton--lleno" href="https://github.com/miguelferre">GitHub</a>
-        <a class="boton" href="https://www.linkedin.com/in/miguel-ferreiro-garcia">LinkedIn</a>
-        <a class="boton" href={cv}>{s.cv}</a>
+        <a class="boton boton--icono" href="https://github.com/miguelferre" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
+        <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
+        <a class="boton boton--lleno" href={cv}><Icono nombre="cv" /> {s.cv}</a>
       </div>
     </div>
   </section>
@@ -72,20 +72,10 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
         {p.ficha.map((f) => (
           <div class="ficha__fila"><dt>{f.clave}</dt><dd>{f.valor}</dd></div>
         ))}
-        <div class="ficha__fila">
-          <dt>{p.inventario}</dt>
-          <dd>
-            <ul class="inventario">
-              {inventario.map((e) => (
-                <li><span class="inventario__nombre">{e.data.nombre}</span> <span class="inventario__cifra">{cifra(e.data.metricas![0].valor, lang)} {e.data.metricas![0].etiqueta[lang]}</span></li>
-              ))}
-            </ul>
-          </dd>
-        </div>
       </dl>
       <div class="botones">
-        <a class="boton" href="https://www.linkedin.com/in/miguel-ferreiro-garcia">{p.perfilLinkedIn}</a>
-        <a class="boton" href={cv}>{s.cv}</a>
+        <a class="boton" href="https://www.linkedin.com/in/miguel-ferreiro-garcia"><Icono nombre="linkedin" /> {p.perfilLinkedIn}</a>
+        <a class="boton" href={cv}><Icono nombre="cv" /> {s.cv}</a>
       </div>
     </div>
   </section>
@@ -238,7 +228,4 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
   @media (min-width: 640px) { .ficha__fila { grid-template-columns: 160px minmax(0, 1fr); } }
   .ficha dt { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--tinta-3); padding-top: 3px; }
   .ficha dd { margin: 0; color: var(--tinta-2); text-wrap: pretty; }
-  .inventario { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-  .inventario__nombre { font-weight: 600; color: var(--tinta); }
-  .inventario__cifra { color: var(--acento); font-variant-numeric: tabular-nums; }
 </style>

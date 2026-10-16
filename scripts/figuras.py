@@ -23,11 +23,13 @@ EMBED_CSS = """
   :root[data-theme="light"] { --bg:#f6f4ef; --panel:#f6f4ef; --edge:#ddd8ce; }
   body { padding:0; background:transparent; overflow:hidden; }
   .wrap { max-width:none; gap:0; }
-  .top, #nav, .made-with { display:none !important; }
+  /* .wrap > .top es la barra de la plantilla; .face.top son las caras superiores y no se tocan */
+  .wrap > .top, #nav, .made-with { display:none !important; }
   .layout { display:block; }
   figure { border:0; border-radius:0; background:transparent; padding:4px 8px 6px; }
-  figure > .cap:first-child { display:none; }
-  .cap { font-size:11px; }
+  /* Sin pies: ni número de figura, ni pista de teclas, ni readout */
+  .cap { display:none !important; }
+  figure { padding:0; }
   /* ?compacto: tarjeta de exploración; la figura llena el marco y no lleva pie */
   html.compacto, html.compacto body, html.compacto .wrap, html.compacto .layout, html.compacto figure { height:100%; }
   html.compacto figure { padding:0; display:block; }

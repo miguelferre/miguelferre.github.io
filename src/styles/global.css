@@ -110,6 +110,9 @@ p { margin: 0; text-wrap: pretty; }
   font-size: 14px;
   text-decoration: none;
 }
+.boton { gap: 8px; }
+/* Botón solo con icono: cuadrado, el nombre va en aria-label */
+.boton--icono { padding: 0; width: 44px; justify-content: center; }
 .boton:hover { border-color: var(--acento); color: var(--tinta); }
 .boton--lleno { background: var(--acento); border-color: var(--acento); color: #fff; }
 .boton--lleno:hover { background: var(--acento-oscuro); border-color: var(--acento-oscuro); color: #fff; }

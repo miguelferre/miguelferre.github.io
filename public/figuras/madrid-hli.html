@@ -135,11 +135,13 @@
   :root[data-theme="light"] { --bg:#f6f4ef; --panel:#f6f4ef; --edge:#ddd8ce; }
   body { padding:0; background:transparent; overflow:hidden; }
   .wrap { max-width:none; gap:0; }
-  .top, #nav, .made-with { display:none !important; }
+  /* .wrap > .top es la barra de la plantilla; .face.top son las caras superiores y no se tocan */
+  .wrap > .top, #nav, .made-with { display:none !important; }
   .layout { display:block; }
   figure { border:0; border-radius:0; background:transparent; padding:4px 8px 6px; }
-  figure > .cap:first-child { display:none; }
-  .cap { font-size:11px; }
+  /* Sin pies: ni número de figura, ni pista de teclas, ni readout */
+  .cap { display:none !important; }
+  figure { padding:0; }
   /* ?compacto: tarjeta de exploración; la figura llena el marco y no lleva pie */
   html.compacto, html.compacto body, html.compacto .wrap, html.compacto .layout, html.compacto figure { height:100%; }
   html.compacto figure { padding:0; display:block; }
@@ -192,7 +194,7 @@ const MH_T = {
     : 'Ciudad isométrica de nueve barrios. Cada barrio se comprueba con la regla 3-30-300 de verde urbano: tres árboles a la vista, 30 % de copa y un parque a menos de 300 m. Clic en un barrio, flechas, espacio o r.',
   block: EN ? 'block' : 'barrio',
   N: 'N', S: 'S',
-  pills: ['3', '30 %', '300 m'],
+  pills: EN ? ['3 trees', '30 % canopy', '300 m park'] : ['3 árboles', '30 % copa', '300 m parque'],
 };
 
 FIGS.push({
@@ -215,7 +217,7 @@ FIGS.push({
     // compliance per block [3 trees, 30 % canopy, 300 m park]; rows: north, middle, south
     const OK = [[1,0,0],[0,0,0],[0,1,0], [1,0,0],[0,0,1],[1,0,0], [1,1,1],[1,1,0],[1,0,1]];
     const PARK = 6;
-    const K = api.iso.frame([[-14,-14,0],[W+14,W+14,0],[-14,W+14,0],[W+14,-14,0],[0,0,34],[W,W,-38]]);
+    const K = api.iso.frame([[-14,-14,0],[W+14,W+14,0],[-14,W+14,0],[W+14,-14,0],[0,0,26],[W,W,-22]]);
     const { P, TOP, box } = K;
     const vb = K.viewBox.split(/[ ,]+/).map(Number);
     const cell = (a, b) => [6 + a * 22 + 2, 6 + b * 22 + 2];
@@ -234,7 +236,7 @@ FIGS.push({
       const items = [];
       const park = i === PARK;
       const used = new Set();
-      if (!park) for (const [a, b, h] of BLD.slice(0, 5 + (i % 2))) { used.add(a + ',' + b); items.push({ a, b, h: h + (i % 3) * 3, bld: true }); }
+      if (!park) for (const [a, b, h] of BLD.slice(0, 5 + (i % 2))) { used.add(a + ',' + b); items.push({ a, b, h: Math.round(h * .75) + (i % 3) * 2, bld: true }); }
       else { for (const [a, b, h] of [[3,3,12]]) { used.add(a+','+b); items.push({ a, b, h, bld: true }); } }
       const free = [];
       for (let a = 0; a < 4; a++) for (let b = 0; b < 4; b++) if (!used.has(a + ',' + b)) free.push([a, b]);
@@ -245,26 +247,27 @@ FIGS.push({
       list.sort((p, q) => (p.a + p.b) - (q.a + q.b));
       for (const t of list) {
         const [cx, cy] = cell(t.a, t.b);
-        if (t.bld) svg += box(x0 + cx, y0 + cy, 3, 18, 18, t.h, 2);
+        if (t.bld) svg += box(x0 + cx, y0 + cy, 3, 18, 18, t.h, 0) + `<g transform="${TOP(x0 + cx, y0 + cy, 3 + t.h)}"><rect class="face" style="fill:var(--recess);stroke:var(--ink)" width="18" height="18"/></g>`;
         else { const q = P(x0 + cx + 9, y0 + cy + 9, 15); svg += box(x0 + cx + 8, y0 + cy + 8, 3, 2, 2, 8, 0) + `<circle class="face mh-tree mh-t${i}" cx="${q[0]}" cy="${q[1]}" r="6.5"/>`; }
       }
     }
     // orientation labels, outside the plate
-    const pn = P(0, W / 2, 0), ps = P(W, W / 2, 0), side = (p, dx, dy, t) => `<text class="label" x="${p[0]+dx}" y="${p[1]+dy}" text-anchor="middle" style="font-size:15px">${t}</text>`;
+    const pn = P(0, W / 2, 0), ps = P(W, W / 2, 0), side = (p, dx, dy, t) => `<text class="label" x="${p[0]+dx}" y="${p[1]+dy}" text-anchor="middle" style="font-size:19px">${t}</text>`;
     svg += side(pn, -14, -8, MH_T.N) + side(ps, 14, 22, MH_T.S);
     // dynamic layers
     svg += `<g id="madrid-hli-ring" pointer-events="none"></g>`;
     for (let i = 0; i < 9; i++) {
       const r = (i / 3) | 0, c = i % 3, p = P(r * STEP + B / 2, c * STEP + B / 2, 36);
-      for (let k = 0; k < 3; k++) svg += `<circle id="madrid-hli-pip${i}-${k}" class="mh-pip" cx="${p[0] + (k - 1) * 10}" cy="${p[1]}" r="3.6" pointer-events="none" filter="url(#soft)"/>`;
+      for (let k = 0; k < 3; k++) svg += `<circle id="madrid-hli-pip${i}-${k}" class="mh-pip" cx="${p[0] + (k - 1) * 17}" cy="${p[1]}" r="6.5" pointer-events="none" filter="url(#soft)"/>`;
     }
     // indicator pills in screen space, below the city
-    const pcx = P(W / 2, W / 2, 0)[0], py = P(W, W, 0)[1] + 26, pw = 74, pg = 12;
+    const pcx = P(W / 2, W / 2, 0)[0], py = P(W, W, 0)[1] - 8, pw = 150, pg = 8;
     for (let k = 0; k < 3; k++) {
       const x = pcx + (k - 1) * (pw + pg) - pw / 2;
-      svg += `<g pointer-events="none"><rect id="madrid-hli-pill${k}" class="face led mh-pill" x="${x}" y="${py}" width="${pw}" height="28" rx="14"/>`
-           + `<text id="madrid-hli-pt${k}" class="label mh-pt" x="${x + pw / 2}" y="${py + 19}" text-anchor="middle" style="font-size:15px">${MH_T.pills[k]}</text></g>`;
+      svg += `<g pointer-events="none"><rect id="madrid-hli-pill${k}" class="face led mh-pill" x="${x}" y="${py}" width="${pw}" height="34" rx="17"/>`
+           + `<text id="madrid-hli-pt${k}" class="label mh-pt" x="${x + pw / 2}" y="${py + 23}" text-anchor="middle" style="font-size:16px">${MH_T.pills[k]}</text></g>`;
     }
+    svg += `<text id="madrid-hli-name" class="label" x="${vb[0] + 14}" y="${vb[1] + 28}" style="font-size:22px"></text>`;
     for (let i = 0; i < 9; i++) {
       const r = (i / 3) | 0, c = i % 3;
       svg += `<g transform="${TOP(r*STEP, c*STEP, 3)}"><rect class="mh-hit" data-mh="${i}" width="${B}" height="${B}"/></g>`;
@@ -300,9 +303,10 @@ FIGS.push({
           $('pill' + k).setAttribute('class', 'face led mh-pill' + (on ? ' hot' : ''));
           $('pt' + k).style.fill = on ? 'var(--panel)' : 'var(--ink-hi)';
         }
+        $('name').textContent = `${MH_T.block} ${st.sel + 1}`;
         api.readout(`${MH_T.block} ${st.sel + 1} · 3 ${ok[0] ? '✓' : '✗'} 30 ${ok[1] ? '✓' : '✗'} 300 ${ok[2] ? '✓' : '✗'}`);
       } else {
-        ringG.innerHTML = '';
+        ringG.innerHTML = ''; $('name').textContent = '';
         for (let k = 0; k < 3; k++) { $('pill' + k).setAttribute('class', 'face led mh-pill'); $('pt' + k).style.fill = 'var(--ink-hi)'; }
         api.readout(EN ? '9 blocks · 1 passes all' : '9 barrios · 1 cumple los tres');
       }
