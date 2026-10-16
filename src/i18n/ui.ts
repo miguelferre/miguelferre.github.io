@@ -26,7 +26,12 @@ export const ui = {
     portada: {
       descripcion: 'Gobernanza y validación de IA en sanidad. Por mi cuenta, productos de datos geoespaciales. Portfolio de proyectos.',
       lema: 'Gobernando sistemas de inteligencia artificial.',
-      subtitulo: 'Biólogo de formación, pasé por el mundo de los datos y hoy trabajo en la vigilancia y supervisión de modelos de inteligencia artificial. Mi objetivo es contribuir a que la inteligencia artificial siga al servicio de las personas. Por mi cuenta exploro otros temas y construyo herramientas: explóralas tú mismo.',
+      // Descripción de la portada: una idea por línea
+      subtitulo: [
+        'Biólogo de formación. Pasé por el mundo de los datos y hoy trabajo en la vigilancia y supervisión de modelos de inteligencia artificial.',
+        'Mi objetivo es contribuir a que la inteligencia artificial siga al servicio de las personas.',
+        'Por mi cuenta exploro otros temas y construyo herramientas: explóralas tú mismo.',
+      ],
       herramientasEntradilla: 'Herramientas',
       herramientasTitulo: 'Herramientas para gobernar y vigilar modelos de IA.',
       descargar: 'Descargar',
@@ -83,7 +88,11 @@ export const ui = {
     portada: {
       descripcion: 'AI governance and validation in healthcare. On my own time, geospatial data products. Project portfolio.',
       lema: 'Governing artificial intelligence systems.',
-      subtitulo: 'A biologist by training, I moved through the world of data and today I work on monitoring and overseeing AI models. My goal is to help keep artificial intelligence at the service of people. On my own, I explore other topics and build tools: explore them yourself.',
+      subtitulo: [
+        'A biologist by training. I moved through the world of data, and today I work on monitoring and overseeing AI models.',
+        'My goal is to help keep artificial intelligence at the service of people.',
+        'On my own, I explore other topics and build tools: explore them yourself.',
+      ],
       herramientasEntradilla: 'Tools',
       herramientasTitulo: 'Tools to govern and monitor AI models.',
       descargar: 'Download',

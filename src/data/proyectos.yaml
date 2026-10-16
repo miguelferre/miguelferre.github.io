@@ -88,11 +88,9 @@
     en: Is healthy living equally easy in every Madrid neighbourhood?
   resumen:
     es: >-
-      Índice compuesto desde cero. El titular: correlación negativa con la renta
-      (ρ = −0,26). Isócronas en R, dashboard shinylive.
+      Un índice de vida saludable para cada barrio de Madrid, hecho con datos abiertos: comida sana, deporte, parques y arbolado. Se consulta en un dashboard interactivo.
     en: >-
-      A composite index built from scratch. The headline: negative correlation with income
-      (ρ = −0.26). Isochrones in R, shinylive dashboard.
+      A healthy-living index for every Madrid neighbourhood, built from open data: healthy food, sport, parks and tree cover. You explore it in an interactive dashboard.
   estado: live
   url_live: https://miguelferre.github.io/Madrid_HLI/
   url_repo: https://github.com/miguelferre/Madrid_HLI
@@ -127,11 +125,9 @@
     en: Why did so much of Galicia burn in 2025?
   resumen:
     es: >-
-      dNBR sobre Sentinel-2. Incluye el mayor incendio registrado en Galicia.
-      Nueve capítulos scrollytelling, ES y GL.
+      Un relato con mapas, capítulo a capítulo, de los incendios de 2025 en Galicia: dónde ardió, cuánto y con qué severidad, medido con imágenes de satélite.
     en: >-
-      dNBR over Sentinel-2. It includes the largest fire ever recorded in Galicia.
-      Nine scrollytelling chapters, ES and GL.
+      A map story, chapter by chapter, of the 2025 wildfires in Galicia: where it burned, how much and how severely, measured from satellite images.
   estado: live
   url_live: https://miguelferre.github.io/STORYMAP_INCENDIOS_GALICIA_2025/
   url_repo: https://github.com/miguelferre/STORYMAP_INCENDIOS_GALICIA_2025
@@ -168,11 +164,9 @@
     en: Beach day or mountain hike today in Galicia?
   resumen:
     es: >-
-      Playas y 201 rutas de monte, meteo y mar en tiempo real, puesta de sol orográfica.
-      Veredicto explicado; los pesos los mueve el usuario.
+      Una app que mira el tiempo, el mar y la distancia, y te dice si hoy en Galicia toca playa o ruta por el monte, explicando por qué.
     en: >-
-      Beaches and 201 trails, live weather and sea state, terrain-aware sunset.
-      An explained verdict; the user sets the weights.
+      An app that checks the weather, the sea and the distance, and tells you whether today in Galicia calls for the beach or a mountain hike, and why.
   estado: repo
   figura: praia-ou-montana
   metricas:
@@ -201,11 +195,9 @@
     en: Which city has the climate I want, today and in 2050?
   resumen:
     es: >-
-      ERA5 desde 1940, CMIP6 con banda de incertidumbre, percentiles en vez de medias.
-      En producción desde junio de 2026.
+      Una web que compara el clima real de cualquier ciudad del mundo, hoy y en 2050, para encontrar la que se parece al clima que buscas.
     en: >-
-      ERA5 since 1940, CMIP6 with an uncertainty band, percentiles instead of averages.
-      In production since June 2026.
+      A website that compares the real climate of any city in the world, today and in 2050, to find the one that matches the climate you want.
   estado: live
   url_live: https://climatch.app
   captura: /capturas/climatch.webp

@@ -84,8 +84,8 @@ FIGS.push({
     {
       const x = 14, y = 96, w = 62, d = 70, h = 36;
       let s = `<g id="curso-g3" style="cursor:pointer">${box(x, y, 0, w, d, h, 2)}${box(x + 8, y + 10, h, w - 16, d - 20, 6, 1)}`;
-      s += wins(BK(x, y, h), 3, 7, 7, 4, 1, 10, 20, 16, 0) + wins(FR(x, y + d, h), 3, 7, 7, 3, 1, 10, 20, 17, 0);
-      s += `<g transform="${BK(x, y, h)}"><rect data-b="3" class="glass" x="${d / 2 - 6}" y="${h - 12}" width="12" height="12" rx="1"/></g></g>`;
+      s += wins(BK(x, y, h), 3, 7, 7, 4, 1, 10, 20, 16, 0) + wins(FR(x, y + d, h), 3, 6, 7, 2, 1, 10, 20, 40, 0);
+      s += `<g transform="${FR(x, y + d, h)}"><rect data-b="3" class="glass" x="${w / 2 - 6}" y="${h - 15}" width="12" height="15" rx="1"/></g></g>`;
       add(x, y, x + w, y + d, s);
     }
     // 4 Aula magna (x240-340, y0-52): cúpula y entrada
@@ -105,10 +105,9 @@ FIGS.push({
       + `<path d="M-7 0 L-3.5 -19 L3.5 -19 L7 0 Z" style="fill:var(--accent);stroke:var(--accent-hi)" vector-effect="non-scaling-stroke" filter="url(#soft)"/>`
       + `<circle cy="-25" r="6.5" style="fill:var(--accent-hi);stroke:var(--accent)" vector-effect="non-scaling-stroke" filter="url(#soft)"/></g>`;
     // rótulos flotantes (no se inclinan con el plano)
-    const TAGS = [[174, 24, 80, -20, -62], [69, 29, 140, -50, -50], [328, 116, 56, 30, -36], [45, 131, 0, -48, 14], [290, 26, 56, 32, -78]];
+    const TAGS = [[174, 24, 80, -20, -62], [69, 29, 140, -50, -50], [328, 116, 56, 52, -36], [45, 131, 0, -72, 14], [290, 26, 56, 32, -78]];
     TAGS.forEach(([tx, ty, tz, dx, dy], i) => {
       const p = Pw(tx, ty, tz), L = CURSO_B[i][0].split('|'), n = Math.max(...L.map(l => l.length), 8), W = Math.round(n * 7.6 + 18), H = 14 * L.length + 17;
-      svg += `<path class="detail" vector-effect="non-scaling-stroke" d="M${p[0]} ${p[1]} L${p[0] + dx} ${dy > 0 ? p[1] + dy : p[1] + dy + H}"/>`;
       svg += `<g id="curso-tag${i}" transform="translate(${p[0] + dx - W / 2} ${p[1] + dy})" style="cursor:pointer"><rect class="glass" width="${W}" height="${H}" rx="5"/>`
         + L.map((l, k) => `<text class="label" x="${W / 2}" y="${14 + 14 * k}" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-hi)">${l}</text>`).join('')
         + `<text class="label" x="${W / 2}" y="${H - 5}" text-anchor="middle" style="font-size:10px;fill:var(--ink)">${EN ? 'mod.' : 'mód.'} ${CURSO_B[i][1]}</text></g>`;

@@ -31,7 +31,7 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
     <div class="contenedor pila pila--ancha limite">
       <h1>Miguel Ferreiro García</h1>
       <p class="lema">{p.lema}</p>
-      <p class="subtitulo">{p.subtitulo}</p>
+      <div class="subtitulo">{p.subtitulo.map((linea) => <p>{linea}</p>)}</div>
       <div class="botones">
         <a class="boton boton--icono" href="https://github.com/miguelferre" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
         <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
@@ -162,7 +162,7 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
   /* Fondo animado: mancha de color, velo crema tras el texto y lluvia de fragmentos */
   .portada { position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--borde); }
   .portada > .contenedor { position: relative; z-index: 2; }
-  .portada .subtitulo { color: var(--tinta); font-weight: 500; }
+  .portada .subtitulo { color: var(--tinta); font-weight: 500; font-size: 17px; line-height: 1.55; display: flex; flex-direction: column; gap: 10px; max-width: 640px; }
   .portada .lema { font-family: var(--titulos); font-weight: 600; font-size: clamp(20px, 2.4vw, 26px); color: var(--acento); text-wrap: balance; }
   .portada .boton:not(.boton--lleno) { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(6px); }
 
