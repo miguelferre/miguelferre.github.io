@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Etiqueta from './Etiqueta.astro';
-import { t, rutaExploracion, type Lang } from '../i18n/ui';
+import { t, rutaExploracion, cifra, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -15,7 +15,11 @@ const ficha = rutaExploracion(lang, proyecto.id);
 
 <article class="tarjeta">
   <a class="tarjeta__enlace" href={ficha} aria-label={`${d.nombre}: ${d.pregunta[lang]}`}>
-    {d.captura ? (
+    {d.figura ? (
+      <div class="tarjeta__figura" aria-hidden="true">
+        <iframe src={`/figuras/${d.figura}.html?lang=${lang}&compacto`} title="" tabindex="-1" loading="lazy"></iframe>
+      </div>
+    ) : d.captura ? (
       <img class="tarjeta__captura" src={d.captura} alt="" width="1280" height="800" loading="lazy" />
     ) : (
       <div class="tarjeta__marcador" aria-hidden="true">{s.sinDesplegarCorto}</div>
@@ -27,6 +31,9 @@ const ficha = rutaExploracion(lang, proyecto.id);
       <Etiqueta lang={lang} estado={d.estado} nota={d.estado_nota?.[lang]} />
     </div>
     <h3><a class="tarjeta__titulo" href={ficha}>{d.pregunta[lang]}</a></h3>
+    {d.metricas?.[0] && (
+      <p class="tarjeta__cifra"><span class="tarjeta__cifra-valor">{cifra(d.metricas[0].valor, lang)}</span> {d.metricas[0].etiqueta[lang]}</p>
+    )}
     <p class="tarjeta__resumen">{d.resumen[lang]}</p>
   </div>
 </article>
@@ -41,6 +48,9 @@ const ficha = rutaExploracion(lang, proyecto.id);
     height: 168px;
     border-bottom: 1px solid var(--borde);
   }
+  /* La figura se mueve sola; el clic va al enlace de la tarjeta */
+  .tarjeta__figura { aspect-ratio: 16 / 10; border-bottom: 1px solid var(--borde); background: var(--fondo); }
+  .tarjeta__figura iframe { display: block; width: 100%; height: 100%; border: 0; pointer-events: none; }
   .tarjeta__captura {
     object-fit: cover;
     object-position: top;
@@ -60,5 +70,7 @@ const ficha = rutaExploracion(lang, proyecto.id);
   .tarjeta__nombre { font-size: 12px; font-weight: 600; color: var(--tinta-3); }
   .tarjeta__titulo { color: var(--tinta); text-decoration: none; }
   .tarjeta__titulo:hover { color: var(--acento); }
+  .tarjeta__cifra { font-size: 13px; color: var(--tinta-3); }
+  .tarjeta__cifra-valor { font-family: var(--titulos); font-weight: 700; font-size: 26px; color: var(--acento); font-variant-numeric: tabular-nums; margin-right: 4px; }
   .tarjeta__resumen { font-size: 14px; line-height: 1.55; color: var(--tinta-2); }
 </style>

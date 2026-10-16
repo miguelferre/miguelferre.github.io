@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TarjetaExploracion from '../TarjetaExploracion.astro';
 import Destacado from '../Destacado.astro';
-import { t, rutas, type Lang } from '../../i18n/ui';
+import { t, rutas, cifra, type Lang } from '../../i18n/ui';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -14,6 +14,7 @@ const otro: Lang = lang === 'es' ? 'en' : 'es';
 const herramientas = await getCollection('proyectos', (e) => e.data.tipo === 'herramienta');
 
 const exploraciones = await getCollection('proyectos', (e) => e.data.tipo === 'exploracion');
+const inventario = [...herramientas, ...exploraciones].filter((e) => e.data.metricas?.length);
 const cv = lang === 'es' ? '/cv/Miguel_Ferreiro_CV_ES.pdf' : '/cv/Miguel_Ferreiro_CV_EN.pdf';
 const idHerramientas = lang === 'es' ? 'herramientas' : 'tools';
 const idExploraciones = lang === 'es' ? 'exploraciones' : 'explorations';
@@ -63,26 +64,25 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
     </div>
   </section>
 
-  <section class="tira tira--papel" aria-labelledby="privado">
-    <div class="contenedor pila pila--ancha">
-      <span class="entradilla" id="privado">{p.privadoEntradilla}</span>
-      <div class="rejilla rejilla--3">
-        {p.privado.map((f) => (
-          <div class="ficha-corta">
-            <span class="ficha-corta__meta">{f.meta}</span>
-            <span class="ficha-corta__titulo">{f.titulo}</span>
-            <span class="ficha-corta__texto">{f.texto}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
   <section class="tira" id={idSobreMi} aria-labelledby="sobre-mi-titulo">
     <div class="contenedor pila pila--ancha limite">
       <span class="entradilla">{p.sobreMiEntradilla}</span>
       <h2 id="sobre-mi-titulo">{p.sobreMiTitulo}</h2>
-      <p>{p.sobreMiTexto}</p>
+      <dl class="ficha">
+        {p.ficha.map((f) => (
+          <div class="ficha__fila"><dt>{f.clave}</dt><dd>{f.valor}</dd></div>
+        ))}
+        <div class="ficha__fila">
+          <dt>{p.inventario}</dt>
+          <dd>
+            <ul class="inventario">
+              {inventario.map((e) => (
+                <li><span class="inventario__nombre">{e.data.nombre}</span> <span class="inventario__cifra">{cifra(e.data.metricas![0].valor, lang)} {e.data.metricas![0].etiqueta[lang]}</span></li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      </dl>
       <div class="botones">
         <a class="boton" href="https://www.linkedin.com/in/miguel-ferreiro-garcia">{p.perfilLinkedIn}</a>
         <a class="boton" href={cv}>{s.cv}</a>
@@ -232,15 +232,13 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
 
   .herramientas { display: flex; flex-direction: column; gap: 56px; }
 
-  .ficha-corta {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 20px;
-    border-radius: 12px;
-    border: 1px solid var(--borde);
-  }
-  .ficha-corta__meta { font-size: 12px; color: var(--tinta-3); }
-  .ficha-corta__titulo { font-family: var(--titulos); font-weight: 600; font-size: 16px; }
-  .ficha-corta__texto { font-size: 13px; color: var(--tinta-2); }
+  /* Ficha de «Sobre mí»: clave a la izquierda, valor a la derecha */
+  .ficha { margin: 0; border-top: 1px solid var(--borde); }
+  .ficha__fila { display: grid; grid-template-columns: 1fr; gap: 2px 24px; padding: 12px 0; border-bottom: 1px solid var(--borde); }
+  @media (min-width: 640px) { .ficha__fila { grid-template-columns: 160px minmax(0, 1fr); } }
+  .ficha dt { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--tinta-3); padding-top: 3px; }
+  .ficha dd { margin: 0; color: var(--tinta-2); text-wrap: pretty; }
+  .inventario { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .inventario__nombre { font-weight: 600; color: var(--tinta); }
+  .inventario__cifra { color: var(--acento); font-variant-numeric: tabular-nums; }
 </style>

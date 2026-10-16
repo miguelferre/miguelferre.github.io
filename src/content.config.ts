@@ -22,6 +22,8 @@ const proyectos = defineCollection({
     url_repo: z.string().url().optional(),
     url_descarga: z.string().url().optional(),
     captura: z.string().optional(),
+    // id de una figura iso-glow en public/figuras/<id>.html
+    figura: z.string().optional(),
     captura_alt: texto.optional(),
     inicio: z.number().optional(),
     intro: texto.optional(),

@@ -54,7 +54,6 @@ const enlaces = [
     <a class="saltar" href="#contenido">{s.saltar}</a>
     <header class="cabecera">
       <div class="contenedor cabecera__fila">
-        <a class="marca" href={rutas.inicio[lang]}>miguelferre</a>
         <nav aria-label={lang === 'es' ? 'Principal' : 'Main'}>
           <ul class="menu">
             {enlaces.map((e) => (
@@ -86,6 +85,7 @@ const enlaces = [
           <a href="https://www.linkedin.com/in/miguel-ferreiro-garcia">LinkedIn</a>
           <a href={lang === 'es' ? '/cv/Miguel_Ferreiro_CV_ES.pdf' : '/cv/Miguel_Ferreiro_CV_EN.pdf'}>{s.cv}</a>
           <a href="mailto:ferreirogarciamiguel@gmail.com">ferreirogarciamiguel@gmail.com</a>
+          <a href="https://iso-glow.vercel.app" rel="noopener">{s.figurasCredito}</a>
         </div>
       </div>
     </footer>
@@ -112,16 +112,9 @@ const enlaces = [
   .cabecera__fila {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 16px;
     padding-block: 18px;
-  }
-  .marca {
-    font-family: var(--titulos);
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--tinta);
-    text-decoration: none;
   }
   .menu {
     display: flex;

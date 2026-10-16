@@ -22,9 +22,10 @@ export const ui = {
     etiqueta: { live: 'LIVE', repo: 'REPO', privado: 'PRIVADO' },
     leyenda: { live: 'enlaza al producto', repo: 'enlaza al código', privado: 'se enseña en conversación', titulo: 'Qué significa cada etiqueta' },
     cv: 'CV (PDF)',
+    figurasCredito: 'Figuras con ISO-GLOW ↗',
     portada: {
       descripcion: 'Gobernanza y validación de IA en sanidad. Por mi cuenta, productos de datos geoespaciales. Portfolio de proyectos.',
-      subtitulo: 'Trabajo en la frontera entre un modelo y las personas que tienen que usarlo. Gobernanza y validación de IA en sanidad. Por mi cuenta, productos de datos geoespaciales.',
+      subtitulo: 'Trabajo en gobernanza y supervisión de IA en sanidad. Por mi cuenta construyo herramientas de IA y productos con datos abiertos.',
       herramientasEntradilla: 'Herramientas',
       herramientasTitulo: 'Una herramienta de monitorización de modelos y un curso.',
       descargar: 'Descargar',
@@ -33,17 +34,21 @@ export const ui = {
       repo: 'Repo',
       marcos: 'Marcos de referencia',
       exploracionesEntradilla: 'Exploraciones geoespaciales',
-      exploracionesTitulo: 'Proyectos con datos abiertos, hechos por curiosidad.',
+      exploracionesTitulo: 'Proyectos con datos abiertos.',
       exploracionesTexto: 'Cada uno empezó con una pregunta.',
-      privadoEntradilla: 'Trabajo privado con salida pública',
-      privado: [
-        { meta: 'Artículo · septiembre de 2026', titulo: 'Gobernanza de IA en Sanidad', texto: 'Revista médica española. Enlace cuando se publique.' },
-        { meta: 'Ponente · mayo de 2026', titulo: 'Demo de watsonx.governance con IBM', texto: 'Gobernanza de modelos ante sistemas de salud.' },
-        { meta: 'Privado · bajo demanda', titulo: 'Pipeline agéntico de búsqueda de empleo', texto: 'Recogida multifuente, scoring con LLM, digest diario. Se enseña en conversación.' },
-      ],
       sobreMiEntradilla: 'Sobre mí',
       sobreMiTitulo: 'Biólogo de formación, análisis de datos y producto después, gobernanza de IA ahora.',
-      sobreMiTexto: 'Trabajo en GMV como AI Governance Specialist: validación clínica y ciclo de vida de modelos de IA con IBM watsonx.governance en dos sistemas autonómicos de salud. Antes, Product Owner de plataformas europeas de datos clínicos y analista de datos de salud. Máster en Bioinformática y Bioestadística (UOC) y en Bioingeniería (IQS); grado en Biología (USC). Certificado en ISO/IEC 42001 por BSI. Santiago de Compostela.',
+      // Ficha de «Sobre mí»: filas clave-valor e inventario de proyectos (sale de proyectos.yaml)
+      ficha: [
+        { clave: 'Rol', valor: 'AI Governance Specialist · GMV' },
+        { clave: 'Qué hago', valor: 'Validación clínica y ciclo de vida de modelos de IA con IBM watsonx.governance, en dos sistemas autonómicos de salud.' },
+        { clave: 'Antes', valor: 'Product Owner de plataformas europeas de datos clínicos; analista de datos de salud.' },
+        { clave: 'Formación', valor: 'Grado en Biología (USC) · Máster en Bioinformática y Bioestadística (UOC) · Máster en Bioingeniería (IQS)' },
+        { clave: 'Certificación', valor: 'ISO/IEC 42001, BSI' },
+        { clave: 'Base', valor: 'Santiago de Compostela' },
+        { clave: 'Lo que me gusta', valor: 'Traducir un problema real en algo que la IA pueda abordar, y llevarlo al uso.' },
+      ],
+      inventario: 'Inventario',
       perfilLinkedIn: 'Perfil completo en LinkedIn',
       // Fondo animado de la portada: se ven fragmentos de estas palabras
       claves: [
@@ -74,9 +79,10 @@ export const ui = {
     etiqueta: { live: 'LIVE', repo: 'REPO', privado: 'PRIVATE' },
     leyenda: { live: 'links to the product', repo: 'links to the code', privado: 'shown in conversation', titulo: 'What each label means' },
     cv: 'CV (PDF)',
+    figurasCredito: 'Figures made with ISO-GLOW ↗',
     portada: {
       descripcion: 'AI governance and validation in healthcare. On my own time, geospatial data products. Project portfolio.',
-      subtitulo: 'I work at the boundary between a model and the people who have to use it. AI governance and validation in healthcare. On my own time, geospatial data products.',
+      subtitulo: 'I work on AI governance and oversight in healthcare. On my own, I build AI tools and open-data products.',
       herramientasEntradilla: 'Tools',
       herramientasTitulo: 'A model-monitoring tool and a course.',
       descargar: 'Download',
@@ -85,17 +91,20 @@ export const ui = {
       repo: 'Repo',
       marcos: 'Reference frameworks',
       exploracionesEntradilla: 'Geospatial explorations',
-      exploracionesTitulo: 'Open-data projects, built out of curiosity.',
+      exploracionesTitulo: 'Open-data projects.',
       exploracionesTexto: 'Each one started with a question.',
-      privadoEntradilla: 'Private work with public output',
-      privado: [
-        { meta: 'Article · September 2026', titulo: 'AI Governance in Healthcare', texto: 'Spanish medical journal. Link when published.' },
-        { meta: 'Speaker · May 2026', titulo: 'watsonx.governance demo with IBM', texto: 'Model governance for health systems.' },
-        { meta: 'Private · on request', titulo: 'Agentic job-search pipeline', texto: 'Multi-source harvesting, LLM scoring, daily digest. Shown in conversation.' },
-      ],
       sobreMiEntradilla: 'About',
       sobreMiTitulo: 'Biologist by training, then data analysis and product, AI governance now.',
-      sobreMiTexto: 'I work at GMV as an AI Governance Specialist: clinical validation and AI model lifecycle with IBM watsonx.governance across two regional health systems. Before that, Product Owner of European clinical-data platforms and health data analyst. MSc in Bioinformatics and Biostatistics (UOC) and in Bioengineering (IQS); BSc in Biology (USC). ISO/IEC 42001 certified by BSI. Based in Santiago de Compostela, Spain.',
+      ficha: [
+        { clave: 'Role', valor: 'AI Governance Specialist · GMV' },
+        { clave: 'What I do', valor: 'Clinical validation and AI model lifecycle with IBM watsonx.governance, across two regional health systems.' },
+        { clave: 'Before', valor: 'Product Owner of European clinical-data platforms; health data analyst.' },
+        { clave: 'Education', valor: 'BSc in Biology (USC) · MSc in Bioinformatics and Biostatistics (UOC) · MSc in Bioengineering (IQS)' },
+        { clave: 'Certification', valor: 'ISO/IEC 42001, BSI' },
+        { clave: 'Based in', valor: 'Santiago de Compostela, Spain' },
+        { clave: 'What I enjoy', valor: 'Turning a real problem into something AI can tackle, and taking it into use.' },
+      ],
+      inventario: 'Inventory',
       perfilLinkedIn: 'Full profile on LinkedIn',
       claves: [
         'governance', 'AI', 'healthcare', 'validation', 'data', 'geospatial',
@@ -119,6 +128,12 @@ export const ui = {
     },
   },
 } as const;
+
+// Las cifras se escriben en formato español en proyectos.yaml; en inglés cambian separadores
+export function cifra(valor: string, lang: Lang) {
+  if (lang === 'es') return valor;
+  return valor.replace(/(\d)\.(\d{3})/g, '$1,$2').replace(/(\d),(\d{1,2})(?!\d)/g, '$1.$2').replace(/(\d) %/g, '$1%');
+}
 
 export function t(lang: Lang) {
   return ui[lang];

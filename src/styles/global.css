@@ -91,6 +91,9 @@ p { margin: 0; text-wrap: pretty; }
 .pila { display: flex; flex-direction: column; gap: 10px; }
 .pila--ancha { gap: 20px; }
 .limite { max-width: 760px; }
+/* Un contenedor con límite se alinea con el resto de la página; el límite va a sus hijos */
+.contenedor.limite { max-width: none; }
+.contenedor.limite > * { max-width: 760px; }
 
 .botones { display: flex; flex-wrap: wrap; gap: 12px; }
 
