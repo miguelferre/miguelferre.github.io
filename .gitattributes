@@ -1,0 +1,6 @@
+# Binarios: sin conversión de fin de línea. Con core.autocrlf=true, un PDF
+# detectado como texto se reescribe LF->CRLF al hacer checkout y rompe los
+# offsets del xref (los de reportlab, sin compresión, parecen texto).
+*.pdf  binary
+*.png  binary
+*.webp binary
