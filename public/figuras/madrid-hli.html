@@ -194,7 +194,7 @@ const MH_T = {
     : 'Ciudad isométrica de nueve barrios. Cada barrio se comprueba con la regla 3-30-300 de verde urbano: tres árboles a la vista, 30 % de copa y un parque a menos de 300 m. Clic en un barrio, flechas, espacio o r.',
   block: EN ? 'block' : 'barrio',
   N: 'N', S: 'S',
-  pills: EN ? ['3 trees', '30 % canopy', '300 m park'] : ['3 árboles', '30 % copa', '300 m parque'],
+  pills: EN ? ['3 trees', '30 % tree canopy', '300 m park'] : ['3 árboles', '30 % cobertura arbórea', '300 m parque'],
 };
 
 FIGS.push({
@@ -262,9 +262,9 @@ FIGS.push({
       for (let k = 0; k < 3; k++) svg += `<circle id="madrid-hli-pip${i}-${k}" class="mh-pip" cx="${p[0] + (k - 1) * 17}" cy="${p[1]}" r="6.5" pointer-events="none" filter="url(#soft)"/>`;
     }
     // indicator pills in screen space, below the city
-    const pcx = P(W / 2, W / 2, 0)[0], py = P(W + 12, W + 12, -10)[1] + 12, pw = 150, pg = 16;
+    const pcx = P(W / 2, W / 2, 0)[0], py = P(W + 12, W + 12, -10)[1] + 12, PW = [130, 244, 150], pg = 16;
     for (let k = 0; k < 3; k++) {
-      const x = pcx + (k - 1) * (pw + pg) - pw / 2;
+      const pw = PW[k], x = pcx - (PW[0] + PW[1] + PW[2] + 2 * pg) / 2 + PW.slice(0, k).reduce((a, b) => a + b + pg, 0);
       svg += `<g pointer-events="none"><rect id="madrid-hli-pill${k}" class="face led mh-pill" x="${x}" y="${py}" width="${pw}" height="34" rx="17"/>`
            + `<text id="madrid-hli-pt${k}" class="label mh-pt" x="${x + pw / 2}" y="${py + 23}" text-anchor="middle" style="font-size:16px">${MH_T.pills[k]}</text></g>`;
     }
