@@ -28,9 +28,9 @@ export const ui = {
       lema: 'Gobernando sistemas de inteligencia artificial.',
       // Descripción de la portada: una idea por línea
       subtitulo: [
-        'Biólogo de formación. Pasé por el mundo de los datos y hoy trabajo en la vigilancia y supervisión de modelos de inteligencia artificial.',
-        'Mi objetivo es contribuir a que la inteligencia artificial siga al servicio de las personas.',
-        'Por mi cuenta exploro otros temas y construyo herramientas: explóralas tú mismo.',
+        'Biólogo de formación. Comencé en el mundo de los datos y hoy vigilo y superviso modelos de IA.',
+        'Mi objetivo: que la IA siga al servicio de las personas.',
+        'Por mi cuenta exploro y construyo herramientas: explóralas tú mismo.',
       ],
       herramientasEntradilla: 'Herramientas',
       herramientasTitulo: 'Herramientas para gobernar y vigilar modelos de IA.',
@@ -89,9 +89,9 @@ export const ui = {
       descripcion: 'AI governance and validation in healthcare. On my own time, geospatial data products. Project portfolio.',
       lema: 'Governing artificial intelligence systems.',
       subtitulo: [
-        'A biologist by training. I moved through the world of data, and today I work on monitoring and overseeing AI models.',
-        'My goal is to help keep artificial intelligence at the service of people.',
-        'On my own, I explore other topics and build tools: explore them yourself.',
+        'A biologist by training. I started out in data, and today I monitor and oversee AI models.',
+        'My goal: to keep AI at the service of people.',
+        'On my own, I explore and build tools: explore them yourself.',
       ],
       herramientasEntradilla: 'Tools',
       herramientasTitulo: 'Tools to govern and monitor AI models.',

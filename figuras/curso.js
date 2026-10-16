@@ -45,6 +45,9 @@ FIGS.push({
     };
     const tree = (x, y) => add(x - 6, y - 6, x + 9, y + 9, box(x, y, 0, 3, 3, 10, 1) + box(x - 6, y - 6, 10, 15, 15, 16, 7));
     [[120, 98], [236, 98], [120, 160], [236, 160]].forEach(t => tree(...t));
+    // árboles pequeños en las esquinas libres de la placa
+    const mini = (x, y) => add(x - 4, y - 4, x + 6, y + 6, box(x, y, 0, 2, 2, 6, 1) + box(x - 4, y - 4, 6, 10, 10, 12, 5));
+    [[8, 14], [26, 40], [12, 66], [352, 16], [330, 66], [354, 70], [316, 172], [346, 186], [360, 160]].forEach(t => mini(...t));
 
     // 0 Facultad: columnas y frontón (x112-236, y0-58)
     {
@@ -112,7 +115,7 @@ FIGS.push({
         + L.map((l, k) => `<text class="label" x="${W / 2}" y="${14 + 14 * k}" text-anchor="middle" style="font-size:12px;font-weight:700;fill:var(--ink-hi)">${l}</text>`).join('')
         + `<text class="label" x="${W / 2}" y="${H - 5}" text-anchor="middle" style="font-size:10px;fill:var(--ink)">${EN ? 'mod.' : 'mód.'} ${CURSO_B[i][1]}</text></g>`;
     });
-    svg += `<g transform="${SIDE(206, 372, 0)}"><text class="label" x="190" y="11" text-anchor="middle" style="font-size:8.5px;font-weight:400;letter-spacing:1.2px;fill:var(--ink)">${EN ? 'AI safety and governance course' : 'Curso de seguridad y gobernanza de la IA'}</text></g>`;
+    svg += `<g transform="${SIDE(206, 372, 0)}"><text class="label" x="190" y="9.2" text-anchor="middle" style="font-size:8px;font-weight:400;letter-spacing:1.2px;fill:var(--ink)">${EN ? 'AI safety and governance course' : 'Curso de seguridad y gobernanza de la IA'}</text></g>`;
     stage.setAttribute('viewBox', K.viewBox); stage.innerHTML = svg;
 
     const $ = id => stage.querySelector('#curso-' + id);

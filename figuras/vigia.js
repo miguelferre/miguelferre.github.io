@@ -63,11 +63,15 @@ FIGS.push({
     svg += box(0, -24, 0, 140, 354, PZ, 12);
     svg += `<g transform="${TOP(0, -24, PZ)}"><rect class="detail" x="7" y="7" width="126" height="340" rx="8"/></g>`;
 
+    const cable = (id, d) => `<path class="wire-under" d="${d}"/><path id="${id}" class="wire" d="${d}"/><path id="${id}-p" class="pulse" pathLength="1000" d="${d}"/>`;
     // asistente de IA (MCP)
     svg += `<g id="vg-ass">${box(36, -16, PZ, 44, 48, 40, 3)}
       <g transform="${SIDE(80, 32, PZ + 40)}"><rect id="vg-ag" class="face glass" x="3" y="3" width="42" height="22" rx="2"/>${vgIco('chat', 6, 6, 15)}
       <text id="vg-at" class="label" x="23" y="19.5" font-size="9.5" letter-spacing=".4">MCP</text>
       <text class="label" x="5" y="35" font-size="6.4" letter-spacing=".5">${VG_T.ass}</text></g></g>`;
+
+    // cable asistente -> monitor: va por detrás del monitor, se pinta antes que él
+    svg += cable('vg-wa', path([[80, 8, PZ + .5], [88, 8, PZ + .5], [88, 60, PZ + .5]]));
 
     // monitor de Vigía: tres constantes con símbolo, trazo y piloto; debajo, el uso
     svg += box(80, 60, PZ, 16, 84, 84, 4);
@@ -102,11 +106,9 @@ FIGS.push({
       <g id="vg-dsig">${vgIco('sigue', 8, 4, 16, 'vivo')}</g><g id="vg-dcor" class="oculto">${vgIco('corrige', 8, 4, 16, 'vivo')}</g></g>`;
 
     // cables (sobre el suelo, por delante de las cajas)
-    const cable = (id, d) => `<path class="wire-under" d="${d}"/><path id="${id}" class="wire" d="${d}"/><path id="${id}-p" class="pulse" pathLength="1000" d="${d}"/>`;
-    svg += cable('vg-wr', path([[84, 232, PZ + .5], [72, 232, PZ + .5], [72, 268, PZ + .5], [54, 268, PZ + .5]]));
+    svg += cable('vg-wr', path([[84, 236, PZ + .5], [90, 236, PZ + .5], [90, 270, PZ + .5], [54, 270, PZ + .5]]));
     svg += cable('vg-w', path([[106, 180, 31], [106, 180, PZ + .5], [106, 110, PZ + .5], [96, 110, PZ + .5]]));
     svg += cable('vg-wu', path([[54, 288, PZ + .5], [118, 288, PZ + .5], [118, 90, PZ + .5], [96, 90, PZ + .5]]));
-    svg += cable('vg-wa', path([[80, 8, PZ + .5], [90, 8, PZ + .5], [90, 60, PZ + .5]]));
 
     // sonda (pulsable)
     svg += `<g class="press" id="vg-probe">${box(84, 174, 26, 22, 12, 10, 2)}
