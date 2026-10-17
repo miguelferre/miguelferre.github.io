@@ -6,11 +6,14 @@ interface Etapa { etiqueta: string; texto: string }
 interface Props { etapas: readonly Etapa[]; fotos: Readonly<Record<string, Foto>> }
 const { etapas, fotos } = Astro.props;
 
-// "texto [[id]] texto" → trozos de texto y de foto
-const trozos = (texto: string) =>
-  texto.split(/(\[\[\w+\]\])/).map((t) => {
-    const m = t.match(/^\[\[(\w+)\]\]$/);
-    return m ? { foto: fotos[m[1]] } : { texto: t };
+// "texto [[id]] texto [enlace](url)" → trozos de texto, de foto y de enlace
+type Trozo = { texto: string } | { foto: Foto | undefined } | { enlace: string; href: string };
+const trozos = (texto: string): Trozo[] =>
+  texto.split(/(\[\[\w+\]\]|\[[^\]]+\]\([^)]+\))/).map((t) => {
+    const f = t.match(/^\[\[(\w+)\]\]$/);
+    if (f) return { foto: fotos[f[1]] };
+    const e = t.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    return e ? { enlace: e[1], href: e[2] } : { texto: t };
   });
 ---
 
@@ -27,8 +30,12 @@ const trozos = (texto: string) =>
                 <img src={t.foto.src} alt={t.foto.alt} loading="lazy" />
               </span>
             </span>
+          ) : 'enlace' in t ? (
+            t.href.startsWith('#') || t.href.startsWith('mailto:')
+              ? <a class="camino__enlace" href={t.href}>{t.enlace}</a>
+              : <a class="camino__enlace" href={t.href} target="_blank" rel="noopener">{t.enlace}</a>
           ) : (
-            t.texto
+            'texto' in t ? t.texto : null
           )
         )}
       </p>
@@ -42,6 +49,8 @@ const trozos = (texto: string) =>
   @media (min-width: 640px) { .camino__etapa { grid-template-columns: 160px minmax(0, 1fr); } }
   .camino__etiqueta { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); padding-top: 5px; }
   .camino__texto { font-size: 17px; line-height: 1.65; color: var(--tinta); text-wrap: pretty; }
+  .camino__enlace { color: var(--acento); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .camino__enlace:hover { text-decoration-thickness: 2px; }
 
   /* Miniatura en línea, del alto de una línea de texto */
   .mini { position: relative; display: inline-block; vertical-align: -0.28em; margin: 0 2px; outline: none; }
