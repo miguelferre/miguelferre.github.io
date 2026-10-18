@@ -1,6 +1,6 @@
 ---
-// Iconos de enlace: GitHub y LinkedIn (trazados de Simple Icons, CC0) y documento (Lucide, ISC).
-interface Props { nombre: 'github' | 'linkedin' | 'cv' }
+// Iconos de enlace: GitHub y LinkedIn (trazados de Simple Icons, CC0), documento y correo (Lucide, ISC).
+interface Props { nombre: 'github' | 'linkedin' | 'cv' | 'correo' }
 const { nombre } = Astro.props;
 ---
 
@@ -12,6 +12,9 @@ const { nombre } = Astro.props;
 )}
 {nombre === 'cv' && (
   <svg class="icono" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+)}
+{nombre === 'correo' && (
+  <svg class="icono" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
 )}
 
 <style>

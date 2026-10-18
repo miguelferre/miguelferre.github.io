@@ -16,9 +16,8 @@ const trozos = (texto: string): Trozo[] =>
     return e ? { enlace: e[1], href: e[2] } : { texto: t };
   });
 
-// [texto](correo:) → enlace al correo que se arma al usarlo, para que la dirección no esté en el HTML.
-// Va del revés y en dos trozos: un bot que busca «usuario@dominio» en el código no la encuentra.
-const CORREO = { u: 'leugimaicragorierref', d: 'moc.liamg' };
+// [texto](correo:) → enlace al correo que se arma al usarlo, para que la dirección no esté en el HTML
+import { CORREO } from '../data/correo';
 ---
 
 <ol class="camino">

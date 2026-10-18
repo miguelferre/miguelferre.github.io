@@ -5,6 +5,7 @@ import TarjetaExploracion from '../TarjetaExploracion.astro';
 import Destacado from '../Destacado.astro';
 import Icono from '../Icono.astro';
 import Camino from '../Camino.astro';
+import { CORREO } from '../../data/correo';
 import { t, rutas, cifra, type Lang } from '../../i18n/ui';
 
 interface Props { lang: Lang }
@@ -16,6 +17,7 @@ const otro: Lang = lang === 'es' ? 'en' : 'es';
 const herramientas = await getCollection('proyectos', (e) => e.data.tipo === 'herramienta');
 
 const exploraciones = await getCollection('proyectos', (e) => e.data.tipo === 'exploracion');
+const etiquetaCorreo = lang === 'es' ? 'Correo' : 'Email';
 const idHerramientas = lang === 'es' ? 'herramientas' : 'tools';
 const idExploraciones = lang === 'es' ? 'exploraciones' : 'explorations';
 const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
@@ -35,6 +37,7 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
       <div class="botones">
         <a class="boton boton--icono" href="https://github.com/miguelferre" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
         <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
+        <a class="boton boton--icono" href="#" data-u={CORREO.u} data-d={CORREO.d} aria-label={etiquetaCorreo} title={etiquetaCorreo}><Icono nombre="correo" /></a>
       </div>
     </div>
   </section>
@@ -72,6 +75,7 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
       <div class="botones">
         <a class="boton boton--icono" href="https://github.com/miguelferre" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
         <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
+        <a class="boton boton--icono" href="#" data-u={CORREO.u} data-d={CORREO.d} aria-label={etiquetaCorreo} title={etiquetaCorreo}><Icono nombre="correo" /></a>
       </div>
     </div>
   </section>
