@@ -28,7 +28,7 @@ export const ui = {
       lema: 'Supervisión de modelos de IA y de cómo los usan las personas.',
       // Descripción de la portada: una idea por línea
       subtitulo: [
-        'Biólogo de formación. Comencé en el mundo de los datos y hoy vigilo y superviso modelos de IA.',
+        'Vengo de la biología, crecí trabajando con datos clínicos y hoy me dedico a la gobernanza de modelos de IA.',
         'Por mi cuenta exploro ideas, y algunas acaban convertidas en herramientas o proyectos. Te invito a conocerlas.',
       ],
       herramientasEntradilla: 'Herramientas',
@@ -98,7 +98,7 @@ export const ui = {
       descripcion: 'AI governance and validation in healthcare. On my own time, geospatial data products. Project portfolio.',
       lema: 'Overseeing AI models and how people use them.',
       subtitulo: [
-        'A biologist by training. I started out in data, and today I monitor and oversee AI models.',
+        'I come from biology, grew up professionally working with clinical data, and today I work on the governance of AI models.',
         'On my own, I explore ideas, and some end up as tools or projects. You are welcome to take a look.',
       ],
       herramientasEntradilla: 'Tools',
