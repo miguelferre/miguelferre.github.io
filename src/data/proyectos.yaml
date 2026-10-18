@@ -15,8 +15,8 @@
   tipo: herramienta
   nombre: Vigía
   pregunta:
-    es: Una herramienta para vigilar modelos de IA en producción, pensada para usarla con un asistente de IA por MCP.
-    en: A tool to monitor AI models in production, built to be run with an AI assistant over MCP.
+    es: Una herramienta para vigilar modelos de IA en producción (así empezó Blade Runner), pensada para usarla con un asistente de IA por MCP.
+    en: A tool to monitor AI models in production (that is how Blade Runner started), built to be run with an AI assistant over MCP.
   resumen:
     es: >-
       Mide la calidad, la equidad entre grupos, la deriva y la explicabilidad de un modelo

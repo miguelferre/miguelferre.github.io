@@ -17,7 +17,7 @@ const ficha = rutaExploracion(lang, proyecto.id);
   <a class="tarjeta__enlace" href={ficha} aria-label={`${d.nombre}: ${d.pregunta[lang]}`}>
     {d.figura ? (
       <div class="tarjeta__figura" aria-hidden="true">
-        <iframe src={`/figuras/${d.figura}.html?lang=${lang}&compacto`} title="" tabindex="-1" loading="lazy"></iframe>
+        <iframe src={`/figuras/${d.figura}.html?lang=${lang}&compacto`} title="" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
       </div>
     ) : d.captura ? (
       <img class="tarjeta__captura" src={d.captura} alt="" width="1280" height="800" loading="lazy" />

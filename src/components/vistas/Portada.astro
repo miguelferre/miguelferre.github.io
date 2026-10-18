@@ -16,7 +16,6 @@ const otro: Lang = lang === 'es' ? 'en' : 'es';
 const herramientas = await getCollection('proyectos', (e) => e.data.tipo === 'herramienta');
 
 const exploraciones = await getCollection('proyectos', (e) => e.data.tipo === 'exploracion');
-const cv = lang === 'es' ? '/cv/Miguel_Ferreiro_CV_ES.pdf' : '/cv/Miguel_Ferreiro_CV_EN.pdf';
 const idHerramientas = lang === 'es' ? 'herramientas' : 'tools';
 const idExploraciones = lang === 'es' ? 'exploraciones' : 'explorations';
 const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
@@ -36,7 +35,6 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
       <div class="botones">
         <a class="boton boton--icono" href="https://github.com/miguelferre" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
         <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
-        <a class="boton boton--lleno" href={cv} target="_blank" rel="noopener"><Icono nombre="cv" /> {s.cv}</a>
       </div>
     </div>
   </section>
@@ -74,7 +72,6 @@ const idSobreMi = lang === 'es' ? 'sobre-mi' : 'about';
       <div class="botones">
         <a class="boton boton--icono" href="https://github.com/miguelferre" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><Icono nombre="github" /></a>
         <a class="boton boton--icono" href="https://www.linkedin.com/in/miguel-ferreiro-garcia" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><Icono nombre="linkedin" /></a>
-        <a class="boton boton--lleno" href={cv} target="_blank" rel="noopener"><Icono nombre="cv" /> {s.cv}</a>
       </div>
     </div>
   </section>
