@@ -31,8 +31,7 @@
       leaning on the model), how often they correct the model and an audit of the interaction. It is
       built to be run by an AI assistant over MCP, with 39 tools, and everything is logged,
       recording who did each thing. A local, no-code Windows tool.
-  # Al publicar el repo: estado repo.
-  estado: privado
+  estado: repo
   url_repo: https://github.com/miguelferre/vigia
   url_descarga: https://github.com/miguelferre/vigia/releases/latest
   captura: /capturas/vigia.webp
@@ -64,8 +63,7 @@
       A Spanish adaptation of the AI safety book and course by the Center for AI Safety
       (CAIS). It adds healthcare cases and a monitoring module with
       Vigía as the lab. The whole course runs in the browser, with nothing to install.
-  # Al publicar el repo y activar Pages desde docs/: estado live.
-  estado: privado
+  estado: live
   url_live: https://miguelferre.github.io/curso-seguridad-y-gobernanza-ia/
   url_repo: https://github.com/miguelferre/curso-seguridad-y-gobernanza-ia
   captura: /capturas/curso.webp
