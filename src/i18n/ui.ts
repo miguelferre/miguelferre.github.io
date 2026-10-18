@@ -68,8 +68,9 @@ export const ui = {
       claves: [
         'gobernanza', 'IA', 'sanidad', 'validación', 'datos', 'geoespacial',
         'bioinformática', 'bioestadística', 'biología', 'ISO 42001',
-        'EU AI Act', 'NIST AI RMF', 'automation bias', 'confianza', 'producto',
-        'modelos', 'personas', 'Santiago',
+        'EU AI Act', 'NIST AI RMF', 'confianza', 'producto', 'modelos', 'personas',
+        'human in the loop', 'capa humana', 'supervisión humana', 'deskilling',
+        'deriva', 'calidad', 'explicabilidad', 'equidad',
       ],
     },
     exploracion: {
@@ -136,8 +137,9 @@ export const ui = {
       claves: [
         'governance', 'AI', 'healthcare', 'validation', 'data', 'geospatial',
         'bioinformatics', 'biostatistics', 'biology', 'ISO 42001',
-        'EU AI Act', 'NIST AI RMF', 'automation bias', 'trust', 'product',
-        'models', 'people', 'Santiago',
+        'EU AI Act', 'NIST AI RMF', 'trust', 'product', 'models', 'people',
+        'human in the loop', 'human layer', 'human oversight', 'deskilling',
+        'drift', 'quality', 'explainability', 'fairness',
       ],
     },
     exploracion: {
