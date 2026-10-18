@@ -90,9 +90,9 @@
     en: Is healthy living equally easy in every Madrid neighbourhood?
   resumen:
     es: >-
-      Un índice de vida saludable para cada barrio de Madrid, hecho con datos abiertos: comida sana, deporte, parques y arbolado. Se consulta en un dashboard interactivo. La regla 3-30-300 pide ver 3 árboles desde casa, un 30 % de copa de árbol en el barrio y un parque a menos de 300 metros.
+      Un índice de vida saludable para cada barrio de Madrid, hecho con datos abiertos: comida sana, deporte, parques y arbolado. Se consulta en un dashboard interactivo. La regla 3-30-300 pide ver 3 árboles desde casa, un 30 % de cobertura arbórea en el barrio y un parque a menos de 300 metros.
     en: >-
-      A healthy-living index for every Madrid neighbourhood, built from open data: healthy food, sport, parks and tree cover. You explore it in an interactive dashboard. The 3-30-300 rule asks for 3 trees visible from home, 30 % tree canopy in the neighbourhood and a park within 300 metres.
+      A healthy-living index for every Madrid neighbourhood, built from open data: healthy food, sport, parks and tree cover. You explore it in an interactive dashboard. The 3-30-300 rule asks for 3 trees visible from home, 30 % tree cover in the neighbourhood and a park within 300 metres.
   estado: live
   url_live: https://miguelferre.github.io/Madrid_HLI/
   url_repo: https://github.com/miguelferre/Madrid_HLI
