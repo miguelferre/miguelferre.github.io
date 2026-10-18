@@ -25,11 +25,10 @@ export const ui = {
     figurasCredito: 'Figuras con ISO-GLOW ↗',
     portada: {
       descripcion: 'Gobernanza y validación de IA en sanidad. Por mi cuenta, productos de datos geoespaciales. Portfolio de proyectos.',
-      lema: 'Gobernando sistemas de inteligencia artificial.',
+      lema: 'Manteniendo la IA al servicio de las personas.',
       // Descripción de la portada: una idea por línea
       subtitulo: [
         'Biólogo de formación. Comencé en el mundo de los datos y hoy vigilo y superviso modelos de IA.',
-        'Mi objetivo: que la IA siga al servicio de las personas.',
         'Por mi cuenta exploro y construyo herramientas. Explóralas tú mismo.',
       ],
       herramientasEntradilla: 'Herramientas',
@@ -97,10 +96,9 @@ export const ui = {
     figurasCredito: 'Figures made with ISO-GLOW ↗',
     portada: {
       descripcion: 'AI governance and validation in healthcare. On my own time, geospatial data products. Project portfolio.',
-      lema: 'Governing artificial intelligence systems.',
+      lema: 'Keeping AI at the service of people.',
       subtitulo: [
         'A biologist by training. I started out in data, and today I monitor and oversee AI models.',
-        'My goal: to keep AI at the service of people.',
         'On my own, I explore and build tools. Explore them yourself.',
       ],
       herramientasEntradilla: 'Tools',
