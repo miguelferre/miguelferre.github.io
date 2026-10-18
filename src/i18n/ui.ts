@@ -67,7 +67,7 @@ export const ui = {
       // Fondo animado de la portada: se ven fragmentos de estas palabras
       claves: [
         'gobernanza', 'IA', 'sanidad', 'validación', 'datos', 'geoespacial',
-        'bioinformática', 'bioestadística', 'biología', 'watsonx', 'ISO 42001',
+        'bioinformática', 'bioestadística', 'biología', 'ISO 42001',
         'EU AI Act', 'NIST AI RMF', 'automation bias', 'confianza', 'producto',
         'modelos', 'personas', 'Santiago',
       ],
@@ -135,7 +135,7 @@ export const ui = {
       perfilLinkedIn: 'Full profile on LinkedIn',
       claves: [
         'governance', 'AI', 'healthcare', 'validation', 'data', 'geospatial',
-        'bioinformatics', 'biostatistics', 'biology', 'watsonx', 'ISO 42001',
+        'bioinformatics', 'biostatistics', 'biology', 'ISO 42001',
         'EU AI Act', 'NIST AI RMF', 'automation bias', 'trust', 'product',
         'models', 'people', 'Santiago',
       ],
