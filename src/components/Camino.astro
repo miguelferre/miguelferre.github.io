@@ -24,7 +24,7 @@ const CORREO = { u: 'leugimaicragorierref', d: 'moc.liamg' };
 <ol class="camino">
   {etapas.map((e) => (
     <li class="camino__etapa">
-      <span class="camino__etiqueta">{e.etiqueta}</span>
+      <h3 class="camino__etiqueta">{e.etiqueta}</h3>
       <p class="camino__texto">
         {trozos(e.texto).map((t) =>
           'foto' in t && t.foto ? (
@@ -61,10 +61,10 @@ const CORREO = { u: 'leugimaicragorierref', d: 'moc.liamg' };
 </script>
 
 <style>
-  .camino { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
-  .camino__etapa { display: grid; grid-template-columns: 1fr; gap: 4px 24px; }
-  @media (min-width: 640px) { .camino__etapa { grid-template-columns: 160px minmax(0, 1fr); } }
-  .camino__etiqueta { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); padding-top: 5px; }
+  /* Cada etapa: su título encima y el texto debajo, a todo el ancho de lectura */
+  .camino { list-style: none; margin: 0; padding: 0; display: grid; gap: 30px; max-width: 72ch; }
+  .camino__etapa { display: grid; gap: 6px; }
+  .camino__etiqueta { margin: 0; font-size: 19px; font-weight: 600; line-height: 1.3; color: var(--tinta); text-wrap: balance; }
   .camino__texto { font-size: 17px; line-height: 1.65; color: var(--tinta); text-wrap: pretty; }
   .camino__enlace { color: var(--acento); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
   .camino__enlace:hover { text-decoration-thickness: 2px; }

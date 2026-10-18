@@ -191,8 +191,8 @@
   tipo: exploracion
   nombre: Climatch
   pregunta:
-    es: ¿Qué ciudad tiene el clima que quiero, hoy y en 2050?
-    en: Which city has the climate I want, today and in 2050?
+    es: ¿Qué ciudad tiene mi clima, hoy y en 2050?
+    en: Which city has my climate, today and in 2050?
   resumen:
     es: >-
       Un comparador de ciudades según su clima, con las previsiones de futuro incluidas, para saber qué ciudades se adaptan mejor a tus gustos.
