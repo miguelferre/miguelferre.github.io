@@ -15,6 +15,10 @@ const trozos = (texto: string): Trozo[] =>
     const e = t.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
     return e ? { enlace: e[1], href: e[2] } : { texto: t };
   });
+
+// [texto](correo:) → enlace al correo que se arma al usarlo, para que la dirección no esté en el HTML.
+// Va del revés y en dos trozos: un bot que busca «usuario@dominio» en el código no la encuentra.
+const CORREO = { u: 'leugimaicragorierref', d: 'moc.liamg' };
 ---
 
 <ol class="camino">
@@ -31,7 +35,9 @@ const trozos = (texto: string): Trozo[] =>
               </span>
             </span>
           ) : 'enlace' in t ? (
-            t.href.startsWith('#') || t.href.startsWith('mailto:')
+            t.href === 'correo:'
+              ? <a class="camino__enlace" href="#" data-u={CORREO.u} data-d={CORREO.d}>{t.enlace}</a>
+              : t.href.startsWith('#')
               ? <a class="camino__enlace" href={t.href}>{t.enlace}</a>
               : <a class="camino__enlace" href={t.href} target="_blank" rel="noopener">{t.enlace}</a>
           ) : (
@@ -42,6 +48,17 @@ const trozos = (texto: string): Trozo[] =>
     </li>
   ))}
 </ol>
+
+<script>
+  // Arma el mailto: al pasar el ratón, al enfocar o al pulsar, nunca al cargar la página
+  const del_reves = (s: string) => s.split('').reverse().join('');
+  document.querySelectorAll<HTMLAnchorElement>('a[data-u][data-d]').forEach((a) => {
+    const arma = () => { a.href = 'mailto:' + del_reves(a.dataset.u!) + String.fromCharCode(64) + del_reves(a.dataset.d!); };
+    a.addEventListener('pointerenter', arma, { once: true });
+    a.addEventListener('focus', arma, { once: true });
+    a.addEventListener('click', arma);
+  });
+</script>
 
 <style>
   .camino { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }

@@ -15,19 +15,19 @@
   tipo: herramienta
   nombre: Vigía
   pregunta:
-    es: Una herramienta para vigilar modelos de IA en producción (así empezó Blade Runner), pensada para usarla con un asistente de IA por MCP.
-    en: A tool to monitor AI models in production (that is how Blade Runner started), built to be run with an AI assistant over MCP.
+    es: Una herramienta para vigilar modelos de IA en producción, pensada para usarla con un asistente de IA por MCP.
+    en: A tool to monitor AI models in production, built to be run with an AI assistant over MCP.
   resumen:
     es: >-
-      Mide la calidad, la equidad entre grupos, la deriva y la explicabilidad de un modelo
-      con datos tabulares. Añade la capa humana: deskilling, overrides y auditoría de la
-      interacción. Un asistente de IA la opera por MCP con 39 herramientas, y todo lo que hace
-      queda en el diario. Herramienta local para Windows, sin código.
+      Mide la calidad, la equidad entre grupos, la deriva y la explicabilidad de un modelo.
+      Añade la capa humana: deskilling, overrides y auditoría de la interacción. Está pensada
+      para que la opere un asistente de IA por MCP, con 39 herramientas, y todo queda
+      registrado, identificando quién hace cada cosa. Herramienta local para Windows, sin código.
     en: >-
-      It measures quality, fairness across groups, drift and explainability for a model
-      on tabular data. It adds the human layer: deskilling, overrides and an audit of the
-      interaction. An AI assistant runs it over MCP with 39 tools, and everything it does
-      goes into the log. A local, no-code Windows tool.
+      It measures quality, fairness across groups, drift and explainability for a model.
+      It adds the human layer: deskilling, overrides and an audit of the interaction. It is
+      built to be run by an AI assistant over MCP, with 39 tools, and everything is logged,
+      recording who did each thing. A local, no-code Windows tool.
   # Al publicar el repo: estado repo.
   estado: privado
   url_repo: https://github.com/miguelferre/vigia
@@ -164,9 +164,9 @@
     en: Beach day or mountain hike today in Galicia?
   resumen:
     es: >-
-      Una app que mira el tiempo, el mar y la distancia, y te dice si hoy en Galicia toca playa o ruta por el monte, explicando por qué.
+      Una app que mira el tiempo, el mar y la distancia, y te dice si hoy en Galicia toca playa o ruta por el monte, adaptándose a tus preferencias.
     en: >-
-      An app that checks the weather, the sea and the distance, and tells you whether today in Galicia calls for the beach or a mountain hike, and why.
+      An app that checks the weather, the sea and the distance, and tells you whether today in Galicia calls for the beach or a mountain hike, adapting to your preferences.
   estado: repo
   figura: praia-ou-montana
   metricas:
@@ -195,9 +195,9 @@
     en: Which city has the climate I want, today and in 2050?
   resumen:
     es: >-
-      Una web que compara el clima real de cualquier ciudad del mundo, hoy y en 2050, para encontrar la que se parece al clima que buscas.
+      Un comparador de ciudades según su clima, con las previsiones de futuro incluidas, para saber qué ciudades se adaptan mejor a tus gustos.
     en: >-
-      A website that compares the real climate of any city in the world, today and in 2050, to find the one that matches the climate you want.
+      A comparator of cities by their climate, future projections included, to find out which cities best suit your tastes.
   estado: live
   url_live: https://climatch.app
   captura: /capturas/climatch.webp
