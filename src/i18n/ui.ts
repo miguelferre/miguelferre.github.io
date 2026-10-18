@@ -29,7 +29,6 @@ export const ui = {
       // Descripción de la portada: una idea por línea
       subtitulo: [
         'Biólogo de formación. Comencé en el mundo de los datos y hoy vigilo y superviso modelos de IA.',
-        'Me importa que la IA siga al servicio de las personas.',
         'Por mi cuenta exploro ideas, y algunas acaban convertidas en herramientas o proyectos. Te invito a conocerlas.',
       ],
       herramientasEntradilla: 'Herramientas',
@@ -100,7 +99,6 @@ export const ui = {
       lema: 'Overseeing AI models and how people use them.',
       subtitulo: [
         'A biologist by training. I started out in data, and today I monitor and oversee AI models.',
-        'I care about keeping AI at the service of people.',
         'On my own, I explore ideas, and some end up as tools or projects. You are welcome to take a look.',
       ],
       herramientasEntradilla: 'Tools',
