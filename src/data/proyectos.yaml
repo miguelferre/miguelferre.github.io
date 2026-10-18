@@ -15,18 +15,18 @@
   tipo: herramienta
   nombre: Vigía
   pregunta:
-    es: Una herramienta para vigilar modelos de IA en producción, pensada para usarla con un asistente de IA por MCP.
-    en: A tool to monitor AI models in production, built to be run with an AI assistant over MCP.
+    es: Una herramienta para vigilar modelos de IA mientras se usan, que puede manejar un asistente de IA.
+    en: A tool to monitor AI models while they are in use, which an AI assistant can operate.
   resumen:
     es: >-
       Mide la calidad, la equidad entre grupos, la deriva y la explicabilidad de un modelo.
-      Añade la capa humana: el deskilling (cuando el profesional pierde criterio propio por
+      Añade la capa humana, cómo cambia el trabajo de quien usa el modelo: el deskilling (cuando el profesional pierde criterio propio por
       apoyarse en el modelo), las veces que corrige al modelo y la auditoría de la interacción. Está pensada
       para que la opere un asistente de IA por MCP, con 39 herramientas, y todo queda
       registrado, identificando quién hace cada cosa. Herramienta local para Windows, sin código.
     en: >-
       It measures quality, fairness across groups, drift and explainability for a model.
-      It adds the human layer: deskilling (when professionals lose their own judgement by
+      It adds the human layer, how the work of whoever uses the model changes: deskilling (when professionals lose their own judgement by
       leaning on the model), how often they correct the model and an audit of the interaction. It is
       built to be run by an AI assistant over MCP, with 39 tools, and everything is logged,
       recording who did each thing. A local, no-code Windows tool.
@@ -57,11 +57,11 @@
     es: >-
       Adapta al español el libro y el curso de seguridad de la IA del Center for AI Safety
       (CAIS). Añade casos de sanidad y un módulo de monitorización con Vigía
-      como laboratorio. Se estudia en el navegador.
+      como laboratorio. El curso entero se sigue desde el navegador, sin instalar nada.
     en: >-
       A Spanish adaptation of the AI safety book and course by the Center for AI Safety
       (CAIS). It adds healthcare cases and a monitoring module with
-      Vigía as the lab. It runs in the browser.
+      Vigía as the lab. The whole course runs in the browser, with nothing to install.
   # Al publicar el repo y activar Pages desde docs/: estado live.
   estado: privado
   url_live: https://miguelferre.github.io/curso-seguridad-y-gobernanza-ia/
