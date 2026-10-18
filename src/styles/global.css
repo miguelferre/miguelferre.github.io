@@ -129,6 +129,7 @@ p { margin: 0; text-wrap: pretty; }
 .etiqueta--live { background: var(--live-fondo); color: var(--live-texto); }
 .etiqueta--repo { background: var(--repo-fondo); color: var(--repo-texto); }
 .etiqueta--privado { background: var(--privado-fondo); color: var(--privado-texto); }
+.etiqueta--sector { background: color-mix(in srgb, var(--acento) 10%, transparent); color: var(--acento); text-transform: uppercase; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip {

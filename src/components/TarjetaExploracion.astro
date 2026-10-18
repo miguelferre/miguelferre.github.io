@@ -28,7 +28,7 @@ const ficha = rutaExploracion(lang, proyecto.id);
   <div class="tarjeta__cuerpo">
     <div class="tarjeta__fila">
       <span class="tarjeta__nombre">{d.nombre}</span>
-      <Etiqueta lang={lang} estado={d.estado} nota={d.estado_nota?.[lang]} />
+      <Etiqueta texto={d.sector[lang]} />
     </div>
     <h3><a class="tarjeta__titulo" href={ficha}>{d.pregunta[lang]}</a></h3>
     {d.metricas?.[0] && (

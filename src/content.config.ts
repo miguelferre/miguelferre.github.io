@@ -16,6 +16,8 @@ const proyectos = defineCollection({
     nombre: z.string(),
     pregunta: texto,
     resumen: texto,
+    // sector o ámbito del proyecto: es la etiqueta que se ve en tarjetas y fichas
+    sector: texto,
     estado: z.enum(['live', 'repo', 'privado']),
     estado_nota: texto.optional(),
     url_live: z.string().url().optional(),

@@ -34,7 +34,7 @@ const titulo = `destacado-${proyecto.id}`;
   <div class="pila pila--ancha">
     <div class="destacado__cabeza">
       <h3 id={titulo}>{d.nombre}</h3>
-      <Etiqueta lang={lang} estado={d.estado} nota={d.estado_nota?.[lang]} />
+      <Etiqueta texto={d.sector[lang]} />
     </div>
     <p class="destacado__pregunta">{d.pregunta[lang]}</p>
     <p class="destacado__texto">{d.resumen[lang]}</p>

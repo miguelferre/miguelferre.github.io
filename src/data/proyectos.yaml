@@ -14,6 +14,7 @@
 - id: vigia
   tipo: herramienta
   nombre: Vigía
+  sector: { es: Gobernanza de IA, en: AI governance }
   pregunta:
     es: Una herramienta para vigilar modelos de IA mientras se usan, que puede manejar un asistente de IA.
     en: A tool to monitor AI models while they are in use, which an AI assistant can operate.
@@ -50,6 +51,7 @@
 - id: curso
   tipo: herramienta
   nombre: Seguridad y gobernanza de la IA
+  sector: { es: Seguridad de la IA, en: AI safety }
   pregunta:
     es: Un curso de seguridad y gobernanza de la IA, en español.
     en: An AI safety and governance course, in Spanish.
@@ -85,6 +87,7 @@
 - id: madrid-hli
   tipo: exploracion
   nombre: Madrid Healthy Living Index
+  sector: { es: Salud urbana, en: Urban health }
   pregunta:
     es: ¿Es igual de fácil llevar una vida saludable en todos los barrios de Madrid?
     en: Is healthy living equally easy in every Madrid neighbourhood?
@@ -122,6 +125,7 @@
 - id: storymap-incendios
   tipo: exploracion
   nombre: Storymap incendios Galicia 2025
+  sector: { es: Incendios forestales, en: Wildfires }
   pregunta:
     es: ¿Por qué ardió tanto Galicia en 2025?
     en: Why did so much of Galicia burn in 2025?
@@ -161,6 +165,7 @@
 - id: praia-ou-montana
   tipo: exploracion
   nombre: Praia ou montaña
+  sector: { es: Ocio al aire libre, en: Outdoor leisure }
   pregunta:
     es: ¿Día de playa o ruta por el monte hoy en Galicia?
     en: Beach day or mountain hike today in Galicia?
@@ -192,6 +197,7 @@
 - id: climatch
   tipo: exploracion
   nombre: Climatch
+  sector: { es: Clima, en: Climate }
   pregunta:
     es: ¿Qué ciudad tiene mi clima, hoy y en 2050?
     en: Which city has my climate, today and in 2050?

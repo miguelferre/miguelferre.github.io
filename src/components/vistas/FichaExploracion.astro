@@ -32,7 +32,7 @@ const otro: Lang = lang === 'es' ? 'en' : 'es';
       </nav>
       <div class="fila-etiquetas">
         <span class="entradilla">{x.entradilla}</span>
-        <Etiqueta lang={lang} estado={d.estado} nota={d.estado_nota?.[lang]} />
+        <Etiqueta texto={d.sector[lang]} />
       </div>
       <h1>{d.pregunta[lang]}</h1>
       <p class="subtitulo">{d.intro?.[lang] ?? d.resumen[lang]}</p>

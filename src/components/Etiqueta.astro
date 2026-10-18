@@ -1,13 +1,7 @@
 ---
-import { t, type Lang } from '../i18n/ui';
-
-interface Props {
-  lang: Lang;
-  estado: 'live' | 'repo' | 'privado';
-  nota?: string;
-}
-const { lang, estado, nota } = Astro.props;
-const texto = t(lang).etiqueta[estado] + (nota ? ` · ${nota.toUpperCase()}` : '');
+// Etiqueta de sector o ámbito del proyecto (antes mostraba el estado: live, repo, privado)
+interface Props { texto: string }
+const { texto } = Astro.props;
 ---
 
-<span class:list={['etiqueta', `etiqueta--${estado}`]}>{texto}</span>
+<span class="etiqueta etiqueta--sector">{texto}</span>
