@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Etiqueta from './Etiqueta.astro';
+import Icono from './Icono.astro';
 import { t, cifra, type Lang } from '../i18n/ui';
 
 interface Props {
@@ -51,7 +52,7 @@ const titulo = `destacado-${proyecto.id}`;
     {publico ? (
       <div class="botones">
         {principal && <a class="boton boton--lleno" href={principal.href} target="_blank" rel="noopener">{principal.texto}</a>}
-        {d.url_repo && <a class="boton" href={d.url_repo} target="_blank" rel="noopener">{p.repo}</a>}
+        {d.url_repo && <a class="boton boton--icono" href={d.url_repo} target="_blank" rel="noopener" aria-label={`${d.nombre} ${lang === 'es' ? 'en' : 'on'} GitHub`} title="GitHub"><Icono nombre="github" /></a>}
       </div>
     ) : (
       <p class="destacado__aviso">{p.proximamente}</p>
