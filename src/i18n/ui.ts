@@ -5,14 +5,9 @@ export const idiomas: Lang[] = ['es', 'en'];
 export const rutas = {
   inicio: { es: '/', en: '/en/' },
   herramientas: { es: '/#herramientas', en: '/en/#tools' },
-  exploracion: { es: '/exploraciones/', en: '/en/explorations/' },
   exploraciones: { es: '/#exploraciones', en: '/en/#explorations' },
   sobreMi: { es: '/#sobre-mi', en: '/en/#about' },
 } as const;
-
-export function rutaExploracion(lang: Lang, id: string) {
-  return `${rutas.exploracion[lang]}${id}/`;
-}
 
 export const ui = {
   es: {
@@ -74,17 +69,8 @@ export const ui = {
       ],
     },
     exploracion: {
-      entradilla: 'Exploración geoespacial',
-      migas: 'Estás en',
       abrir: 'Abrir',
       repo: 'Repo',
-      como: 'Cómo está hecho',
-      aprendi: 'Lo que aprendí',
-      sinDesplegar: 'Sin desplegar todavía. El código está en el repositorio.',
-      sinDesplegarCorto: 'Sin desplegar todavía',
-      captura: 'Captura de',
-      todas: 'Todas las exploraciones',
-      siguiente: 'Siguiente',
     },
   },
   en: {
@@ -143,17 +129,8 @@ export const ui = {
       ],
     },
     exploracion: {
-      entradilla: 'Geospatial exploration',
-      migas: 'You are in',
       abrir: 'Open',
       repo: 'Repo',
-      como: 'How it is built',
-      aprendi: 'What I learned',
-      sinDesplegar: 'Not deployed yet. The code is in the repository.',
-      sinDesplegarCorto: 'Not deployed yet',
-      captura: 'Screenshot of',
-      todas: 'All explorations',
-      siguiente: 'Next',
     },
   },
 } as const;

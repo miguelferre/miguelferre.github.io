@@ -1,7 +1,8 @@
 ---
+// Tarjeta de exploración: figura, datos y botones a la web (Abrir) y al código (Repo). Sin ficha propia.
 import type { CollectionEntry } from 'astro:content';
 import Etiqueta from './Etiqueta.astro';
-import { t, rutaExploracion, cifra, type Lang } from '../i18n/ui';
+import { t, cifra, type Lang } from '../i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -10,45 +11,44 @@ interface Props {
 const { lang, proyecto } = Astro.props;
 const d = proyecto.data;
 const s = t(lang).exploracion;
-const ficha = rutaExploracion(lang, proyecto.id);
 ---
 
 <article class="tarjeta">
-  <a class="tarjeta__enlace" href={ficha} aria-label={`${d.nombre}: ${d.pregunta[lang]}`}>
-    {d.figura ? (
-      <div class="tarjeta__figura" aria-hidden="true">
-        <iframe src={`/figuras/${d.figura}.html?lang=${lang}&compacto`} title="" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
-      </div>
-    ) : d.captura ? (
-      <img class="tarjeta__captura" src={d.captura} alt="" width="1280" height="800" loading="lazy" />
-    ) : (
-      <div class="tarjeta__marcador" aria-hidden="true">{s.sinDesplegarCorto}</div>
-    )}
-  </a>
+  {d.figura ? (
+    <div class="tarjeta__figura" aria-hidden="true">
+      <iframe src={`/figuras/${d.figura}.html?lang=${lang}&compacto`} title="" tabindex="-1" aria-hidden="true" loading="lazy"></iframe>
+    </div>
+  ) : d.captura && (
+    <img class="tarjeta__captura" src={d.captura} alt="" width="1280" height="800" loading="lazy" />
+  )}
   <div class="tarjeta__cuerpo">
     <div class="tarjeta__fila">
       <span class="tarjeta__nombre">{d.nombre}</span>
       <Etiqueta texto={d.sector[lang]} />
     </div>
-    <h3><a class="tarjeta__titulo" href={ficha}>{d.pregunta[lang]}</a></h3>
+    <h3 class="tarjeta__titulo">{d.pregunta[lang]}</h3>
     {d.metricas?.[0] && (
       <p class="tarjeta__cifra"><span class="tarjeta__cifra-valor">{cifra(d.metricas[0].valor, lang)}</span> {d.metricas[0].etiqueta[lang]}</p>
     )}
     <p class="tarjeta__resumen">{d.resumen[lang]}</p>
+    {(d.url_live || d.url_repo) && (
+      <div class="botones tarjeta__botones">
+        {d.url_live && <a class="boton boton--lleno" href={d.url_live} target="_blank" rel="noopener" aria-label={`${s.abrir} ${d.nombre}`}>{s.abrir}</a>}
+        {d.url_repo && <a class="boton" href={d.url_repo} target="_blank" rel="noopener" aria-label={`${s.repo} ${d.nombre}`}>{s.repo}</a>}
+      </div>
+    )}
   </div>
 </article>
 
 <style>
-  .tarjeta__enlace { display: block; text-decoration: none; }
   /* Portada contenida: franja fija, no la captura entera. */
-  .tarjeta__captura,
-  .tarjeta__marcador {
+  .tarjeta__captura {
     display: block;
     width: 100%;
     height: 168px;
     border-bottom: 1px solid var(--borde);
   }
-  /* La figura se mueve sola; el clic va al enlace de la tarjeta */
+  /* La figura se mueve sola; no es pulsable */
   .tarjeta__figura { aspect-ratio: 3 / 2; border-bottom: 1px solid var(--borde); background: var(--fondo); }
   .tarjeta__figura iframe { display: block; width: 100%; height: 100%; border: 0; pointer-events: none; }
   .tarjeta__captura {
@@ -56,21 +56,14 @@ const ficha = rutaExploracion(lang, proyecto.id);
     object-position: top;
     background: #e8e4da;
   }
-  .tarjeta__marcador {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: repeating-linear-gradient(135deg, #f1eee7 0 12px, #e8e4da 12px 24px);
-    color: #6b6878;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .tarjeta__cuerpo { display: flex; flex-direction: column; gap: 10px; padding: 18px 22px 22px; }
+  .tarjeta { display: flex; flex-direction: column; }
+  .tarjeta__cuerpo { display: flex; flex-direction: column; gap: 10px; padding: 18px 22px 22px; flex: 1; }
   .tarjeta__fila { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   .tarjeta__nombre { font-size: 12px; font-weight: 600; color: var(--tinta-3); }
-  .tarjeta__titulo { color: var(--tinta); text-decoration: none; }
-  .tarjeta__titulo:hover { color: var(--acento); }
+  .tarjeta__titulo { color: var(--tinta); margin: 0; }
   .tarjeta__cifra { font-size: 13px; color: var(--tinta-3); }
   .tarjeta__cifra-valor { font-family: var(--titulos); font-weight: 700; font-size: 26px; color: var(--acento); font-variant-numeric: tabular-nums; margin-right: 4px; }
+  /* Los botones van al pie aunque el texto de la tarjeta sea más corto que el de su vecina */
+  .tarjeta__botones { margin-top: auto; padding-top: 6px; }
   .tarjeta__resumen { font-size: 14px; line-height: 1.55; color: var(--tinta-2); }
 </style>
