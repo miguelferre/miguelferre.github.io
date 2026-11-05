@@ -226,3 +226,24 @@
   nota_codigo:
     es: El repositorio es privado; se enseña bajo petición.
     en: The repository is private; available on request.
+
+- id: easimap
+  tipo: exploracion
+  nombre: EASiMap
+  sector: { es: Estructura de proteínas, en: Protein structure }
+  pregunta:
+    es: ¿Qué se repite y qué cambia en el sitio activo de una familia de enzimas?
+    en: What stays the same, and what changes, in the active site of an enzyme family?
+  resumen:
+    es: >-
+      Un atlas que dibuja los aminoácidos alrededor del azúcar como estrellas de un cielo: cuanto más cerca, más brillan. Superpone todas las estructuras del PDB de una familia, y se ve dónde la evolución dejó cada residuo en su sitio y dónde lo soltó. Cinco familias. Solo GH1 da una historia limpia, la posición 333; en las otras salen hipótesis, no resultados. Es mi TFM de 2020 rehecho con datos actuales.
+    en: >-
+      An atlas that draws the amino acids around the sugar as stars in a sky: the closer, the brighter. It stacks every PDB structure of a family, so you can see where evolution kept each residue in place and where it let go. Five families. Only GH1 gives a clean story, position 333; the others give hypotheses, not results. It is my 2020 master's thesis, redone with current data.
+  estado: live
+  url_live: https://miguelferre.github.io/easimap/
+  url_repo: https://github.com/miguelferre/easimap
+  figura: easimap
+  metricas:
+    - valor: "309"
+      etiqueta: { es: "estructuras del PDB en 5 familias", en: "PDB structures in 5 families" }
+  inicio: 2026
