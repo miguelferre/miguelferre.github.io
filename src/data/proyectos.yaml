@@ -247,3 +247,24 @@
     - valor: "309"
       etiqueta: { es: "estructuras del PDB en 5 familias", en: "PDB structures in 5 families" }
   inicio: 2026
+
+- id: wikinatu
+  tipo: exploracion
+  nombre: WikiNatu
+  sector: { es: Biodiversidad, en: Biodiversity }
+  pregunta:
+    es: ¿Qué vive junto al camino que voy a andar?
+    en: What lives along the path I am about to walk?
+  resumen:
+    es: >-
+      Una web que cruza una ruta GPX con las observaciones de iNaturalist y te da lo que vive junto al camino. Lo enseña en un mapa, en un cuadro de la naturaleza al modo de Humboldt, con cada especie a su altura, y en una guía en PDF configurable para llevar en la mochila. El GPX no sale de tu navegador.
+    en: >-
+      A website that crosses a GPX route with iNaturalist observations and gives you what lives along the path. It shows it on a map, in a nature plate in the manner of Humboldt, with each species at its height, and in a configurable PDF guide to carry in your backpack. The GPX never leaves your browser.
+  estado: live
+  url_live: https://miguelferre.github.io/wikinatu/
+  url_repo: https://github.com/miguelferre/wikinatu
+  figura: wikinatu
+  metricas:
+    - valor: "189"
+      etiqueta: { es: "especies en la ruta de ejemplo", en: "species on the example route" }
+  inicio: 2026
