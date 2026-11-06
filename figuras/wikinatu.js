@@ -3,12 +3,12 @@ const WN_T = {
   name: WN_EN ? 'What lives along the path' : 'Lo que vive junto al camino',
   hint: WN_EN ? 'Click or space: next view · r restarts' : 'Clic o espacio: siguiente vista · r reinicia',
   aria: WN_EN
-    ? 'Isometric mountain with contour lines and a walker on a trail. The trail lights up, then the dots beside it light up, each one a species seen there. The last view names some species at their height. Click, space or r.'
-    : 'Montaña isométrica con curvas de nivel y una persona en un sendero. El sendero se enciende, después se encienden los puntos que tiene al lado, cada uno una especie vista allí. La última vista rotula especies a su altura. Clic, espacio o r.',
-  pills: WN_EN ? ['The route', 'Along the path', 'Nature plate'] : ['La ruta', 'Junto al camino', 'Cuadro'],
+    ? 'Isometric mountain with contour lines. A light climbs the trail and the species seen beside it appear as it passes. The last view names some species at their height. Click, space or r.'
+    : 'Montaña isométrica con curvas de nivel. Una luz sube por el sendero y las especies vistas a su lado aparecen a su paso. La última vista rotula especies a su altura. Clic, espacio o r.',
+  pills: WN_EN ? ['The route', 'Nature plate'] : ['La ruta', 'Cuadro'],
   read: WN_EN
-    ? ['A GPX on the mountain', 'Only what was seen beside the trail lights up', 'Each species at its height, as Humboldt drew them']
-    : ['Un GPX sobre la montaña', 'Solo se enciende lo visto junto al sendero', 'Cada especie a su altura, como las dibujó Humboldt'],
+    ? ['The species appear as the route advances', 'Each species at its height, as Humboldt drew them']
+    : ['Las especies aparecen a medida que avanza la ruta', 'Cada especie a su altura, como las dibujó Humboldt'],
   // nombres reales de la ruta de ejemplo de WikiNatu (Lagos de Tristaina), de abajo arriba
   names: WN_EN ? ['Common Frog', 'Alpenrose', 'Alpine Marmot', 'Northern Wheatear'] : ['Rana bermeja', 'Rododendro', 'Marmota alpina', 'Collalba norteña'],
 };
@@ -24,13 +24,14 @@ FIGS.push({
     [data-fig="wikinatu"] .wn-tree line { stroke: var(--line); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
     [data-fig="wikinatu"] .wn-tree path { fill: var(--deck); stroke: var(--line); stroke-width: 1.1; vector-effect: non-scaling-stroke; }
     [data-fig="wikinatu"] .wn-base { fill: none; stroke: var(--line); stroke-width: 1.6; stroke-dasharray: 5 4; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-    [data-fig="wikinatu"] .wn-trail { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linejoin: round; stroke-linecap: butt; }
-    [data-fig="wikinatu"] .wn-band { fill: var(--accent); fill-opacity: 0; stroke: none; transition: fill-opacity .6s; }
-    [data-fig="wikinatu"] .wn-band.on { fill-opacity: .17; }
+    [data-fig="wikinatu"] .wn-lit { transition: opacity .9s ease; will-change: opacity; }
+    [data-fig="wikinatu"] .wn-band { fill: none; stroke: var(--accent); stroke-opacity: .16; stroke-width: 28; stroke-linejoin: round; stroke-linecap: round; }
+    [data-fig="wikinatu"] .wn-halo { fill: none; stroke: var(--accent); stroke-opacity: .28; stroke-width: 9; stroke-linejoin: round; stroke-linecap: round; }
+    [data-fig="wikinatu"] .wn-trail { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
     [data-fig="wikinatu"] .wn-far { fill: var(--panel); stroke: var(--line); stroke-width: 1.1; vector-effect: non-scaling-stroke; }
-    [data-fig="wikinatu"] .wn-sp { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; vector-effect: non-scaling-stroke; transition: fill .25s, stroke .25s, opacity .4s; }
-    [data-fig="wikinatu"] .wn-sp.hot { fill: var(--accent); stroke: var(--accent-hi); }
-    [data-fig="wikinatu"] .wn-sp.dim { opacity: .4; }
+    [data-fig="wikinatu"] .wn-sp { fill: var(--accent); stroke: var(--accent); stroke-opacity: .3; stroke-width: 5; opacity: 0; transform: scale(.15); transform-box: fill-box; transform-origin: center; transition: transform .55s cubic-bezier(.2, 1.5, .4, 1), opacity .35s ease; }
+    [data-fig="wikinatu"] .wn-sp.on { opacity: 1; transform: none; }
+    [data-fig="wikinatu"] .wn-sp.on.dim { opacity: .4; }
     [data-fig="wikinatu"] .wn-ring { fill: var(--accent); fill-opacity: .16; stroke: var(--accent); stroke-width: 1.4; vector-effect: non-scaling-stroke; transition: opacity .3s; }
     [data-fig="wikinatu"] .wn-spot { fill: var(--accent-hi); transition: opacity .3s; }
     [data-fig="wikinatu"] .wn-lead { fill: none; stroke: var(--accent); stroke-width: 1.1; opacity: 0; transition: opacity .4s; vector-effect: non-scaling-stroke; }
@@ -39,8 +40,6 @@ FIGS.push({
     [data-fig="wikinatu"] .wn-flagcloth { fill: var(--deck); stroke: var(--line); stroke-width: 1.2; vector-effect: non-scaling-stroke; transition: fill .3s, stroke .3s; }
     [data-fig="wikinatu"] .wn-flagcloth.hot { fill: var(--accent); stroke: var(--accent-hi); }
     [data-fig="wikinatu"] .wn-pole { stroke: var(--ink-hi); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
-    [data-fig="wikinatu"] .wn-per { stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: round; }
-    [data-fig="wikinatu"] .wn-limb { fill: none; stroke: var(--ink-hi); stroke-width: 2.2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
     [data-fig="wikinatu"] .wn-pill { transition: fill .3s, stroke .3s; }
     [data-fig="wikinatu"] .wn-pt { transition: fill .3s; font-weight: 600; }
   `,
@@ -80,12 +79,6 @@ FIGS.push({
     const atT = t => { const L = t * TL; let i = 1; while (i < len.length - 1 && len[i] < L) i++; const u = (L - len[i - 1]) / ((len[i] - len[i - 1]) || 1); return [tq[i - 1][0] + (tq[i][0] - tq[i - 1][0]) * u, tq[i - 1][1] + (tq[i][1] - tq[i - 1][1]) * u, tq[i][0] < tq[i - 1][0]]; };
     const trailD = 'M' + tq.map(q => f1(q[0]) + ' ' + f1(q[1])).join('L');
     const nearest = (x, y) => { let b = 1e9, bi = 0; tr.forEach((p, i) => { const d = Math.hypot(p[0] - x, p[1] - y); if (d < b) { b = d; bi = i; } }); return [b, bi]; };
-
-    // la banda de búsqueda alrededor del sendero, pegada al relieve
-    const off = side => tr.map((p, i) => { const a = tr[Math.max(i - 1, 0)], b = tr[Math.min(i + 1, tr.length - 1)], dx = b[0] - a[0], dy = b[1] - a[1], n = Math.hypot(dx, dy) || 1; return [p[0] - dy / n * BUF * side, p[1] + dx / n * BUF * side]; });
-    const inb = p => [Math.min(N, Math.max(0, p[0])), Math.min(N, Math.max(0, p[1]))];
-    const band = [...off(1), ...off(-1).reverse()].map(inb).map(p => sp(p[0], p[1], .4));
-    const bandD = 'M' + band.map(q => f1(q[0]) + ' ' + f1(q[1])).join('L') + 'Z';
 
     // observaciones: las que caen en la banda son las de la ruta; las demás se quedan apagadas
     let seed = 23; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
@@ -154,39 +147,26 @@ FIGS.push({
     const edgeY = Array.from({ length: G + 1 }, (_, i) => [i * Q, N]), edgeX = Array.from({ length: G + 1 }, (_, i) => [N, i * Q]);
     svg += `<path class="face" d="${wall(edgeY)}"/><path class="face top" d="${wall(edgeX)}"/>`;
 
-    svg += `<path id="wikinatu-band" class="wn-band" d="${bandD}" pointer-events="none"/>`;
     svg += `<path class="wn-base" d="${trailD}"/>`;
-    svg += `<path id="wikinatu-trail" class="wn-trail" filter="url(#soft)" pathLength="1000" stroke-dasharray="0 1000" d="${trailD}"/>`;
 
-    // observaciones, de atrás adelante
+    // las observaciones lejanas se quedan apagadas; las de la ruta nacen al paso de la luz
     const order = obs.map((o, i) => ({ o, i })).sort((u, v) => (u.o.x + u.o.y) - (v.o.x + v.o.y));
-    svg += order.map(({ o, i }) => o.near
-      ? `<circle id="wikinatu-sp${i}" class="wn-sp" filter="url(#soft)" cx="${f1(o.q[0])}" cy="${f1(o.q[1])}" r="${f1(named.includes(i) ? 5 : o.r)}"/>`
-      : `<circle class="wn-far" cx="${f1(o.q[0])}" cy="${f1(o.q[1])}" r="${f1(o.r)}"/>`).join('');
+    svg += order.filter(e => !e.o.near).map(({ o }) => `<circle class="wn-far" cx="${f1(o.q[0])}" cy="${f1(o.q[1])}" r="${f1(o.r)}"/>`).join('');
+
+    // lo que se enciende va sin filtros: un filtro obliga a repintarlo en cada fotograma
+    const RX = BUF * 1.2247, RY = BUF * .7071;
+    svg += `<g id="wikinatu-lit" class="wn-lit" pointer-events="none" style="opacity:0">`
+      + ['band', 'halo', 'trail'].map(k => `<path id="wikinatu-${k}" class="wn-${k}" pathLength="1000" stroke-dasharray="0 1000" d="${trailD}"/>`).join('')
+      + order.filter(e => e.o.near).map(({ o, i }) => `<circle id="wikinatu-sp${i}" class="wn-sp" cx="${f1(o.q[0])}" cy="${f1(o.q[1])}" r="${f1(named.includes(i) ? 5 : o.r)}"/>`).join('')
+      + `<g id="wikinatu-scan"><ellipse class="wn-ring" rx="${f1(RX)}" ry="${f1(RY)}"/><circle class="wn-spot" r="5"/></g></g>`;
 
     // bandera de cima y marca de salida
     const fl = sp(top[0] + 7, top[1] - 7, 0);
     svg += `<g pointer-events="none" transform="translate(${f1(fl[0])} ${f1(fl[1])})"><line class="wn-pole" x1="0" y1="0" x2="0" y2="-30"/><path id="wikinatu-flag" class="wn-flagcloth" d="M0 -30 L17 -25 L0 -19 z"/></g>`;
 
-    // anillo de búsqueda que recorre el sendero en la segunda vista
-    const RX = BUF * 1.2247, RY = BUF * .7071;
-    svg += `<g id="wikinatu-scan" pointer-events="none" style="opacity:0"><ellipse class="wn-ring" rx="${f1(RX)}" ry="${f1(RY)}"/><circle class="wn-spot" r="3.6" filter="url(#glow)"/></g>`;
-
-    // la persona que anda, con mochila y bastón
-    svg += `<g id="wikinatu-walker" pointer-events="none"><g id="wikinatu-flip"><g transform="scale(.92)">
-      <ellipse cx="0" cy="1" rx="8" ry="2.6" style="fill:var(--ink-hi);opacity:.14"/>
-      <path id="wikinatu-legs" class="wn-limb" d=""/>
-      <rect class="face wn-per" x="-9.5" y="-17.5" width="6" height="10" rx="2.4"/>
-      <path class="face wn-per" d="M-6 -6 C-6 -13 -4.4 -16.5 0 -16.5 C4.4 -16.5 6 -13 6 -6 Z"/>
-      <path id="wikinatu-arms" class="wn-limb" d=""/>
-      <circle class="face wn-per" cx="0" cy="-21" r="5.4"/>
-      <path d="M-5.4 -22 C-5.2 -27.4 5.2 -27.4 5.4 -22 C3 -24.2 -3 -24.2 -5.4 -22Z" style="fill:var(--ink-hi)"/>
-      <circle cx="1.6" cy="-20.8" r=".9" style="fill:var(--ink-hi)"/><circle cx="3.9" cy="-20.8" r=".9" style="fill:var(--ink-hi)"/>
-    </g></g></g>`;
-
     // pastillas de fase bajo el bloque
-    const pcx = P(N / 2, N / 2, 0)[0], py = P(N, N, ZB - 7)[1] + 12, PW = WN_EN ? [138, 190, 160] : [120, 210, 116], pg = 16, PT = PW[0] + PW[1] + PW[2] + 2 * pg;
-    for (let k = 0; k < 3; k++) {
+    const pcx = P(N / 2, N / 2, 0)[0], py = P(N, N, ZB - 7)[1] + 12, PW = WN_EN ? [138, 160] : [120, 116], pg = 16, PT = PW[0] + PW[1] + pg;
+    for (let k = 0; k < 2; k++) {
       const pw = PW[k], x = pcx - PT / 2 + PW.slice(0, k).reduce((a, b) => a + b + pg, 0);
       svg += `<g pointer-events="none"><rect id="wikinatu-pill${k}" class="face led wn-pill" x="${x}" y="${py}" width="${pw}" height="38" rx="19"/>`
            + `<text id="wikinatu-pt${k}" class="label wn-pt" x="${x + pw / 2}" y="${py + 26}" text-anchor="middle" style="font-size:18px">${WN_T.pills[k]}</text></g>`;
@@ -205,25 +185,25 @@ FIGS.push({
     stage.innerHTML = svg;
 
     const $ = id => stage.querySelector('#wikinatu-' + id);
-    const trail = $('trail'), walker = $('walker'), flip = $('flip'), scan = $('scan'), legs = $('legs'), arms = $('arms');
+    const lit = $('lit'), scan = $('scan'), flag = $('flag'), dash = ['band', 'halo', 'trail'].map($);
     const spEl = near.map(e => [e, $('sp' + e.i)]);
     const QUIET = /still/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const DUR = [1500, 3600, 4000, 5200], WALK = 3000, SCAN = 3200;
+    const DUR = [1100, 8000, 5400], WALK = 7000;
     const st = { phase: 0, t0: 0 };
     let auto = false;
-    const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    const ease = u => (1 - Math.cos(Math.PI * u)) / 2;
+    const setT = t => { const v = `${(t * 1000).toFixed(2)} 1000`; for (const d of dash) d.setAttribute('stroke-dasharray', v); };
 
     function render() {
       const ph = st.phase;
-      $('band').classList.toggle('on', ph >= 2);
-      scan.style.opacity = ph === 2 ? 1 : 0;
-      for (let k = 0; k < 4; k++) { $('lead' + k).classList.toggle('wn-on', ph === 3); $('tag' + k).classList.toggle('wn-on', ph === 3); }
-      for (const [e, el] of spEl) {
-        if (ph < 2) el.classList.remove('hot');
-        if (ph === 3) el.classList.add('hot');
-        el.classList.toggle('dim', ph === 3 && !named.includes(e.i));
-      }
-      for (let k = 0; k < 3; k++) {
+      lit.style.opacity = ph === 0 ? 0 : 1;
+      scan.style.opacity = ph === 1 ? 1 : 0;
+      flag.classList.toggle('hot', ph === 2);
+      if (ph === 1) { setT(0); for (const [, el] of spEl) el.classList.remove('on'); }
+      if (ph === 2) { setT(1); for (const [, el] of spEl) el.classList.add('on'); }
+      for (const [e, el] of spEl) el.classList.toggle('dim', ph === 2 && !named.includes(e.i));
+      for (let k = 0; k < 4; k++) { $('lead' + k).classList.toggle('wn-on', ph === 2); $('tag' + k).classList.toggle('wn-on', ph === 2); }
+      for (let k = 0; k < 2; k++) {
         const on = ph === k + 1;
         $('pill' + k).setAttribute('class', 'face led wn-pill' + (on ? ' hot' : ''));
         $('pt' + k).style.fill = on ? 'var(--panel)' : 'var(--ink-hi)';
@@ -232,39 +212,29 @@ FIGS.push({
       api.readout(ph === 0 ? (WN_EN ? 'A mountain, still dark' : 'Una montaña, aún apagada') : WN_T.read[ph - 1]);
     }
 
-    function frame(ts) {
-      const ph = st.phase, el = performance.now() - st.t0;
-      const t = ph === 0 ? 0 : ph === 1 ? ease(Math.min(1, el / WALK)) : 1;
-      trail.setAttribute('stroke-dasharray', `${(t * 1000).toFixed(1)} 1000`);
-      $('flag').classList.toggle('hot', t >= 1);
-      const [x, y, left] = atT(t), going = ph === 1 && t < 1, top_ = t >= 1;
-      const bob = going ? Math.abs(Math.sin(ts / 110)) * 1.1 : 0, sw = going ? Math.sin(ts / 110) * 3.4 : 0;
-      walker.setAttribute('transform', `translate(${f1(x)} ${(y - bob).toFixed(2)})`);
-      if (going) flip.setAttribute('transform', `scale(${left ? -1 : 1} 1)`);
-      legs.setAttribute('d', `M-2 -7L${(-2 - sw).toFixed(1)} 0M2 -7L${(2 + sw).toFixed(1)} 0`);
-      const wave = top_ ? Math.sin(ts / 260) * 1.6 : 0;
-      arms.setAttribute('d', top_ ? `M-5 -13L${(-9 + wave).toFixed(1)} -24M5 -13L${(9 + wave).toFixed(1)} -24` : `M-5 -13L${(-6 - sw).toFixed(1)} -6M5 -13L${(6 + sw).toFixed(1)} -6`);
-      if (ph === 2) {
-        const s = ease(Math.min(1, el / SCAN)), [sx, sy] = atT(s);
-        scan.setAttribute('transform', `translate(${f1(sx)} ${f1(sy)})`);
-        if (el > SCAN + 150) scan.style.opacity = 0;
-        for (const [e, node] of spEl) if (e.o.t <= s + .02) node.classList.add('hot');
-      }
+    // solo trabaja mientras la luz sube; el resto de la figura no se toca
+    function frame() {
+      if (st.phase !== 1) return;
+      const u = Math.min(1, (performance.now() - st.t0) / WALK), t = ease(u), [x, y] = atT(t);
+      setT(t);
+      scan.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)})`);
+      for (const [e, el] of spEl) if (e.o.t <= t + .012) el.classList.add('on');
+      if (u >= 1) { scan.style.opacity = 0; flag.classList.add('hot'); }
     }
 
-    const go = n => { st.phase = ((n % 4) + 4) % 4; st.t0 = performance.now(); render(); };
+    const go = n => { st.phase = ((n % 3) + 3) % 3; st.t0 = performance.now(); render(); };
     const next = () => go(st.phase + 1);
     const tick = () => api.after(DUR[st.phase], () => { if (auto) { next(); tick(); } });
     api.loop(frame);
     stage.addEventListener('click', () => { auto = false; next(); });
-    go(/still/.test(location.search) ? 3 : 0);
+    go(/still/.test(location.search) ? 2 : 0);
     return {
       key(e) {
         if (e.key === ' ' || e.key === 'Enter') { auto = false; next(); return true; }
         if (e.key === 'r' || e.key === 'R') { auto = false; go(0); return true; }
         return false;
       },
-      demo() { if (QUIET) { go(3); return; } auto = true; go(1); tick(); },
+      demo() { if (QUIET) { go(2); return; } auto = true; go(1); tick(); },
     };
   },
 });

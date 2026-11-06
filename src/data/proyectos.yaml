@@ -253,8 +253,8 @@
   nombre: WikiNatu
   sector: { es: Biodiversidad, en: Biodiversity }
   pregunta:
-    es: ¿Qué vive junto al camino que voy a andar?
-    en: What lives along the path I am about to walk?
+    es: ¿Qué especies me encontraré en mi ruta?
+    en: Which species will I find on my route?
   resumen:
     es: >-
       Una web que cruza una ruta GPX con las observaciones de iNaturalist y te da lo que vive junto al camino. Lo enseña en un mapa, en un cuadro de la naturaleza al modo de Humboldt, con cada especie a su altura, y en una guía en PDF configurable para llevar en la mochila. El GPX no sale de tu navegador.
