@@ -3,9 +3,8 @@ const WN_T = {
   name: WN_EN ? 'What lives along the path' : 'Lo que vive junto al camino',
   hint: WN_EN ? 'Click or space: next view · r restarts' : 'Clic o espacio: siguiente vista · r reinicia',
   aria: WN_EN
-    ? 'Isometric mountain with contour lines. A light climbs the trail and the species seen beside it appear as it passes. The last view names some species at their height. Click, space or r.'
-    : 'Montaña isométrica con curvas de nivel. Una luz sube por el sendero y las especies vistas a su lado aparecen a su paso. La última vista rotula especies a su altura. Clic, espacio o r.',
-  pills: WN_EN ? ['The route', 'Nature plate'] : ['La ruta', 'Cuadro'],
+    ? 'Isometric mountain with contour lines. A light climbs the trail and the species seen beside it appear as it passes. Their names appear at their height as the route climbs. Click, space or r.'
+    : 'Montaña isométrica con curvas de nivel. Una luz sube por el sendero y las especies vistas a su lado aparecen a su paso. Sus nombres salen a su altura según sube la ruta. Clic, espacio o r.',
   read: WN_EN
     ? ['The species appear as the route advances', 'Each species at its height, as Humboldt drew them']
     : ['Las especies aparecen a medida que avanza la ruta', 'Cada especie a su altura, como las dibujó Humboldt'],
@@ -31,7 +30,6 @@ FIGS.push({
     [data-fig="wikinatu"] .wn-far { fill: var(--panel); stroke: var(--line); stroke-width: 1.1; vector-effect: non-scaling-stroke; }
     [data-fig="wikinatu"] .wn-sp { fill: var(--accent); stroke: var(--accent); stroke-opacity: .3; stroke-width: 5; opacity: 0; transform: scale(.15); transform-box: fill-box; transform-origin: center; transition: transform .55s cubic-bezier(.2, 1.5, .4, 1), opacity .35s ease; }
     [data-fig="wikinatu"] .wn-sp.on { opacity: 1; transform: none; }
-    [data-fig="wikinatu"] .wn-sp.on.dim { opacity: .4; }
     [data-fig="wikinatu"] .wn-ring { fill: var(--accent); fill-opacity: .16; stroke: var(--accent); stroke-width: 1.4; vector-effect: non-scaling-stroke; transition: opacity .3s; }
     [data-fig="wikinatu"] .wn-spot { fill: var(--accent-hi); transition: opacity .3s; }
     [data-fig="wikinatu"] .wn-lead { fill: none; stroke: var(--accent); stroke-width: 1.1; opacity: 0; transition: opacity .4s; vector-effect: non-scaling-stroke; }
@@ -40,8 +38,6 @@ FIGS.push({
     [data-fig="wikinatu"] .wn-flagcloth { fill: var(--deck); stroke: var(--line); stroke-width: 1.2; vector-effect: non-scaling-stroke; transition: fill .3s, stroke .3s; }
     [data-fig="wikinatu"] .wn-flagcloth.hot { fill: var(--accent); stroke: var(--accent-hi); }
     [data-fig="wikinatu"] .wn-pole { stroke: var(--ink-hi); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
-    [data-fig="wikinatu"] .wn-pill { transition: fill .3s, stroke .3s; }
-    [data-fig="wikinatu"] .wn-pt { transition: fill .3s; font-weight: 600; }
   `,
   mount(stage, api) {
     const N = 200, G = 40, Q = N / G, ZB = -9, BUF = 15;
@@ -164,16 +160,9 @@ FIGS.push({
     const fl = sp(top[0] + 7, top[1] - 7, 0);
     svg += `<g pointer-events="none" transform="translate(${f1(fl[0])} ${f1(fl[1])})"><line class="wn-pole" x1="0" y1="0" x2="0" y2="-30"/><path id="wikinatu-flag" class="wn-flagcloth" d="M0 -30 L17 -25 L0 -19 z"/></g>`;
 
-    // pastillas de fase bajo el bloque
-    const pcx = P(N / 2, N / 2, 0)[0], py = P(N, N, ZB - 7)[1] + 12, PW = WN_EN ? [138, 160] : [120, 116], pg = 16, PT = PW[0] + PW[1] + pg;
-    for (let k = 0; k < 2; k++) {
-      const pw = PW[k], x = pcx - PT / 2 + PW.slice(0, k).reduce((a, b) => a + b + pg, 0);
-      svg += `<g pointer-events="none"><rect id="wikinatu-pill${k}" class="face led wn-pill" x="${x}" y="${py}" width="${pw}" height="38" rx="19"/>`
-           + `<text id="wikinatu-pt${k}" class="label wn-pt" x="${x + pw / 2}" y="${py + 26}" text-anchor="middle" style="font-size:18px">${WN_T.pills[k]}</text></g>`;
-    }
-    const vt = P(top[0], top[1], ZT + 32)[1] - 6, vH = py + 38 + 8 - vt, vW = Math.max(vH * 1.6, PT + 40), vL = pcx - vW / 2;
+    const pcx = P(N / 2, N / 2, 0)[0], vt = P(top[0], top[1], ZT + 32)[1] - 6, vH = P(N, N, ZB - 7)[1] + 14 - vt, vW = vH * 1.6, vL = pcx - vW / 2;
 
-    // el cuadro: cada nombre a la altura de su especie, en columna a los lados, como en la lámina de Humboldt
+    // cada nombre a la altura de su especie, en columna a los lados, como en la lámina de Humboldt
     const tags = named.map((si, k) => {
       const q = obs[si].q, right = k % 2 === 1, x = right ? vL + vW - 14 : vL + 14, w = WN_T.names[k].length * 10.2, end = right ? x - w - 6 : x + w + 6;
       return `<path id="wikinatu-lead${k}" class="wn-lead" d="M${f1(q[0])} ${f1(q[1])}L${f1(end)} ${f1(q[1])}"/>`
@@ -187,6 +176,7 @@ FIGS.push({
     const $ = id => stage.querySelector('#wikinatu-' + id);
     const lit = $('lit'), scan = $('scan'), flag = $('flag'), dash = ['band', 'halo', 'trail'].map($);
     const spEl = near.map(e => [e, $('sp' + e.i)]);
+    const nameEl = named.map((si, k) => [obs[si], $('lead' + k), $('tag' + k)]);
     const QUIET = /still/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
     const DUR = [1100, 8000, 5400], WALK = 7000;
     const st = { phase: 0, t0: 0 };
@@ -201,13 +191,7 @@ FIGS.push({
       flag.classList.toggle('hot', ph === 2);
       if (ph === 1) { setT(0); for (const [, el] of spEl) el.classList.remove('on'); }
       if (ph === 2) { setT(1); for (const [, el] of spEl) el.classList.add('on'); }
-      for (const [e, el] of spEl) el.classList.toggle('dim', ph === 2 && !named.includes(e.i));
-      for (let k = 0; k < 4; k++) { $('lead' + k).classList.toggle('wn-on', ph === 2); $('tag' + k).classList.toggle('wn-on', ph === 2); }
-      for (let k = 0; k < 2; k++) {
-        const on = ph === k + 1;
-        $('pill' + k).setAttribute('class', 'face led wn-pill' + (on ? ' hot' : ''));
-        $('pt' + k).style.fill = on ? 'var(--panel)' : 'var(--ink-hi)';
-      }
+      for (const [, lead, tag] of nameEl) { lead.classList.toggle('wn-on', ph === 2); tag.classList.toggle('wn-on', ph === 2); }
       api.power(ph >= 1);
       api.readout(ph === 0 ? (WN_EN ? 'A mountain, still dark' : 'Una montaña, aún apagada') : WN_T.read[ph - 1]);
     }
@@ -219,6 +203,7 @@ FIGS.push({
       setT(t);
       scan.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)})`);
       for (const [e, el] of spEl) if (e.o.t <= t + .012) el.classList.add('on');
+      for (const [o, lead, tag] of nameEl) if (o.t <= t + .012) { lead.classList.add('wn-on'); tag.classList.add('wn-on'); }
       if (u >= 1) { scan.style.opacity = 0; flag.classList.add('hot'); }
     }
 
