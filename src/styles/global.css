@@ -1,3 +1,19 @@
+/* Allo 1.0.3 (Josh Puckett, OFL: public/fonts/OFL.txt). D-023 de MIA. */
+@font-face {
+  font-family: 'Allo';
+  src: url('/fonts/AlloVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Allo';
+  src: url('/fonts/Allo-Oblique.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 :root {
   --fondo: #f6f4ef;
   --papel: #ffffff;
@@ -18,8 +34,8 @@
   --aviso-fondo: #fbf3e3;
   --aviso-borde: #e6d3a3;
   --aviso-texto: #5a4208;
-  --titulos: 'Poppins', system-ui, sans-serif;
-  --texto: 'Montserrat', system-ui, sans-serif;
+  --titulos: 'Allo', system-ui, sans-serif;
+  --texto: 'Allo', system-ui, sans-serif;
   --ancho: 1120px;
   --margen: 24px;
 }
