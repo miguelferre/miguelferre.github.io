@@ -274,8 +274,8 @@
   nombre: Galicia en hexágonos
   sector: { es: Territorio, en: Territory }
   pregunta:
-    es: ¿Cómo se ve Galicia como un mapa de juego de estrategia?
-    en: What does Galicia look like as a strategy game map?
+    es: ¿Y si Galicia fuera un juego de estrategia?
+    en: What if Galicia were a strategy game?
   resumen:
     es: >-
       Una adaptación de usaciv, de Andrej Karpathy, con datos públicos gallegos. Unos 11.400 hexágonos de 1 km con el relieve del IGN y el suelo de ESA WorldCover; las comarcas hacen de estados y los concellos de condados. Las lentes enseñan población, renta, trabajo, clima, incendios e inundación, y cada fuente tiene su licencia revisada.
