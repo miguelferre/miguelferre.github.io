@@ -268,3 +268,24 @@
     - valor: "189"
       etiqueta: { es: "especies en la ruta de ejemplo", en: "species on the example route" }
   inicio: 2026
+
+- id: galiciaciv
+  tipo: exploracion
+  nombre: Galicia en hexágonos
+  sector: { es: Territorio, en: Territory }
+  pregunta:
+    es: ¿Cómo se ve Galicia como un mapa de juego de estrategia?
+    en: What does Galicia look like as a strategy game map?
+  resumen:
+    es: >-
+      Una adaptación de usaciv, de Andrej Karpathy, con datos públicos gallegos. Unos 11.400 hexágonos de 1 km con el relieve del IGN y el suelo de ESA WorldCover; las comarcas hacen de estados y los concellos de condados. Las lentes enseñan población, renta, trabajo, clima, incendios e inundación, y cada fuente tiene su licencia revisada.
+    en: >-
+      An adaptation of Andrej Karpathy's usaciv with Galician open data. About 11,400 hexagons of 1 km with IGN terrain and ESA WorldCover land cover; comarcas act as states and municipalities as counties. The lenses show population, income, work, climate, wildfires and floods, and each source has its licence checked.
+  estado: live
+  url_live: https://miguelferre.github.io/galiciaciv/
+  url_repo: https://github.com/miguelferre/galiciaciv
+  captura: /capturas/galiciaciv.webp
+  metricas:
+    - valor: "23"
+      etiqueta: { es: "lentes con datos públicos", en: "lenses with open data" }
+  inicio: 2026

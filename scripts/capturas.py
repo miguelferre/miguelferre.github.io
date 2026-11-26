@@ -16,6 +16,7 @@ OBJETIVOS = {
     "storymap-incendios": ("https://miguelferre.github.io/STORYMAP_INCENDIOS_GALICIA_2025/", 6000),
     "madrid-hli": ("https://miguelferre.github.io/Madrid_HLI/", 20000),
     "climatch": ("https://climatch.app/", 5000),
+    "galiciaciv": ("https://miguelferre.github.io/galiciaciv/", 8000),
 }
 
 
