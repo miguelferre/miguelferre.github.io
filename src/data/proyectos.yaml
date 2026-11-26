@@ -290,3 +290,24 @@
     - valor: "23"
       etiqueta: { es: "lentes con datos públicos", en: "lenses with open data" }
   inicio: 2026
+
+- id: mapas
+  tipo: exploracion
+  nombre: Mapas
+  sector: { es: Cartografía, en: Cartography }
+  pregunta:
+    es: ¿Qué forma crea el agua cuando la dibujas con datos?
+    en: What shapes does water make when you draw it with data?
+  resumen:
+    es: >-
+      Una galería de cinco mapas de agua. Ríos dibujados como modelos de elevación relativa (REM), que quitan la pendiente del valle y dejan ver el cauce; una ría de tierra y mar con LiDAR y batimetría; y la misma ría sobre una carta náutica de 1838. Cada mapa dice de qué datos sale y con qué licencia.
+    en: >-
+      A gallery of five maps of water. Rivers drawn as relative elevation models (REM), which remove the slope of the valley so the channels show; a ria of land and sea from LiDAR and bathymetry; and the same ria on an 1838 nautical chart. Each map says which data it comes from and under which licence.
+  estado: live
+  url_live: https://miguelferre.github.io/mapas/
+  url_repo: https://github.com/miguelferre/mapas
+  figura: mapas
+  metricas:
+    - valor: "5"
+      etiqueta: { es: "mapas de ríos y rías", en: "maps of rivers and rias" }
+  inicio: 2024
