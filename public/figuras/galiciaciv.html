@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>galiciaciv</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg:#0c0d0e; --panel:#141516; --edge:#222426;
+    --line:#3d4144; --detail:#2b2e30; --body:#17181a; --deck:#1b1d1f;
+    --ink:#868b8f; --ink-hi:#e6e8e9; --live:#f4f5f5;
+    --glass:#0f1011; --glass-on:#1a1410; --recess:#0e0f10;
+    --accent:#ff9a2e; --accent-hi:#ffc77a; --accent-dim:rgba(255,154,46,.10);
+    --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg:#e9eaea; --panel:#f6f6f5; --edge:#d6d8d8;
+    --line:#8e9397; --detail:#c3c6c8; --body:#ececeb; --deck:#f3f3f2;
+    --ink:#6a6f73; --ink-hi:#16181a; --live:#0c0d0e;
+    --glass:#dcdede; --glass-on:#f3e6da; --recess:#e2e4e4;
+    --accent:#d97706; --accent-hi:#f59e0b; --accent-dim:rgba(217,119,6,.08);
+  } }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --bg:#e9eaea; --panel:#f6f6f5; --edge:#d6d8d8;
+    --line:#8e9397; --detail:#c3c6c8; --body:#ececeb; --deck:#f3f3f2;
+    --ink:#6a6f73; --ink-hi:#16181a; --live:#0c0d0e;
+    --glass:#dcdede; --glass-on:#f3e6da; --recess:#e2e4e4;
+    --accent:#d97706; --accent-hi:#f59e0b; --accent-dim:rgba(217,119,6,.08);
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--mono); font-size:13px; padding:20px 16px 32px; }
+  .wrap { max-width:1180px; margin-inline:auto; display:grid; gap:14px; }
+  .top { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:8px 18px; text-transform:uppercase; letter-spacing:.14em; padding:0 4px; }
+  .top .hi { color:var(--ink-hi); }
+  .top .dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); margin-right:10px; vertical-align:1px; }
+  .arrows { display:flex; gap:6px; }
+  .arrows button, nav button { font:inherit; color:inherit; background:none; border:1px solid var(--edge); border-radius:10px; cursor:pointer; }
+  .arrows button { padding:6px 12px; letter-spacing:.14em; text-transform:uppercase; }
+  .arrows button:hover { color:var(--ink-hi); border-color:var(--line); }
+  .top .hi { margin-right:auto; }
+  .swatches { display:flex; align-items:center; gap:4px; padding:4px; border:1px solid var(--edge); border-radius:999px; }
+  .swatches button { width:26px; height:26px; border-radius:50%; border:1px solid transparent; background:none; cursor:pointer; display:grid; place-items:center; padding:0; }
+  .swatches button i { width:12px; height:12px; border-radius:50%; background:var(--sw); border:1px solid var(--line); box-shadow:0 0 0 0 var(--sw); transition:box-shadow .2s, transform .2s; }
+  .swatches button:hover i { transform:scale(1.15); }
+  .swatches button[aria-checked="true"] { border-color:var(--line); }
+  .swatches button[aria-checked="true"] i { box-shadow:0 0 10px 1px var(--sw); }
+  .swatches button:focus-visible { outline:2px solid var(--accent); outline-offset:1px; }
+  .layout { display:grid; grid-template-columns:230px minmax(0,1fr); grid-template-rows:auto 1fr; grid-template-areas:"nav fig" "credit fig"; gap:14px; align-items:start; }
+  .layout > nav { grid-area:nav; } .layout > figure { grid-area:fig; } .layout > .credit { grid-area:credit; }
+  .made-with { display:flex; justify-content:flex-end; padding:2px 6px 0; font-size:11px; letter-spacing:.12em; text-transform:uppercase; }
+  .made-with a { color:var(--line); text-decoration:none; transition:color .2s; }
+  .made-with a:hover { color:var(--ink); }
+  .credit { align-self:end; display:grid; gap:3px; padding:0 16px 22px; font-size:12px; line-height:1.5; letter-spacing:.04em; }
+  .credit a { color:var(--ink); text-decoration:none; width:fit-content; transition:color .2s; }
+  .credit a:hover { color:var(--ink-hi); }
+  .credit a:hover .ar { color:var(--accent); }
+  .credit .ar { color:var(--line); transition:color .2s; }
+  .credit .by { color:var(--line); }
+  .credit .nm { color:var(--ink); }
+  .credit .cr { color:var(--line); margin-top:8px; font-size:11px; display:grid; gap:1px; }
+  .credit .cr .hs { white-space:nowrap; }
+  .credit .cr a { color:var(--line); }
+  .credit .cr a:hover { color:var(--ink-hi); }
+  .credit .soc { display:flex; gap:12px; margin-top:4px; }
+  .credit .soc a { display:grid; place-items:center; width:16px; height:16px; }
+  .credit .soc svg { width:14px; height:14px; fill:currentColor; transition:fill .2s; }
+  .credit .soc a:hover svg { fill:var(--accent); }
+  .credit a:focus-visible { outline:1px solid var(--accent); outline-offset:2px; border-radius:3px; }
+  nav { display:grid; gap:4px; background:var(--panel); border:1px solid var(--edge); border-radius:22px; padding:14px; }
+  nav button { display:flex; gap:12px; align-items:center; text-align:left; padding:9px 12px; border-color:transparent; letter-spacing:.06em; }
+  nav button .n { color:var(--line); font-size:12px; transition:color .2s; }
+  nav button:hover { color:var(--ink-hi); }
+  nav button[aria-current="true"] { color:var(--ink-hi); border-color:var(--edge); background:var(--bg); }
+  nav button[aria-current="true"] .n { color:var(--accent); text-shadow:0 0 8px var(--accent); }
+  figure { margin:0; background:var(--panel); border:1px solid var(--edge); border-radius:22px; padding:22px 26px; display:grid; gap:6px; min-width:0; }
+  .cap { display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 18px; text-transform:uppercase; letter-spacing:.14em; }
+  .cap .hi { color:var(--ink-hi); text-transform:none; letter-spacing:.05em; }
+  #stageHolder { aspect-ratio:4/3; border-radius:14px; transition:background .5s; background:radial-gradient(ellipse 50% 45% at 50% 52%, transparent, transparent); }
+  #stageHolder.glow { background:radial-gradient(ellipse 50% 45% at 50% 52%, var(--accent-dim), transparent 72%); }
+  #stage { width:100%; height:100%; display:block; touch-action:manipulation; user-select:none; -webkit-user-select:none; }
+  #stage:focus { outline:none; }
+  #stage:focus-visible { outline:1px dashed var(--line); outline-offset:4px; border-radius:8px; }
+  .fx { position:absolute; width:0; height:0; overflow:hidden; }
+  @media (max-width: 820px) {
+    .layout { grid-template-columns:1fr; grid-template-rows:auto; grid-template-areas:"nav" "fig" "credit"; }
+    .credit { padding:4px 8px 0; display:flex; flex-wrap:wrap; align-items:center; gap:4px 14px; }
+    .credit .soc { margin-top:0; }
+    .credit .cr { margin-top:0; flex-basis:100%; }
+    nav { position:relative; top:0; display:flex; overflow-x:auto; border-radius:16px; padding:8px; scrollbar-width:none; }
+    nav button { flex:none; padding:8px 10px; }
+    figure { padding:16px; }
+  }
+
+  /* ---------- shared figure vocabulary ---------- */
+  #stage text { font-family:var(--mono); }
+  .face { fill:var(--body); stroke:var(--line); stroke-width:1; vector-effect:non-scaling-stroke; stroke-linejoin:round; }
+  .face.top { fill:var(--deck); }
+  .face.recess { fill:var(--recess); }
+  .detail { fill:none; stroke:var(--detail); stroke-width:1; vector-effect:non-scaling-stroke; }
+  .label { fill:var(--ink); font-family:var(--mono); }
+  .glass { fill:var(--glass); transition:fill .3s, stroke .3s; }
+  .glass.hot { fill:var(--glass-on); stroke:var(--accent); }
+  .halo { fill:var(--accent); opacity:0; transition:opacity .4s; }
+  .halo.hot { opacity:.22; }
+  .scr { fill:var(--accent-hi); font-family:var(--mono); }
+  .scr-accent { fill:var(--accent); }
+  .led { fill:var(--detail); transition:fill .2s; }
+  .led.hot { fill:var(--accent); }
+  .wire { fill:none; stroke:var(--line); stroke-width:1; vector-effect:non-scaling-stroke; stroke-linecap:round; stroke-linejoin:round; transition:stroke .4s; }
+  .wire.hot { stroke:var(--accent); }
+  .wire-under { fill:none; stroke:var(--panel); stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round; }
+  .pulse { fill:none; stroke:var(--accent-hi); stroke-width:2.2; stroke-linecap:round; vector-effect:non-scaling-stroke;
+           stroke-dasharray:70 1200; stroke-dashoffset:70; opacity:0; }
+  .pulse.go { animation:flow .55s linear; }
+  @keyframes flow { 0% { stroke-dashoffset:70; opacity:1; } 90% { opacity:1; } 100% { stroke-dashoffset:-1000; opacity:0; } }
+  .press { cursor:pointer; transition:transform 60ms ease-out; }
+  .press.down { transform:translateY(3px); }
+  .press .face { transition:fill .6s ease-out, stroke .6s ease-out; }
+  .press.lit .face, .press.latched .face { fill:var(--accent); stroke:var(--accent-hi); transition:none; }
+  .press.lit .face.top, .press.latched .face.top { fill:var(--accent-hi); }
+  .press.lit { filter:url(#glow); }
+  .press.latched { filter:url(#soft); }
+  .press:hover .face.top { stroke:var(--ink); }
+  .blink { animation:blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity:0; } }
+  @media (prefers-reduced-motion:reduce) {
+    .press, .glass, .halo, .press .face, .wire { transition:none; } .blink { animation:none; } .pulse.go { animation:none; }
+  }
+
+  /* --- incrustada en el portfolio --- */
+  :root[data-theme="light"] { --bg:#f6f4ef; --panel:#f6f4ef; --edge:#ddd8ce; }
+  body { padding:0; background:transparent; overflow:hidden; }
+  .wrap { max-width:none; gap:0; }
+  /* .wrap > .top es la barra de la plantilla; .face.top son las caras superiores y no se tocan */
+  .wrap > .top, #nav, .made-with { display:none !important; }
+  .layout { display:block; }
+  figure { border:0; border-radius:0; background:transparent; padding:4px 8px 6px; }
+  /* Sin pies: ni número de figura, ni pista de teclas, ni readout */
+  .cap { display:none !important; }
+  figure { padding:0; }
+  /* ?compacto: tarjeta de exploración; la figura llena el marco y no lleva pie */
+  html.compacto, html.compacto body, html.compacto .wrap, html.compacto .layout, html.compacto figure { height:100%; }
+  html.compacto figure { padding:0; display:block; }
+  html.compacto .cap { display:none; }
+  html.compacto #stageHolder { aspect-ratio:auto; height:100%; }
+</style>
+<script>if (/compacto/.test(location.search)) document.documentElement.classList.add('compacto');</script>
+<style>
+</style>
+</head>
+<body>
+<svg class="fx" aria-hidden="true">
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="soft" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="bloom" filterUnits="userSpaceOnUse" x="-2000" y="-2000" width="6000" height="6000"><feGaussianBlur stdDeviation="9"/></filter>
+  </defs>
+</svg>
+<div class="wrap">
+  <div class="top">
+    <span class="hi"><span class="dot"></span>Iso figures</span>
+    <div class="swatches" id="swatches" role="radiogroup" aria-label="Glow colour"></div>
+    <div class="arrows"><button id="prev" aria-label="Previous figure">← Prev</button><button id="next" aria-label="Next figure">Next →</button></div>
+  </div>
+  <div class="layout">
+    <nav id="nav" aria-label="Figures"></nav>
+    <!-- optional: <aside class="credit">Made by … <a href="…">…</a></aside> (styles below) -->
+    <figure>
+      <div class="cap"><span class="hi" id="fignum">Fig 1</span><span id="figname"></span></div>
+      <div id="stageHolder"></div>
+      <div class="cap"><span id="hint"></span><span class="hi" id="readout"></span></div>
+    </figure>
+  </div>
+  <!-- Made-with credit: keep by default; delete this footer if you don't want it. -->
+  <footer class="made-with"><a href="https://iso-glow.vercel.app" target="_blank" rel="noopener">Made with ISO-GLOW ↗</a></footer>
+</div>
+<script>
+  // Gallery settings: palette 'ember' | 'city' | your own [[name, darkAccent, darkHi, lightAccent, lightHi], ...]
+  window.GALLERY = { palette: [['Tinta', '#9d8cf0', '#c9bfff', '#614bc1', '#7d68d8']], autoDemo: true, storageKey: 'iso-glow-accent' };
+  const FIGS = [];
+</script>
+<!-- FIGURES: one <script> per figure, each calling FIGS.push({...}). Order here = Fig 1, 2, 3 ... -->
+<script>
+const GC_DATA = {"R":7.0,"hex":[[10,3,0,199,56,0],[11,3,0,138,34,4],[8,4,0,125,58,0],[9,4,0,239,46,0],[10,4,0,248,36,9],[11,4,0,273,52,9],[12,4,0,298,57,0],[13,4,0,173,76,4],[7,5,0,88,92,14],[8,5,0,204,56,0],[9,5,0,367,37,5],[10,5,0,495,29,7],[11,5,0,479,33,4],[12,5,0,251,37,14],[13,5,0,132,56,15],[14,5,0,149,59,39],[15,5,1,0,0,0],[16,5,1,0,0,0],[17,5,1,0,0,0],[18,5,1,0,0,0],[19,5,1,0,0,0],[6,6,0,72,96,2],[7,6,0,236,74,2],[8,6,0,444,41,0],[9,6,0,486,39,15],[10,6,0,680,23,8],[11,6,0,662,26,0],[12,6,0,319,37,0],[13,6,0,303,40,27],[14,6,1,0,0,0],[15,6,1,0,0,0],[16,6,1,0,0,0],[17,6,1,0,0,0],[18,6,1,0,0,0],[5,7,0,64,99,0],[6,7,0,118,74,0],[7,7,0,394,28,0],[8,7,0,502,29,0],[9,7,0,487,37,0],[10,7,0,543,41,4],[11,7,0,575,26,0],[12,7,0,474,31,0],[13,7,0,343,28,0],[14,7,1,0,0,0],[15,7,1,0,0,0],[16,7,1,0,0,0],[17,7,1,0,0,0],[18,7,1,0,0,0],[1,8,0,92,53,21],[2,8,0,143,70,1],[3,8,0,203,75,0],[4,8,0,185,92,0],[5,8,0,94,82,0],[6,8,0,292,45,2],[7,8,0,550,28,3],[8,8,0,502,34,7],[9,8,0,457,43,0],[10,8,0,423,37,0],[11,8,0,476,32,0],[12,8,0,522,31,0],[13,8,0,724,15,0],[14,8,1,0,0,0],[15,8,1,0,0,0],[16,8,1,0,0,0],[17,8,1,0,0,0],[-1,9,0,127,56,12],[0,9,0,189,45,0],[1,9,0,249,46,4],[2,9,0,283,68,3],[3,9,0,374,53,8],[4,9,0,305,57,0],[5,9,0,361,42,0],[6,9,0,492,39,2],[7,9,0,490,31,3],[8,9,0,465,33,5],[9,9,0,410,44,2],[10,9,0,445,38,3],[11,9,0,575,28,5],[12,9,0,659,13,13],[13,9,0,784,13,14],[14,9,1,0,0,0],[15,9,1,0,0,0],[16,9,1,0,0,0],[17,9,1,0,0,0],[-2,10,0,145,43,8],[-1,10,0,284,43,6],[0,10,0,359,46,4],[1,10,0,391,47,4],[2,10,0,374,39,3],[3,10,0,311,58,1],[4,10,0,370,37,0],[5,10,0,463,35,2],[6,10,0,604,29,0],[7,10,0,523,24,4],[8,10,0,471,63,0],[9,10,0,481,75,0],[10,10,0,631,34,0],[11,10,0,722,12,33],[12,10,0,675,13,9],[13,10,1,0,0,0],[14,10,1,0,0,0],[15,10,1,0,0,0],[16,10,1,0,0,0],[-3,11,0,104,67,17],[-2,11,0,319,37,10],[-1,11,0,343,40,5],[0,11,0,344,46,9],[1,11,0,305,69,32],[2,11,0,270,76,0],[3,11,0,319,56,0],[4,11,0,391,42,0],[5,11,0,548,47,4],[6,11,0,621,26,16],[7,11,0,565,59,1],[8,11,0,492,83,0],[9,11,0,466,66,0],[10,11,0,672,26,0],[11,11,0,720,21,8],[12,11,0,610,3,12],[13,11,1,0,0,0],[14,11,1,0,0,0],[15,11,1,0,0,0],[16,11,1,0,0,0],[-2,12,0,345,47,8],[-1,12,0,276,57,9],[0,12,0,201,75,1],[1,12,0,264,90,8],[2,12,0,306,72,0],[3,12,0,328,42,0],[4,12,0,353,42,6],[5,12,0,459,41,28],[6,12,0,577,34,0],[7,12,0,515,31,6],[8,12,0,432,52,1],[9,12,0,510,34,0],[10,12,0,722,29,2],[11,12,0,614,18,7],[12,12,0,1016,3,21],[13,12,1,0,0,0],[14,12,1,0,0,0],[15,12,1,0,0,0],[-3,13,0,141,61,16],[-2,13,0,136,70,10],[-1,13,0,343,54,14],[0,13,0,145,73,4],[1,13,0,173,70,0],[2,13,0,204,48,0],[3,13,0,428,44,0],[4,13,0,491,32,20],[5,13,0,558,33,6],[6,13,0,603,32,7],[7,13,0,510,27,8],[8,13,0,542,55,0],[9,13,0,706,36,11],[10,13,0,847,21,0],[11,13,0,953,7,31],[12,13,1,0,0,0],[13,13,1,0,0,0],[14,13,1,0,0,0],[15,13,1,0,0,0],[-3,14,0,282,68,57],[-2,14,0,172,74,29],[-1,14,0,122,68,32],[0,14,0,253,60,3],[1,14,0,362,55,0],[2,14,0,453,51,18],[3,14,0,562,53,7],[4,14,0,661,33,17],[5,14,0,614,37,5],[6,14,0,526,30,13],[7,14,0,615,37,3],[8,14,0,669,32,5],[9,14,0,1047,16,35],[10,14,0,1088,16,7],[11,14,1,0,0,0],[12,14,1,0,0,0],[13,14,1,0,0,0],[14,14,1,0,0,0],[-2,15,0,84,95,24],[-1,15,0,149,66,23],[0,15,0,466,51,7],[1,15,0,659,36,2],[2,15,0,579,52,14],[3,15,0,690,36,20],[4,15,0,764,39,20],[5,15,0,523,44,5],[6,15,0,533,44,8],[7,15,0,414,37,0],[8,15,0,792,16,77],[9,15,0,1013,11,57],[10,15,1,0,0,0],[11,15,1,0,0,0],[12,15,1,0,0,0],[13,15,1,0,0,0],[14,15,1,0,0,0],[-2,16,0,145,79,10],[-1,16,0,284,73,16],[0,16,0,586,37,12],[1,16,0,708,32,0],[2,16,0,622,45,30],[3,16,0,645,35,41],[4,16,0,601,33,6],[5,16,0,475,30,27],[6,16,0,359,57,26],[7,16,0,507,37,44],[8,16,0,645,18,60],[9,16,0,984,27,97],[10,16,0,764,40,81],[11,16,1,0,0,0],[12,16,1,0,0,0],[13,16,1,0,0,0],[-3,17,0,123,88,9],[-2,17,0,149,94,20],[-1,17,0,417,46,49],[0,17,0,722,31,6],[1,17,0,414,45,28],[2,17,0,388,64,8],[3,17,0,394,85,7],[4,17,0,454,42,27],[5,17,0,511,27,33],[6,17,0,583,40,6],[7,17,0,757,23,30],[8,17,0,629,47,87],[9,17,0,703,62,85],[10,17,0,672,27,80],[11,17,1,0,0,0],[12,17,1,0,0,0],[13,17,1,0,0,0],[-3,18,0,224,93,11],[-2,18,0,236,80,67],[-1,18,0,580,37,22],[0,18,0,720,32,66],[1,18,0,257,52,37],[2,18,0,324,83,14],[3,18,0,321,89,12],[4,18,0,718,40,37],[5,18,0,892,13,24],[6,18,0,993,18,58],[7,18,0,756,26,51],[8,18,0,807,17,47],[9,18,0,1233,8,43],[10,18,0,1362,10,70],[11,18,1,0,0,0],[12,18,1,0,0,0],[-4,19,0,82,99,37],[-3,19,0,231,99,28],[-2,19,0,189,67,35],[-1,19,0,560,42,14],[0,19,0,369,48,32],[1,19,0,402,40,6],[2,19,0,452,58,6],[3,19,0,555,45,25],[4,19,0,704,33,46],[5,19,0,1198,8,86],[6,19,0,1416,6,99],[7,19,0,908,15,42],[8,19,0,1143,8,13],[9,19,0,1499,0,62],[10,19,1,0,0,0],[11,19,1,0,0,0],[12,19,1,0,0,0],[-5,20,0,124,90,16],[-4,20,0,247,97,42],[-3,20,0,109,79,34],[-2,20,0,292,61,68],[-1,20,0,253,49,40],[0,20,0,586,39,17],[1,20,0,677,47,2],[2,20,0,692,44,15],[3,20,0,643,40,3],[4,20,0,844,17,24],[5,20,0,1185,5,64],[6,20,0,1069,5,65],[7,20,0,1026,20,59],[8,20,1,0,0,0],[9,20,1,0,0,0],[10,20,1,0,0,0],[11,20,1,0,0,0],[-5,21,0,268,69,7],[-4,21,1,0,0,0],[-3,21,1,0,0,0],[-2,21,1,0,0,0],[-1,21,1,0,0,0],[0,21,0,933,24,34],[1,21,0,775,27,6],[2,21,0,672,51,0],[3,21,0,726,33,40],[4,21,0,641,19,64],[5,21,0,933,17,16],[6,21,0,936,13,69],[7,21,0,1094,19,76],[8,21,1,0,0,0],[9,21,1,0,0,0],[10,21,1,0,0,0],[11,21,1,0,0,0],[-6,22,0,131,76,0],[-5,22,1,0,0,0],[-4,22,1,0,0,0],[-3,22,1,0,0,0],[-2,22,1,0,0,0],[-1,22,0,664,25,44],[0,22,0,815,24,50],[1,22,0,977,18,6],[2,22,0,859,31,66],[3,22,0,607,37,95],[4,22,0,636,53,60],[5,22,0,764,22,38],[6,22,1,0,0,0],[7,22,1,0,0,0],[8,22,1,0,0,0],[9,22,1,0,0,0],[10,22,1,0,0,0],[-6,23,1,0,0,0],[-5,23,1,0,0,0],[-4,23,1,0,0,0],[-3,23,1,0,0,0],[-2,23,1,0,0,0],[-1,23,0,936,22,70],[0,23,1,0,0,0],[1,23,1,0,0,0],[2,23,1,0,0,0],[3,23,0,471,63,72],[4,23,1,0,0,0],[5,23,1,0,0,0],[6,23,1,0,0,0],[7,23,1,0,0,0],[8,23,1,0,0,0],[9,23,1,0,0,0],[10,23,1,0,0,0],[-7,24,1,0,0,0],[-6,24,1,0,0,0],[-5,24,1,0,0,0],[-4,24,1,0,0,0],[-3,24,1,0,0,0],[-2,24,1,0,0,0],[-1,24,1,0,0,0],[0,24,1,0,0,0],[1,24,1,0,0,0],[2,24,1,0,0,0],[3,24,1,0,0,0],[4,24,1,0,0,0],[5,24,1,0,0,0],[6,24,1,0,0,0],[7,24,1,0,0,0],[8,24,1,0,0,0],[9,24,1,0,0,0],[-7,25,1,0,0,0],[-6,25,1,0,0,0],[-5,25,1,0,0,0],[-4,25,1,0,0,0],[-3,25,1,0,0,0],[-2,25,1,0,0,0],[-1,25,1,0,0,0],[0,25,1,0,0,0],[1,25,1,0,0,0],[2,25,1,0,0,0],[3,25,1,0,0,0],[4,25,1,0,0,0],[5,25,1,0,0,0],[6,25,1,0,0,0],[7,25,1,0,0,0],[8,25,1,0,0,0],[9,25,1,0,0,0],[-7,26,1,0,0,0],[-6,26,1,0,0,0],[-5,26,1,0,0,0],[-4,26,1,0,0,0],[-3,26,1,0,0,0],[-2,26,1,0,0,0],[-1,26,1,0,0,0],[0,26,1,0,0,0],[1,26,1,0,0,0],[2,26,1,0,0,0],[3,26,1,0,0,0],[4,26,1,0,0,0],[5,26,1,0,0,0],[6,26,1,0,0,0],[7,26,1,0,0,0],[8,26,1,0,0,0]],"city":[[5,7,"A Coruña",252,false],[6,6,"Ferrol",64,false],[1,12,"Santiago de Compostela",101,true],[8,11,"Lugo",100,false],[-2,17,"Pontevedra",83,false],[-3,19,"Vigo",294,false],[3,18,"Ourense",106,false]]};
+const GC_EN = new URLSearchParams(location.search).get('lang') === 'en';
+const GC_T = {
+  name: GC_EN ? 'Galicia as a strategy board' : 'Galicia como tablero de estrategia',
+  hint: GC_EN ? 'Click or space: next view · r restarts' : 'Clic o espacio: siguiente vista · r reinicia',
+  aria: GC_EN
+    ? 'Isometric hexagon board in the shape of Galicia, with the real relief. The seven largest cities light up, then a lens colours each hexagon by population and then by burned area. Click, space or r.'
+    : 'Tablero isométrico de hexágonos con la forma de Galicia y su relieve real. Se encienden las siete ciudades más grandes y luego una lente colorea cada hexágono por población y por superficie quemada. Clic, espacio o r.',
+  lens: GC_EN ? ['', 'Cities', 'Lens · population', 'Lens · burned area'] : ['', 'Ciudades', 'Lente · población', 'Lente · superficie quemada'],
+  read: GC_EN ? ['A board, still dark', 'The seven largest cities', 'Inhabitants per km²', 'Burned area, 2016-2025'] : ['Un tablero, aún apagado', 'Las siete ciudades más grandes', 'Habitantes por km²', 'Superficie quemada, 2016-2025'],
+  k: GC_EN ? 'k' : ' mil',
+  short: { 'Santiago de Compostela': 'Santiago' },
+};
+
+FIGS.push({
+  id: 'galiciaciv', name: GC_T.name, hint: GC_T.hint, aria: GC_T.aria,
+  css: `
+    [data-fig="galiciaciv"] .gc-sea { fill: none; stroke: var(--detail); stroke-width: .8; vector-effect: non-scaling-stroke; }
+    [data-fig="galiciaciv"] .gc-out { stroke: var(--detail); }
+    [data-fig="galiciaciv"] .gc-plate { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+    [data-fig="galiciaciv"] .gc-top { transition: fill .5s ease, fill-opacity .5s ease; }
+    [data-fig="galiciaciv"] .gc-dens .gc-top, [data-fig="galiciaciv"] .gc-fire .gc-top { fill: var(--accent); }
+    [data-fig="galiciaciv"] .gc-dens .gc-top { fill-opacity: calc(.05 + .95 * var(--d)); }
+    [data-fig="galiciaciv"] .gc-fire .gc-top { fill-opacity: calc(.05 + .95 * var(--f)); }
+    [data-fig="galiciaciv"] .gc-twr .face { transition: fill .4s ease, stroke .4s ease; }
+    [data-fig="galiciaciv"] .gc-city.on .gc-twr .face { fill: var(--accent); stroke: var(--accent-hi); }
+    [data-fig="galiciaciv"] .gc-glow { fill: var(--accent); opacity: 0; transition: opacity .5s ease; }
+    [data-fig="galiciaciv"] .gc-city.on .gc-glow { opacity: .4; }
+    [data-fig="galiciaciv"] .gc-tag { opacity: 0; transition: opacity .45s ease; font-size: 17px; font-weight: 600; fill: var(--ink-hi); stroke: var(--panel); stroke-width: 5px; paint-order: stroke; }
+    [data-fig="galiciaciv"] .gc-tag .gc-pop { fill: var(--accent); }
+    [data-fig="galiciaciv"] .gc-lead { fill: none; stroke: var(--accent); stroke-width: 1.1; opacity: 0; transition: opacity .45s ease; vector-effect: non-scaling-stroke; }
+    [data-fig="galiciaciv"] .gc-on .gc-tag, [data-fig="galiciaciv"] .gc-on .gc-lead { opacity: 1; }
+    [data-fig="galiciaciv"] .gc-chip { font-size: 20px; font-weight: 600; fill: var(--accent); opacity: 0; transition: opacity .4s; }
+    [data-fig="galiciaciv"] .gc-chip.on { opacity: 1; }
+  `,
+  mount(stage, api) {
+    const R = GC_DATA.R, U = 1.5, HR = R * U, S3 = Math.sqrt(3), RT = Math.SQRT1_2, f1 = v => v.toFixed(1);
+    // mapa (x al este, y al sur) girado 45°: así el norte queda arriba en pantalla
+    const B = (x, y) => [(x + y) * RT, (y - x) * RT];
+    const C = (q, r) => [HR * S3 * (q + r / 2), HR * 1.5 * r];
+    const zOf = e => 3 + Math.pow(e / 1100, .9) * 17;
+
+    const hexes = GC_DATA.hex.map(h => ({ q: h[0], r: h[1], out: h[2] === 1, e: h[3], d: h[4] / 99, f: h[5] / 99, c: C(h[0], h[1]) }));
+    const key = (q, r) => q + ',' + r;
+    const taken = new Set(hexes.map(h => key(h.q, h.r)));
+    const gal = hexes.filter(h => !h.out);
+    // el tablero llega dos casillas más allá de Galicia; el mar son los huecos que quedan
+    const gx = gal.map(h => h.c[0]), gy = gal.map(h => h.c[1]);
+    const X0 = Math.min(...gx) - HR * 3, X1 = Math.max(...gx) + HR * 3, Y0 = Math.min(...gy) - HR * 3, Y1 = Math.max(...gy) + HR * 3;
+    const inBoard = c => c[0] > X0 + HR * .8 && c[0] < X1 - HR * .8 && c[1] > Y0 + HR * .8 && c[1] < Y1 - HR * .8;
+    const sea = [];
+    for (let r = Math.floor(Y0 / (HR * 1.5)); r <= Math.ceil(Y1 / (HR * 1.5)); r++)
+      for (let q = Math.floor(X0 / (HR * S3) - r / 2) - 1; q <= Math.ceil(X1 / (HR * S3) - r / 2) + 1; q++) {
+        const c = C(q, r);
+        if (inBoard(c) && !taken.has(key(q, r))) sea.push({ q, r, c });
+      }
+
+    const zMax = Math.max(...gal.map(h => zOf(h.e)));
+    const corners = [[X0, Y0], [X1, Y0], [X1, Y1], [X0, Y1]];
+    const K = api.iso.frame([...corners.map(p => [...B(...p), -8]), [...B((X0 + X1) / 2, Y0), zMax + 50]]);
+    const { P, box } = K;
+    const Q = (x, y, z) => P(...B(x, y), z);
+    const poly = pts => 'M' + pts.map(p => f1(p[0]) + ' ' + f1(p[1])).join('L') + 'Z';
+    const corner = (c, k, s = .97) => { const a = Math.PI / 180 * (60 * k - 30); return [c[0] + HR * s * Math.cos(a), c[1] + HR * s * Math.sin(a)]; };
+    const hexAt = (c, z, s) => [0, 1, 2, 3, 4, 5].map(k => Q(...corner(c, k, s), z));
+
+    // placa: tapa de mar y la pared sur, la única que se ve con el norte arriba
+    let svg = `<path class="face" d="${poly([Q(X0, Y1, 0), Q(X1, Y1, 0), Q(X1, Y1, -12), Q(X0, Y1, -12)])}"/>`;
+    svg += `<path class="gc-plate" d="${poly(corners.map(p => Q(...p, 0)))}"/>`;
+    svg += sea.map(h => `<path class="gc-sea" d="${poly(hexAt(h.c, 0, .9))}"/>`).join('');
+
+    // prismas de sur a norte al revés (de norte a sur): lo de delante se pinta al final
+    const order = hexes.filter(h => inBoard(h.c)).sort((a, b) => a.c[1] - b.c[1] || a.c[0] - b.c[0]);
+    const cityAt = new Map(GC_DATA.city.map((c, i) => [key(c[0], c[1]), i]));
+    const towers = [];
+    let lit = '';
+    for (const h of order) {
+      if (h.out) { svg += `<path class="face recess gc-out" d="${poly(hexAt(h.c, 1, .97))}"/>`; continue; }
+      const z = zOf(h.e);
+      // caras con normal hacia el sur (60° y 120°): las que mira el observador
+      for (const k of [0, 1, 2]) {
+        const a = corner(h.c, k), b = corner(h.c, k + 1);
+        svg += `<path class="${k === 1 ? 'face' : 'face recess'}" d="${poly([Q(...a, z), Q(...b, z), Q(...b, 0), Q(...a, 0)])}"/>`;
+      }
+      const delay = ((h.c[0] - X0) / (X1 - X0) * 800) | 0;
+      svg += `<path class="face top gc-top" style="--d:${h.d.toFixed(2)};--f:${h.f.toFixed(2)};transition-delay:${delay}ms" d="${poly(hexAt(h.c, z))}"/>`;
+      const ci = cityAt.get(key(h.q, h.r));
+      if (ci !== undefined) {
+        const [bx, by] = B(...h.c), w = HR * .55, th = 8 + Math.sqrt(GC_DATA.city[ci][3]) * 1.5, g = P(bx, by, z + 1);
+        svg += `<g class="gc-city" id="galiciaciv-c${ci}"><ellipse class="gc-glow" cx="${f1(g[0])}" cy="${f1(g[1])}" rx="${f1(HR * 1.6)}" ry="${f1(HR * .9)}" filter="url(#bloom)"/>`
+          + `<g class="gc-twr">${box(bx - w / 2, by - w / 2, z, w, w, th, 2)}</g></g>`;
+        towers.push({ ci, top: P(bx, by, z + th), west: h.c[0] < (X0 + X1) / 2 - HR * 2 });
+      }
+    }
+
+    // encuadre 3:2 para la tarjeta
+    const pts = corners.map(p => Q(...p, 0)).concat([Q(X0, Y1, -12), Q(X1, Y1, -12)]);
+    const minX = Math.min(...pts.map(p => p[0])), maxX = Math.max(...pts.map(p => p[0]));
+    const minY = Math.min(...pts.map(p => p[1]), ...towers.map(t => t.top[1])) - 34, maxY = Math.max(...pts.map(p => p[1])) + 8;
+    let vW = (maxX - minX) * 1.3, vH = maxY - minY;
+    if (vW / vH < 1.5) vW = vH * 1.5; else vH = vW / 1.5;
+    const vL = (minX + maxX) / 2 - vW / 2, vT = (minY + maxY) / 2 - vH / 2;
+
+    // rótulos en dos columnas, a la altura de su torre, sin pisarse
+    const cols = [towers.filter(t => t.west), towers.filter(t => !t.west)];
+    cols.forEach((col, side) => {
+      col.sort((a, b) => a.top[1] - b.top[1]);
+      let last = -1e9;
+      for (const t of col) {
+        const [, , name, pop] = GC_DATA.city[t.ci];
+        const y = Math.max(t.top[1], last + 28); last = y;
+        const x = side === 0 ? vL + 14 : vL + vW - 14, anchor = side === 0 ? 'start' : 'end';
+        const txt = `${pop}${GC_T.k} ${GC_T.short[name] || name}`, w = txt.length * 9.3, end = side === 0 ? x + w + 6 : x - w - 6;
+        lit += `<g class="gc-lab" data-c="${t.ci}"><path class="gc-lead" d="M${f1(t.top[0])} ${f1(t.top[1])}L${f1(end)} ${f1(y)}"/>`
+          + `<text class="label gc-tag" x="${f1(x)}" y="${f1(y + 6)}" text-anchor="${anchor}"><tspan class="gc-pop">${pop}${GC_T.k}</tspan> ${api.iso.esc(GC_T.short[name] || name)}</text></g>`;
+      }
+    });
+    svg += lit;
+    svg += `<text id="galiciaciv-chip" class="label gc-chip" x="${f1(vL + vW / 2)}" y="${f1(vT + 26)}" text-anchor="middle"></text>`;
+    stage.setAttribute('viewBox', `${f1(vL)} ${f1(vT)} ${f1(vW)} ${f1(vH)}`);
+    stage.innerHTML = `<g id="galiciaciv-root">${svg}</g>`;
+
+    const root = stage.querySelector('#galiciaciv-root'), chip = stage.querySelector('#galiciaciv-chip');
+    const cityEls = GC_DATA.city.map((_, i) => [stage.querySelector('#galiciaciv-c' + i), stage.querySelector(`.gc-lab[data-c="${i}"]`)]);
+    const QUIET = /still/.test(location.search) || matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const DUR = [1100, 3600, 4800, 4800];
+    const st = { phase: 0 };
+    let auto = false, timers = [];
+    const clear = () => { timers.forEach(clearTimeout); timers = []; };
+    const light = ([a, b], on) => { a.classList.toggle('on', on); if (b) b.classList.toggle('gc-on', on); };
+
+    function render() {
+      const ph = st.phase;
+      clear();
+      root.classList.toggle('gc-dens', ph === 2);
+      root.classList.toggle('gc-fire', ph === 3);
+      // las ciudades se encienden una a una al entrar en la fase 1 y se quedan encendidas
+      cityEls.forEach((els, i) => {
+        if (ph === 0) light(els, false);
+        else if (ph === 1 && !QUIET) timers.push(setTimeout(() => light(els, true), 200 + i * 280));
+        else light(els, true);
+      });
+      chip.textContent = GC_T.lens[ph];
+      chip.classList.toggle('on', ph > 0);
+      api.power(ph > 0);
+      api.readout(GC_T.read[ph]);
+    }
+
+    const go = n => { st.phase = ((n % 4) + 4) % 4; render(); };
+    const next = () => go(st.phase + 1);
+    const tick = () => api.after(DUR[st.phase], () => { if (auto) { next(); tick(); } });
+    stage.addEventListener('click', () => { auto = false; next(); });
+    go(/still/.test(location.search) ? 2 : 0);
+    return {
+      key(e) {
+        if (e.key === ' ' || e.key === 'Enter') { auto = false; next(); return true; }
+        if (e.key === 'r' || e.key === 'R') { auto = false; go(0); return true; }
+        return false;
+      },
+      unmount() { clear(); },
+      demo() { if (QUIET) { go(2); return; } auto = true; go(1); tick(); },
+    };
+  },
+});
+
+</script>
+<!-- CORE: kernel, api, navigation, palette picker. Keep after the figures. -->
+<script>
+/* ============================================================
+   iso gallery core: kernel, shared api, navigation.
+   Figures register with FIGS.push({...}) — see CONTRACT below.
+   ============================================================ */
+// FIGS is declared inline in the page before the figure scripts
+
+const ISO = (() => {
+  const C = Math.cos(Math.PI / 6), S = Math.sin(Math.PI / 6);
+  function kernel(OX, OY) {
+    const P = (x,y,z) => [(x-y)*C + OX, (x+y)*S - z + OY];
+    const D = (x,y,z) => [(x-y)*C, (x+y)*S - z];
+    const plane = (O,U,V) => { const o=P(...O), u=D(...U), v=D(...V);
+      return `matrix(${u[0]} ${u[1]} ${v[0]} ${v[1]} ${o[0]} ${o[1]})`; };
+    const TOP   = (x,y,z) => plane([x,y,z],[1,0,0],[0,1,0]);
+    const FRONT = (x,y,z) => plane([x,y,z],[1,0,0],[0,0,-1]);
+    const SIDE  = (x,y,z) => plane([x,y,z],[0,-1,0],[0,0,-1]);
+    const rect = (t,w,h,r=0,cls='face') => `<g transform="${t}"><rect class="${cls}" width="${w}" height="${h}" rx="${r}"/></g>`;
+    // Rounded box: one rounded top plus one continuous side wall along the visible part of the
+    // outline, so the corners meet cleanly. r = 0 keeps the classic three flat faces.
+    const rounded = (x,y,z,w,d,h,r,cls) => {
+      r = Math.min(r, w/2, d/2);
+      const n = 10, z1 = z + h, q = Math.PI/4, H = Math.PI/2, c = cls ? ' ' + cls : '';
+      const arc = (cx,cy,a0,a1) => { const o = []; for (let i = 0; i <= n; i++) { const a = a0 + (a1-a0)*i/n; o.push([cx + r*Math.cos(a), cy + r*Math.sin(a)]); } return o; };
+      const ring = [...arc(x+w-r,y+r,-H,0), ...arc(x+w-r,y+d-r,0,H), ...arc(x+r,y+d-r,H,2*H), ...arc(x+r,y+r,2*H,3*H)];
+      const vis  = [...arc(x+w-r,y+r,-q,0), ...arc(x+w-r,y+d-r,0,H), ...arc(x+r,y+d-r,H,3*q)];
+      const d3 = pts => 'M' + pts.map(p => P(...p).map(v => v.toFixed(2)).join(' ')).join('L') + 'Z';
+      const wall = [...vis.map(([a,b]) => [a,b,z]), ...vis.slice().reverse().map(([a,b]) => [a,b,z1])];
+      return `<path class="face${c}" d="${d3(wall)}"/><path class="face top${c}" d="${d3(ring.map(([a,b]) => [a,b,z1]))}"/>`;
+    };
+    const box = (x,y,z,w,d,h,r=0) => r > 0 ? rounded(x,y,z,w,d,h,r,'') :
+      rect(SIDE(x+w,y+d,z+h), d,h) + rect(FRONT(x,y+d,z+h), w,h) + rect(TOP(x,y,z+h), w,d,0,'face top');
+    const boxc = (x,y,z,w,d,h,r,cls) => r > 0 ? rounded(x,y,z,w,d,h,r,cls) :
+      rect(SIDE(x+w,y+d,z+h), d,h,0,'face '+cls) + rect(FRONT(x,y+d,z+h), w,h,0,'face '+cls) + rect(TOP(x,y,z+h), w,d,0,'face top '+cls);
+    // 3D polyline -> SVG path "d"
+    const path = pts => 'M' + pts.map(p => P(...p).map(n => n.toFixed(2)).join(' ')).join('L');
+    return { C, S, P, D, plane, TOP, FRONT, SIDE, rect, box, boxc, path };
+  }
+  // Frame a scene: pass its extreme 3D corners. Returns kernel + viewBox padded to ~4:3.
+  function frame(points, margin = 0.09, aspect = 4 / 3) {
+    const d = points.map(([x,y,z]) => [(x-y)*C, (x+y)*S - z]);
+    let x0 = Math.min(...d.map(p => p[0])), x1 = Math.max(...d.map(p => p[0]));
+    let y0 = Math.min(...d.map(p => p[1])), y1 = Math.max(...d.map(p => p[1]));
+    const m = margin * Math.max(x1 - x0, y1 - y0);
+    let w = x1 - x0 + 2*m, h = y1 - y0 + 2*m;
+    let ox = m - x0, oy = m - y0;
+    if (w / h < aspect) { const nw = h * aspect; ox += (nw - w) / 2; w = nw; }
+    else { const nh = w / aspect; oy += (nh - h) / 2; h = nh; }
+    return { ...kernel(ox, oy), viewBox: `0 0 ${w.toFixed(1)} ${h.toFixed(1)}`, W: w, H: h };
+  }
+  // repeated detail lines in a face-local group
+  const slits = (a0, a1, step, b0, b1, vertical = true, cls = 'detail') => {
+    let s = ''; for (let a = a0; a <= a1 + 1e-6; a += step)
+      s += vertical ? `<line class="${cls}" x1="${a}" y1="${b0}" x2="${a}" y2="${b1}"/>` : `<line class="${cls}" x1="${b0}" y1="${a}" x2="${b1}" y2="${a}"/>`;
+    return s;
+  };
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return { kernel, frame, slits, esc };
+})();
+
+/* ---------- shared audio (created on first user gesture) ---------- */
+const AUDIO = (() => {
+  let ctx = null, out = null, analyser = null;
+  return () => {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      out = ctx.createGain(); out.gain.value = 0.5;
+      analyser = ctx.createAnalyser(); analyser.fftSize = 1024;
+      out.connect(analyser); analyser.connect(ctx.destination);
+    }
+    if (ctx.state === 'suspended') ctx.resume();
+    return { ctx, out, analyser };
+  };
+})();
+
+/* ---------- app ---------- */
+(function app() {
+  const $ = id => document.getElementById(id);
+  const CFG = window.GALLERY || {};
+  const holder = $('stageHolder'), readoutEl = $('readout'), hintEl = $('hint'), numEl = $('fignum'), nameEl = $('figname');
+  const nav = $('nav');
+  let active = null, handle = null, timers = [], frames = [], idx = 0;
+
+  const api = {
+    iso: ISO,
+    readout: s => { readoutEl.textContent = s; },
+    hint: s => { hintEl.textContent = s; },
+    audio: AUDIO,
+    after: (ms, fn) => { const t = setTimeout(fn, ms); timers.push(t); return t; },
+    every: (ms, fn) => { const t = setInterval(fn, ms); timers.push(t); return t; },
+    loop: fn => { let alive = true; const f = ts => { if (!alive) return; fn(ts); requestAnimationFrame(f); };
+      requestAnimationFrame(f); const stop = () => { alive = false; }; frames.push(stop); return stop; },
+    // light a pressable briefly (orange flash + glow, then fade)
+    flash: (el, ms = 160) => { if (!el) return; el.classList.add('down', 'lit'); clearTimeout(el._f1); clearTimeout(el._f2);
+      el._f1 = setTimeout(() => el.classList.remove('down'), 110); el._f2 = setTimeout(() => el.classList.remove('lit'), ms); },
+    // restart a one-shot CSS animation class (e.g. '.pulse' -> 'go')
+    replay: (el, cls = 'go') => { if (!el) return; el.classList.remove(cls); void el.getBoundingClientRect(); el.classList.add(cls); },
+    power: on => { holder.classList.toggle('glow', !!on); },
+  };
+
+  function mount(i) {
+    if (handle && handle.unmount) handle.unmount();
+    timers.forEach(t => { clearTimeout(t); clearInterval(t); }); timers = [];
+    frames.forEach(stop => stop()); frames = [];
+    idx = (i + FIGS.length) % FIGS.length; active = FIGS[idx];
+    holder.classList.remove('glow');
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('id', 'stage'); svg.setAttribute('role', 'img'); svg.setAttribute('tabindex', '0');
+    svg.setAttribute('aria-label', active.aria || active.name);
+    svg.dataset.fig = active.id;
+    holder.replaceChildren(svg);
+    numEl.textContent = `Fig ${idx + 1}`; nameEl.textContent = active.name;
+    hintEl.textContent = active.hint || ''; readoutEl.textContent = '';
+    document.title = `Fig ${idx + 1} · ${active.name}`;
+    [...nav.querySelectorAll('button[data-i]')].forEach(b => b.setAttribute('aria-current', +b.dataset.i === idx ? 'true' : 'false'));
+    const cur = nav.querySelector(`button[data-i="${idx}"]`);
+    if (cur && nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: cur.offsetLeft - nav.clientWidth / 2 + cur.offsetWidth / 2, behavior: 'smooth' });
+    if (location.hash.slice(1) !== active.id) history.replaceState(null, '', '#' + active.id);
+    handle = active.mount(svg, api) || {};
+    // demo(): with ?demo, or on every arrival when GALLERY.autoDemo is true (?still disables)
+    const runDemo = /demo/.test(location.search) || (CFG.autoDemo && !/still/.test(location.search));
+    if (runDemo && handle.demo) setTimeout(() => handle.demo(), 120);
+  }
+
+  // ---------- glow colour choice ----------
+  const PALETTES = {
+    // [name, dark accent, dark hi, light accent, light hi]
+    ember: [['Ember','#ff7a1a','#ffb070','#f06a00','#ff8c2e'], ['Cyan','#22d3ee','#9beefa','#0891b2','#06a8c6'], ['Lime','#a3e635','#d6f79f','#4d7c0f','#5f960f'],
+            ['Violet','#a78bfa','#d6caff','#7c3aed','#8b5cf6'], ['Rose','#fb7185','#fdb8c2','#e11d48','#f43f5e'], ['Ice','#dfe9ef','#ffffff','#1f2937','#3b4656']],
+    city:  [['Sodium','#ff9a2e','#ffc77a','#d97706','#f59e0b'], ['Tungsten','#ffd166','#ffe7a8','#a16207','#ca8a04'], ['Neon','#ff4fa3','#ff9fcb','#db2777','#ec4899'],
+            ['Signal','#3ee8a0','#a3f5cf','#047857','#059669'], ['Dusk','#6f9dff','#b5ccff','#2f5bd3','#4a72e8'], ['Moon','#dfe7f5','#ffffff','#273246','#3d4a61']],
+  };
+  const ACCENTS = Array.isArray(CFG.palette) ? CFG.palette : (PALETTES[CFG.palette] || PALETTES.ember);
+  const vars = (a, hi, dark) => `--accent:${a}; --accent-hi:${hi}; --accent-dim:color-mix(in srgb, ${a} ${dark ? 10 : 8}%, transparent);` +
+    ` --glass-on:color-mix(in srgb, ${a} ${dark ? 9 : 12}%, ${dark ? '#101112' : '#eef0f0'});`;
+  const accentCss = ACCENTS.map(([n, da, dh, la, lh]) => { const k = n.toLowerCase();
+    return `:root[data-accent="${k}"] { ${vars(da, dh, true)} }
+@media (prefers-color-scheme: light) { :root[data-accent="${k}"]:not([data-theme="dark"]) { ${vars(la, lh, false)} } }
+:root[data-accent="${k}"][data-theme="light"] { ${vars(la, lh, false)} }`; }).join('\n');
+  const accentStyle = document.createElement('style'); accentStyle.textContent = accentCss; document.head.appendChild(accentStyle);
+  const sw = $('swatches');
+  sw.innerHTML = ACCENTS.map(([n, da]) => `<button role="radio" data-accent="${n.toLowerCase()}" aria-label="${n}" title="${n}" style="--sw:${da}"><i></i></button>`).join('');
+  function setAccent(k) {
+    if (!ACCENTS.some(a => a[0].toLowerCase() === k)) k = ACCENTS[0][0].toLowerCase();
+    document.documentElement.dataset.accent = k;
+    sw.querySelectorAll('button').forEach(b => b.setAttribute('aria-checked', b.dataset.accent === k ? 'true' : 'false'));
+    try { localStorage.setItem((CFG.storageKey || 'iso-glow-accent'), k); } catch (e) {}
+  }
+  let saved = null; try { saved = localStorage.getItem((CFG.storageKey || 'iso-glow-accent')); } catch (e) {}
+  setAccent(saved || ACCENTS[0][0].toLowerCase());
+  sw.addEventListener('click', e => { const b = e.target.closest('button[data-accent]'); if (b) { setAccent(b.dataset.accent); const s = $('stage'); if (s) s.focus({ preventScroll: true }); } });
+
+  // per-figure css
+  FIGS.forEach(f => { if (f.css) { const st = document.createElement('style'); st.textContent = f.css; document.head.appendChild(st); } });
+
+  // navigation markup
+  nav.innerHTML = FIGS.map((f, i) =>
+    `<button data-i="${i}"><span class="n">${String(i + 1).padStart(2, '0')}</span><span class="t">${f.name}</span></button>`).join('');
+  // after a nav click, hand keyboard focus to the figure so space/enter go to it, not the button
+  const focusStage = () => { const s = $('stage'); if (s) s.focus({ preventScroll: true }); };
+  nav.addEventListener('click', e => { const b = e.target.closest('button[data-i]'); if (b) { mount(+b.dataset.i); focusStage(); } });
+  $('prev').addEventListener('click', () => { mount(idx - 1); focusStage(); });
+  $('next').addEventListener('click', () => { mount(idx + 1); focusStage(); });
+  window.addEventListener('hashchange', () => { const i = FIGS.findIndex(f => f.id === location.hash.slice(1)); if (i >= 0 && i !== idx) mount(i); });
+
+  window.addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.target.closest && e.target.closest('button') && (e.key === 'Enter' || e.key === ' ')) return;
+    if (handle && handle.key && handle.key(e)) { e.preventDefault(); return; }
+    if (e.key === 'PageDown') mount(idx + 1);
+    if (e.key === 'PageUp') mount(idx - 1);
+  });
+  window.addEventListener('keyup', e => { if (handle && handle.keyup) handle.keyup(e); });
+  window.addEventListener('blur', () => { if (handle && handle.blur) handle.blur(); });
+
+  if (!FIGS.length) {   // nothing registered yet (figures still being built)
+    holder.innerHTML = '<p style="display:grid;place-items:center;height:100%;margin:0;letter-spacing:.14em;text-transform:uppercase">No figures yet</p>';
+    numEl.textContent = 'Fig —'; return;
+  }
+  const start = FIGS.findIndex(f => f.id === location.hash.slice(1));
+  mount(start >= 0 ? start : 0);
+})();
+
+</script>
+</body>
+</html>

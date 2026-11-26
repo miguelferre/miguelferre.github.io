@@ -285,6 +285,7 @@
   url_live: https://miguelferre.github.io/galiciaciv/
   url_repo: https://github.com/miguelferre/galiciaciv
   captura: /capturas/galiciaciv.webp
+  figura: galiciaciv
   metricas:
     - valor: "23"
       etiqueta: { es: "lentes con datos públicos", en: "lenses with open data" }
